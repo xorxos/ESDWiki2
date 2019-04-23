@@ -1,0 +1,49 @@
+<div class="box-container">
+    <div class="header-container">
+        <div class="title-settings-header inline-block">Bulleted List Settings</div>
+        <button type="button" class="close x-icon" aria-label="Close" (click)="closeBulletedListSettingsMenu()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="settings-container">
+        <form class="setting-element" style="padding: 10px;">
+            <div class="form-group">
+                <label style="margin-bottom:5px;padding-left:3px;">Display Name</label>
+                <input class="form-control display-name" rows="2"
+                    (input)="updateDisplayName($event)" value="{{bulletedList.displayName}}" />
+            </div>
+            <div class="form-group">
+                <label style="margin-bottom:5px;padding-left:3px;">List Items</label>
+                <div class="form-inline" *ngFor="let item of bulletedList.contents; let i = index; trackBy:trackByFn">
+                    <input class="form-control list-item-input" style="margin-bottom:10px; border-radius: 0.25rem 0px 0px 0.25rem;"
+                        (input)="updateBulletedListContent($event, i)" value="{{item}}" />
+                    <button class="btn btn-danger trash-button" type="button" (click)="deleteListItem(i)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+                <button class="btn btn-outline-success btn-block" type="button" (click)="createListItem()">New Item</button>
+            </div>
+            <div class="form-group" style="margin-top:20px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Left Spacing (default: 40 pixels)</label>
+                <input class="form-control" type="number" (input)="updateLeftSpacing($event)" value="{{bulletedList.leftSpacing}}" />
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Top Spacing (default: 0 pixels)</label>
+                <input class="form-control" type="number" (input)="updateTopSpacing($event)" value="{{bulletedList.topSpacing}}" />
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Bottom Spacing (default: 0 pixels)</label>
+                <input class="form-control" type="number" (input)="updateBottomSpacing($event)"
+                    value="{{bulletedList.bottomSpacing}}" />
+            </div>
+            <div class="form-group" style="margin-top:10px; padding-bottom: 20px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Item Spacing (default: 14 pixels)</label>
+                <input class="form-control" type="number" (input)="updateItemSpacing($event)" value="{{bulletedList.itemSpacing}}" />
+            </div>
+        </form>
+    </div>
+    <div class="column-spacer"></div>
+    <div class="setting-element" style="border-top: 1px solid #dfe3e8; min-height: 60px;">
+        <button (click)="deleteComponent()" type="button" class="btn btn-block btn-danger">Delete</button>
+    </div>
+</div>

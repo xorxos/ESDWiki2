@@ -1,0 +1,16 @@
+<div class="add-item-section">
+    <div class="header-container">
+        <div class="header-element inline-block">Add Section</div>
+        <button type="button" class="close x-icon" aria-label="Close" (click)="closeAddItemMenu()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div style="border-top: 1px solid #dfe3e8;">
+        <div class="title-element">Sections</div>
+        <div class="add-item-element" style="border-top: 2px solid #dfe3e8;" (click)="addItem('Text')">Add Text</div>
+        <div class="add-item-element" (click)="addItem('Subheader')">Add Subheader</div>
+        <div class="add-item-element" (click)="addItem('Bulleted List')">Add Bulleted List</div>
+        <div class="add-item-element" (click)="addItem('Numbered List')">Add Numbered List</div>
+        <div class="add-item-element" (click)="addItem('FullWidth Image')">Add Full-width Image</div>
+    </div>
+</div>

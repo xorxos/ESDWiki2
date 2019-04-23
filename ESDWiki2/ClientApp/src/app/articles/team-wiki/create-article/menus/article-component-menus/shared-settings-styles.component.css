@@ -1,0 +1,79 @@
+.inline-block {
+    display: inline-block;
+}
+
+.form-group {
+    margin-bottom: 0px !important;
+    padding-top: 10px;
+}
+
+.display-name {
+    overflow-y: hidden;
+}
+
+.header-container {
+    max-height: 60px;
+    background-color:white;
+    text-align: center;
+    overflow: hidden;
+    padding-left: 10px;
+    max-width: 100%;
+    border-bottom: 1px solid #dfe3e8;
+}
+
+.box-container {
+    border-left: 2px solid #ebeced;
+    border-right: 2px solid #ebeced;
+    display: flex; 
+    flex-direction: column; 
+    height:100%;
+}
+
+.title-settings-header {
+    padding-top: 14px;
+    margin: 2px;
+    width: calc(100% - 41px);
+    overflow: hidden;
+    font-weight: 600 !important;
+    line-height: 2rem;
+}
+
+.setting-element {
+    min-height: 50px;
+    padding: 10px;
+    line-height: 1.5rem;
+    background-color: white;
+}
+
+.x-icon {
+    display: inline-block;
+    line-height: 2rem;
+    padding: 15px 20px 14px 0px;
+    cursor: pointer;
+}
+
+.column-spacer {
+    flex-grow:1;
+}
+
+.custom-file-label {
+    overflow: hidden;
+}
+
+.fa-trash {
+    font-size: 18px;
+}
+
+.list-item-input {
+    width: calc(100% - 39.15px);
+}
+
+.trash-button {
+    padding-left: 11px;
+    margin-bottom: 10px;
+    border-radius: 0px 0.25rem 0.25rem 0px;
+}
+
+.settings-container {
+    margin-top: 15px;
+}

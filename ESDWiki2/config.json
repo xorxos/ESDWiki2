@@ -1,0 +1,15 @@
+{
+  "ConnectionStrings": {
+    "WikiConnectionString": "server=(localdb)\\ProjectsV13;Database=ESDWikiDB;Integrated Security=true;MultipleActiveResultSets=true;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "Tokens": {
+    "Key": "asdfupoqwj;asdfjklcopqiuwer",
+    "Issuer": "localhost",
+    "Audience":  "users"
+  }
+}

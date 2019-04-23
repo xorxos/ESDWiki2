@@ -1,0 +1,117 @@
+@media (min-width: 1200px) {
+  .container{
+      max-width: 900px;
+      padding: 0;
+  }
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.white-section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.soft-gray-section1 {
+  background-color: #f4f5f5;
+}
+
+.soft-gray-section2 {
+  background-color: #f4f5f5;
+  height: 100%;
+  padding-bottom: 80px;
+}
+
+.category-section {
+  padding-top:40px;
+}
+
+.search-box {
+  max-width: 600px;
+  margin: auto;
+}
+
+.col-lg-2, .col-md-3, .col-sm-4 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.hoverwell {
+  padding-top: 28px;
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 3px;
+  height: 140px;
+  font-size: 1rem;
+}
+
+.hoverwell:hover {
+  background-color: #DAE0E6;
+  cursor: pointer;
+}
+
+.article-image {
+  max-height: 50px;
+  display: block;
+  margin: auto;
+}
+
+.carousel-control-prev {
+  margin-left: -135px;
+  cursor: pointer;
+}
+
+.carousel-control-next {
+  margin-right: -135px;
+  cursor: pointer;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.carousel-item {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.filter-item {
+  height: 60px;
+  padding-top:17px;
+  cursor: pointer;
+  color: #007fb0;
+  border-bottom: 1px solid #d0d2d3;
+  border-right: 1px solid #d0d2d3;
+}
+
+.filter-item:hover {
+  background-color: #E0E0E0;
+}
+
+.selected-filter {
+  height: 60px;
+  padding-top:17px;
+  cursor: pointer;
+  color: #333E48;
+  font-weight: 600;
+  background-color: #fff;
+  border-bottom: 1px solid #d0d2d3;
+}
+
+.article-title {
+  color: #007fb0;
+}
+
+.article-description {
+  color: #333E48;
+  padding-top:5px;
+  font-size: 0.95rem;
+}

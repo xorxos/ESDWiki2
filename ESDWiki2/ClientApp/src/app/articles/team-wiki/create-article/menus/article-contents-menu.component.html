@@ -1,0 +1,114 @@
+<div class="configuration-section-1">
+    <div style="display: flex;flex-direction: column;height: 100%">
+        <div class="article-menu">
+            <div [ngClass]="{'article-item-active': showSections, 'article-item': showArticleSettings}"
+                style="margin-right: 5px;" (click)="toggleShowSections()">Sections</div>
+            <div [ngClass]="{'article-item-active': showArticleSettings, 'article-item': showSections}"
+                (click)="toggleShowArticleSettings()">Settings</div>
+        </div>
+        <div *ngIf="showSections">
+            <div *ngFor="let component of newArticle.articleContents;let i = index" (mouseenter)="highlightComponent(i)"
+                (mouseleave)="dehighlightComponent(i)">
+                <div *ngIf="isTitleComponent(component)" class="configuration-object-container"
+                    style="margin-top: 10px;" (click)="toggleTitleSettings(i)">
+                    <div class="configuration-object inline-block">{{component.displayName}}</div>
+                </div>
+                <div *ngIf="isTextComponent(component)" class="configuration-object-container"
+                    (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
+                    <div class="configuration-object inline-block" (click)="toggleTextSettings(i)">{{component.displayName}}</div>
+                    <div class="configuration-order">
+                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
+                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                    </div>
+                </div>
+                <div *ngIf="isSubheaderComponent(component)" class="configuration-object-container"
+                    (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
+                    <div class="configuration-object inline-block" (click)="toggleSubheaderSettings(i)">{{component.displayName}}</div>
+                    <div class="configuration-order">
+                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
+                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                    </div>
+                </div>
+                <div *ngIf="isBulletedListComponent(component)" class="configuration-object-container"
+                    (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
+                    <div class="configuration-object inline-block" (click)="toggleBulletedListSettings(i)">{{component.displayName}}</div>
+                    <div class="configuration-order">
+                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
+                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                    </div>
+                </div>
+                <div *ngIf="isNumberedListComponent(component)" class="configuration-object-container"
+                    (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
+                    <div class="configuration-object inline-block" (click)="toggleNumberedListSettings(i)">{{component.displayName}}</div>
+                    <div class="configuration-order">
+                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
+                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                    </div>
+                </div>
+                <div *ngIf="isFullWidthImageComponent(component)" class="configuration-object-container"
+                    (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
+                    <div class="configuration-object inline-block" (click)="toggleFullWidthImageSettings(i)">{{component.displayName}}</div>
+                    <div class="configuration-order">
+                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
+                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="add-configuration-object" style="text-align:center; margin-bottom: 70px;"
+                (click)="showAddItemMenu()">
+                <div class="inline-block" style="line-height: 2rem;">Add Section</div>
+            </div>
+        </div>
+        <div *ngIf="showArticleSettings" style="border-top: 1px solid #dfe3e8; margin-top: 10px; border-right: 2px solid #dfe3e8;
+    border-left: 2px solid #dfe3e8;">
+            <form class="setting-element" style="padding-top: 10px; padding-bottom: 20px;">
+                <div class="form-group">
+                    <label for="mainCategory" style="margin-bottom:5px;padding-left:3px;">Team Category</label>
+                    <select class="form-control" id="mainCategory">
+                        <option selected>Choose...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subCategory" style="margin-bottom:5px;padding-left:3px;">Team Sub-Category</label>
+                    <select class="form-control" id="subCategory">
+                        <option selected>Choose...</option>
+                    </select>
+                </div>
+                <div class="form-group form-check" style="padding-top: 20px;">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Publicly Available</label>
+                </div>
+                <div class="form-group">
+                    <label for="publicCategory">Public Category</label>
+                    <select disabled="enabled" class="form-control" id="publicCategory">
+                        <option selected>Choose...</option>
+                        <option>Email</option>
+                        <option>VPN</option>
+                        <option>Internet</option>
+                        <option>Skype</option>
+                        <option>Lockouts</option>
+                        <option>Microsoft Office</option>
+                        <option>Adobe</option>
+                        <option>Antivirus</option>
+                        <option>Mobile Devices</option>
+                        <option>Fiori</option>
+                        <option>Browser Issues</option>
+                        <option>Windows</option>
+                        <option>Mac</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="publicCategory">Public Sub-Category</label>
+                    <select disabled class="form-control" id="publicCategory">
+                        <option selected>Choose...</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="column-spacer"></div>
+        <div class="section-button-container">
+            <button (click)="deleteComponent()" type="button" class="btn btn-success save-button">Save</button>
+            <button (click)="deleteComponent()" type="button" class="btn btn-outline-danger cancel-button">Cancel</button>
+        </div>
+    </div>
+</div>

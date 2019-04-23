@@ -1,0 +1,30 @@
+<div class="box-container">
+    <div class="header-container">
+        <div class="title-settings-header inline-block">Title Settings</div>
+        <button type="button" class="close x-icon" aria-label="Close" (click)="closeTitleSettingsMenu()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="settings-container">
+        <form class="setting-element" style="padding: 10px;">
+            <div class="form-group">
+                <label style="margin-bottom:5px;padding-left:3px;">Display Name</label>
+                <input class="form-control" rows="2"
+                    (input)="updateDisplayName($event)" value="{{newArticle.articleContents[0].displayName}}" />
+            </div>
+            <div class="form-group">
+                <label style="margin-bottom:5px;padding-left:3px;">Content</label>
+                <textarea class="form-control" rows="2"
+                    (input)="updateTitleContent($event)">{{newArticle.articleContents[0].contents}}</textarea>
+            </div>
+            <div class="form-group" style="margin-top:5px; padding-bottom: 20px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Bottom Spacing (default: 0 pixels)</label>
+                <input class="form-control" type="number" (input)="updateBottomSpacing($event)" value="{{title.bottomSpacing}}"/>
+            </div>
+        </form>
+    </div>
+    <div class="column-spacer"></div>
+    <div class="setting-element" style="border-top: 1px solid #dfe3e8; min-height: 60px;">
+        <button (click)="deleteComponent()" type="button" class="btn btn-block btn-danger disabled">Delete</button>
+    </div>
+</div>

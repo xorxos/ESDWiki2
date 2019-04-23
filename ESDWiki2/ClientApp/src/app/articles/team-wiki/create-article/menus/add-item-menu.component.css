@@ -1,0 +1,51 @@
+.inline-block {
+    display: inline-block;
+}
+
+.x-icon {
+    float: right;
+    line-height: 2rem;
+    padding: 15px 20px 14px 0px;
+    cursor: pointer;
+}
+
+.add-item-section {
+    padding-top: 0px;
+    border-left: 2px solid #ebeced;
+    border-right: 2px solid #ebeced;
+}
+
+.header-container {
+    min-height: 60px;
+    background-color:white;
+    text-align: center;
+    padding-left: 10px;
+    max-width: 100%
+}
+
+.header-element {
+    padding-top: 14px;
+    padding-left: 30px;
+    font-weight: 600 !important;
+    line-height: 2rem;
+}
+
+.title-element {
+    min-height: 50px;
+    padding: 10px 20px;
+    font-weight: 500;
+    line-height: 1.5rem;
+}
+
+.add-item-element {
+    height: 60px;
+    cursor: pointer;
+    padding: 12px 20px;
+    line-height: 2rem;
+    background-color: white;
+    border-bottom: 2px solid #dfe3e8;
+}
+
+.add-item-element:hover {
+    border-right: 4px solid lightskyblue;
+}

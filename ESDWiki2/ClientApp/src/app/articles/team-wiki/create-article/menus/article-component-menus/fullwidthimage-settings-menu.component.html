@@ -1,0 +1,50 @@
+<div class="box-container">
+    <div class="header-container">
+        <div class="title-settings-header inline-block">Full-Width Image Settings</div>
+        <button type="button" class="close x-icon" aria-label="Close" (click)="closeFullWidthImageSettingsMenu()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="settings-container">
+        <form class="setting-element" style="padding: 10px;">
+            <div class="form-group">
+                <label style="margin-bottom:5px;padding-left:3px;">Display Name</label>
+                <input class="form-control" rows="2"
+                    (input)="updateDisplayName($event)" value="{{fullWidthImage.displayName}}" />
+            </div>
+            <div class="form-group">
+                <label style="margin-bottom:5px;padding-left:3px;">Image</label>
+                <div style="border: 2px solid #ebeced;">
+                    <img #imagePreview [src]="imgSrc" style="max-width: 100%" />
+                </div>
+                <div class="input-group mb-3" style="margin-top:10px;">
+                    <div class="custom-file">
+                        <input type="file" accept="image/*" class="custom-file-input" formControlName="importFile"
+                            id="importFile" (change)="onFileChange($event.target.files)">
+                        <label class="custom-file-label" #labelImport for="importFile">
+                            Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="formControlRange">Width: {{fullWidthImage.width}}%</label>
+                <input type="range" min="1" max="100" [value]="fullWidthImage.width" class="form-control-range"
+                    id="formControlRange" (input)="onRangeChange($event)">
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Top Spacing (default: 0 pixels)</label>
+                <input class="form-control" type="number" (input)="updateTopSpacing($event)"
+                    value="{{fullWidthImage.topSpacing}}" />
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <label style="margin-bottom:5px;padding-left:3px;">Bottom Spacing (default: 0 pixels)</label>
+                <input class="form-control" type="number" (input)="updateBottomSpacing($event)"
+                    value="{{fullWidthImage.bottomSpacing}}" />
+            </div>
+        </form>
+    </div>
+    <div class="column-spacer"></div>
+    <div class="setting-element" style="border-top: 1px solid #dfe3e8; min-height: 60px;">
+        <button (click)="deleteComponent()" type="button" class="btn btn-block btn-danger">Delete</button>
+    </div>
+</div>
