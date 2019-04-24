@@ -9,7 +9,7 @@ using ESDWiki2.Data;
 
 namespace ESDWiki2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/api/[controller]")]
     public class AccountsController : Controller
     {
         private readonly WikiContext _appDbContext;
@@ -38,7 +38,7 @@ namespace ESDWiki2.Controllers
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _appDbContext.ESDTeamUsers.AddAsync(new ESDTeamUser { IdentityId = userIdentity.Id, Team = model.Location });
+            await _appDbContext.ESDTeamUsers.AddAsync(new ESDTeamUser { IdentityId = userIdentity.Id, Team = model.Team });
             await _appDbContext.SaveChangesAsync();
 
             return new OkObjectResult("Account created");

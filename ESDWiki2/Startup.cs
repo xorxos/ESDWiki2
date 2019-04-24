@@ -1,5 +1,7 @@
+using AutoMapper;
 using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +39,22 @@ namespace ESDWiki2
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // add identity
+            var builder = services.AddIdentityCore<WikiUser>(o =>
+            {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            });
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<WikiContext>().AddDefaultTokenProviders();
+
+            services.AddAutoMapper();
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddTransient<WikiSeeder>();
 
