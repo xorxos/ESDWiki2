@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IArticle, ISubheaderSection } from 'src/app/articles/shared/article.model';
+import { IArticle, ISubheaderSection } from '../../../shared/article.model';
 
 @Component({
     selector: 'subheader-settings-menu',

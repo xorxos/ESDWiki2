@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IArticle, IFullWidthImageSection } from 'src/app/articles/shared/article.model';
+import { IArticle, IFullWidthImageSection } from '../../../shared/article.model';
 
 @Component({
     selector: 'fullwidthimage-settings-menu',

@@ -59,7 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\" />
+    <Folder Include="ClientApp\src\app\account\registration-form\" />
+    <Folder Include="ClientApp\src\app\article\" />
   </ItemGroup>
 
   <ItemGroup>

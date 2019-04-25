@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { CategoryService } from '../shared/category.service'
-import { ICategory } from '../shared/category.model'
-import { ArticleService } from '../shared/article.service'
+import { CategoryService } from '../../shared/category.service'
+import { ICategory } from '../../shared/category.model'
+import { ArticleService } from '../../shared/article.service'
 
 @Component({
     templateUrl: './category-articlelist.component.html',

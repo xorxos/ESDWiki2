@@ -1,43 +1,43 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IArticle, INumberedListSection } from 'src/app/articles/shared/article.model'
+import { IBulletedListSection, IArticle } from '../../../shared/article.model';
 
 @Component({
-    selector: 'numberedlist-settings-menu',
-    templateUrl: './numberedlist-settings-menu.component.html',
+    selector: 'bulletedlist-settings-menu',
+    templateUrl: './bulletedlist-settings-menu.component.html',
     styleUrls: ['./shared-settings-styles.component.css']
 })
-export class NumberedListSettingsMenuComponent implements OnInit {
-    @Input() newArticle: IArticle
-    @Input() sectionIndex: number
-    @Output() updateNumberedListContentMessage = new EventEmitter<object>()
+export class BulletedListSettingsMenuComponent implements OnInit{
+    @Input() newArticle:IArticle
+    @Input() sectionIndex:number
+    @Output() updateBulletedListContentMessage = new EventEmitter<object>()
     @Output() updateLeftSpacingMessage = new EventEmitter<Input>()
     @Output() updateTopSpacingMessage = new EventEmitter<Input>()
     @Output() updateBottomSpacingMessage = new EventEmitter<Input>()
     @Output() updateItemSpacingMessage = new EventEmitter<Input>()
     @Output() updateDisplayNameMessage = new EventEmitter<Input>()
-    @Output() closeNumberedListSettingsMenuMessage = new EventEmitter<boolean>()
+    @Output() closeBulletedListSettingsMenuMessage = new EventEmitter<boolean>()
     @Output() deleteComponentMessage = new EventEmitter<number>()
     @Output() deleteListItemMessage = new EventEmitter<number>()
-    @Output() createListItemMessage = new EventEmitter()
+    @Output() createListItemMessage = new EventEmitter<number>()
 
-    numberedList: INumberedListSection
+    bulletedList:IBulletedListSection
 
     ngOnInit() {
-        this.getNumberedList()
+        this.getBulletedList()
     }
 
-    closeNumberedListSettingsMenu() {
-        this.closeNumberedListSettingsMenuMessage.emit(true)
+    closeBulletedListSettingsMenu() {
+        this.closeBulletedListSettingsMenuMessage.emit(true)
     }
 
     updateDisplayName(event:Input) {
         this.updateDisplayNameMessage.emit(event)
     }
 
-    updateNumberedListContent(event: Input, index: number) {
-        this.updateNumberedListContentMessage.emit({ index: index, event: event })
+    updateBulletedListContent(event:Input, index:number) {
+        this.updateBulletedListContentMessage.emit({index:index, event:event})
     }
-    
+
     updateLeftSpacing(event:Input) {
         this.updateLeftSpacingMessage.emit(event)
     }
@@ -54,21 +54,22 @@ export class NumberedListSettingsMenuComponent implements OnInit {
         this.updateItemSpacingMessage.emit(event)
     }
 
-    getNumberedList() {
-        this.numberedList = this.newArticle.articleContents[this.sectionIndex]
+    getBulletedList() {
+        this.bulletedList = this.newArticle.articleContents[this.sectionIndex]
     }
 
     deleteComponent() {
         this.deleteComponentMessage.emit(this.sectionIndex)
-        this.closeNumberedListSettingsMenuMessage.emit(true)
+        this.closeBulletedListSettingsMenuMessage.emit(true)
     }
-
+    
     createListItem() {
         this.createListItemMessage.emit()
     }
 
-    deleteListItem(index) {
-        this.deleteListItemMessage.emit(index)
+    
+    deleteListItem(event) {
+        this.deleteListItemMessage.emit(event)
     }
 
     trackByFn(index: any, item: any) {

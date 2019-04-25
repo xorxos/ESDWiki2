@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IArticle, ITextSection } from 'src/app/articles/shared/article.model';
+import { IArticle, ITextSection } from '../../../shared/article.model';
 
 @Component({
     selector: 'text-settings-menu',

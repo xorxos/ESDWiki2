@@ -5,7 +5,7 @@ import { IArticle,
          ISubheaderSection,
          IFullWidthImageSection, 
          IBulletedListSection, 
-         INumberedListSection } from '../../shared/article.model';
+         INumberedListSection } from '../shared/article.model';
 
 @Component({
     templateUrl: 'create-article.component.html',

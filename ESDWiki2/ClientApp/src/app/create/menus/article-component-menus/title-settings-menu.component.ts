@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IArticle, ITitleSection } from 'src/app/articles/shared/article.model';
+import { IArticle, ITitleSection } from '../../../shared/article.model';
 
 @Component({
     selector: 'title-settings-menu',
