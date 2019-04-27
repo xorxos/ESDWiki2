@@ -1,35 +1,37 @@
-<div class="row">
-  <div class="col-md-6 new-user-alert">
-    <div *ngIf="brandNew" class="alert alert-success" role="alert">
-      <strong>All set!</strong> Please login with your account
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-3 new-user-alert">
+      <div *ngIf="brandNew" class="alert alert-success" role="alert">
+        <strong>All set!</strong> Please login with your account
+      </div>
+      <h2>Log in to your account</h2>
     </div>
-    <h2>Login</h2>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-md-6">
-    <form #f="ngForm" novalidate (ngSubmit)="login(f)">
+  <div class="row" style="padding-top: 20px;">
+    <div class="col-md-6 offset-3">
+      <form class="login-form" #f="ngForm" novalidate (ngSubmit)="login(f)">
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input id="email" type="text" required name="email" class="form-control" placeholder="Email" [ngModel]="credentials.email" #email="ngModel" tmFocus validateEmail>
-        <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" required name="password" placeholder="Password" ngModel>
-      </div>
+        <div class="form-group">
+          <label for="email"><strong>Enter your email</strong></label>
+          <input id="email" type="text" required name="email" class="form-control" placeholder="Email" [ngModel]="credentials.email" #email="ngModel" tmFocus validateEmail>
+          <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+        </div>
+        <div class="form-group">
+          <label for="password"><strong>Enter your password</strong></label>
+          <input type="password" class="form-control" id="password" required name="password" placeholder="Password" ngModel>
+        </div>
 
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
-        <app-spinner [isRunning]="isRequesting"></app-spinner>
-      </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
+          <app-spinner [isRunning]="isRequesting"></app-spinner>
+        </div>
 
-      <div *ngIf="errors" class="alert alert-danger" role="alert">
-        <strong>Oops!</strong> {{errors}}
-      </div>
+        <div *ngIf="errors" class="alert alert-danger" role="alert">
+          <strong>Oops!</strong> {{errors}}
+        </div>
 
-    </form>
+      </form>
+    </div>
   </div>
 </div>

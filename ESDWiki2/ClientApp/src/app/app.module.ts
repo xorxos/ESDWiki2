@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
+import { HttpModule } from '@angular/http'
 
 import { ArticleAppComponent } from './article-app.component'
 import { TopNavBarComponent } from './navbar/top-navbar.component';
@@ -49,6 +50,7 @@ import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     SharedModule,
     ReactiveFormsModule,
     FormsModule,

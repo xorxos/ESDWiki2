@@ -131,12 +131,15 @@
                             </ol>
                         </ng-container>
                         <ng-container *ngIf="isFullWidthImageComponent(component)">
-                            <img [src]="component.src || component.placeholder" 
-                                 [ngStyle]="{ 'border': '2px solid #ebeced', 'border-left' : (component.hovered ? '5px solid red' : '2px solid #ebeced')}"
-                                 [style.paddingTop.px]="component.topSpacing"
+                          <div class="image-container"
+                               [style.paddingBottom.px]="component.bottomSpacing"
+                               [style.paddingTop.px]="component.topSpacing"
+                               [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">
+                            <img [src]="component.src || component.placeholder"
+                                 [ngStyle]="{ 'border': '2px solid #ebeced' }"
                                  [style.width]="component.width + '%'"
-                                 [style.paddingBottom.px]="component.bottomSpacing"
                                  style="max-width:100%; margin:10px; margin-left: 5px;" />
+                          </div>
                         </ng-container>
                     </ng-container>
                 </div>

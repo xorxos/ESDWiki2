@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'
 
 import { UserRegistration } from '../interfaces/user.registration.interface';
 import { ConfigService } from '../utils/config.service';

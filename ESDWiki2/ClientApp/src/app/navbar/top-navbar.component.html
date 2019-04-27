@@ -8,11 +8,14 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
+          <div *ngIf="status" class="navbar-nav">
             <a class="nav-item nav-link" routerLink="/team-wiki">Team Wiki</a>
           </div>
-          <div class="navbar-nav ml-auto">
+          <div *ngIf="!status" class="navbar-nav ml-auto">
             <a class="nav-item nav-link login-out-button" routerLink="/login">LOG IN</a>
+          </div>
+          <div *ngIf="status" class="navbar-nav ml-auto">
+            <a class="nav-item nav-link login-out-button" href="#" (click)="logout()">LOG OFF</a>
           </div>
         </div>
       </nav>
