@@ -7,17 +7,19 @@ import { ConfigService } from '../utils/config.service';
 
 import { BaseService } from "./base.service";
 
-import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/'; 
+import { Observable, BehaviorSubject } from 'rxjs';
 
 // Add the RxJS Observable operators we need in this app.
 import { map, catchError } from "rxjs/operators";
+import { Local } from 'protractor/built/driverProviders';
 
 @Injectable()
 
 export class UserService extends BaseService {
-
+  
   baseUrl: string = '';
+  private _currentUser = new BehaviorSubject<string>("");
+  currentUser$ = this._currentUser.asObservable();
 
   // Observable navItem source
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
@@ -25,14 +27,18 @@ export class UserService extends BaseService {
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
   private loggedIn = false;
+  private username = "";
 
   constructor(private http: Http, private configService: ConfigService) {
     super();
     this.loggedIn = !!localStorage.getItem('auth_token');
+    this.username = JSON.parse(localStorage.getItem('user_name'));
     // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
+    this._currentUser.next(this.username);
     this.baseUrl = configService.getApiURI();
+    
   }
 
     register(email: string, password: string, firstName: string, lastName: string, team: string): Observable<UserRegistration> {
@@ -45,7 +51,7 @@ export class UserService extends BaseService {
         map(res => res.json()),
         catchError(this.handleError)
       );
-  }  
+    }
 
    login(userName, password) {
     let headers = new Headers();
@@ -59,8 +65,10 @@ export class UserService extends BaseService {
       .pipe(map(res => res.json()),
       map(res => {
         localStorage.setItem('auth_token', res.auth_token);
+        localStorage.setItem('user_name', JSON.stringify(userName));
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
+        this._currentUser.next(userName);
         return true;
       }),
       catchError(this.handleError));
@@ -68,8 +76,10 @@ export class UserService extends BaseService {
 
   logout() {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_name');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
+    this._currentUser.next("");
   }
 
   isLoggedIn() {

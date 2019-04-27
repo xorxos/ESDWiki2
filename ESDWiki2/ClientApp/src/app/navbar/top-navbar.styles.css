@@ -3,21 +3,27 @@
     padding: 0px !important;
 }
 
-.navbar-nav a {
-    font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
-    font-weight: 600;
-    color: white;
-    font-size: 15px;
-    padding-top: 13px;
+.nav-link {
+  font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
+  font-weight: 600;
+  color: white;
+  font-size: 15px;
+  padding-top: 13px;
+  border-bottom: 2px solid transparent;
 }
 
-.navbar-nav a:hover {
-    color: black;
+.nav-link:hover {
+    border-bottom: 2px solid white;
+    color: white;
 }
 
 .navbar-brand {
     font-weight: 700;
     color: white;
+}
+
+.navbar-brand:hover {
+  color: white;
 }
 
 .navbar {
@@ -31,17 +37,6 @@
 
 .profile-container {
     display: flex;
-}
-
-.navbar-profile-icon i{
-    font-size: 28px;
-    padding-top: 3px;
-}
-
-.navbar-icon i{
-    font-size: 20px;
-    padding-inline-start:20px !important;
-    padding-top: 7px;
 }
 
 .navbar-profile-text span{
@@ -79,4 +74,9 @@
 
 .login-out-button:hover {
   border: 2px solid black;
+}
+
+.fa-sort-down {
+  color: white;
+  padding-top: 12px;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { UserService } from '../shared/services/user.service';
 import { COMPONENT_FACTORY_RESOLVER } from '@angular/core/src/render3/ng_module_ref';
@@ -12,7 +12,9 @@ import { COMPONENT_FACTORY_RESOLVER } from '@angular/core/src/render3/ng_module_
 export class TopNavBarComponent implements OnInit, OnDestroy {
   title = 'ESD Wiki';
   status: boolean
+  email: string
   subscription: Subscription
+  userName: Subscription
 
   constructor(private userService: UserService) {
 
@@ -24,6 +26,7 @@ export class TopNavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status)
+    this.userName = this.userService.currentUser$.subscribe(userName => this.email = userName);
   }
 
   ngOnDestroy() {
