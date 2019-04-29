@@ -8,7 +8,7 @@ namespace AngularASPNETCore2WebApiAuth.ViewModels.Mappings
     {
         public ViewModelToEntityMappingProfile()
         {
-            CreateMap<RegistrationViewModel, WikiUser>().ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
+            CreateMap<RegistrationViewModel, ApplicationUser>().ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
         }
     }
 }

@@ -18,8 +18,8 @@ import { Local } from 'protractor/built/driverProviders';
 export class UserService extends BaseService {
   
   baseUrl: string = '';
-  private _currentUser = new BehaviorSubject<string>("");
-  currentUser$ = this._currentUser.asObservable();
+  private _currentUserEmail = new BehaviorSubject<string>("");
+  currentUserEmail$ = this._currentUserEmail.asObservable();
 
   // Observable navItem source
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
@@ -36,7 +36,7 @@ export class UserService extends BaseService {
     // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
-    this._currentUser.next(this.username);
+    this._currentUserEmail.next(this.username);
     this.baseUrl = configService.getApiURI();
     
   }
@@ -68,7 +68,7 @@ export class UserService extends BaseService {
         localStorage.setItem('user_name', JSON.stringify(userName));
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
-        this._currentUser.next(userName);
+        this._currentUserEmail.next(userName);
         return true;
       }),
       catchError(this.handleError));
@@ -79,11 +79,26 @@ export class UserService extends BaseService {
     localStorage.removeItem('user_name');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
-    this._currentUser.next("");
+    this._currentUserEmail.next("");
   }
 
   isLoggedIn() {
     return this.loggedIn;
+  }
+
+  isWikiAdmin(): boolean {
+    let jwt = localStorage.getItem('auth_token')
+    let jwtData = jwt.split('.')[1]
+    let decodedJwtJsonData = window.atob(jwtData)
+    let decodedJwtData = JSON.parse(decodedJwtJsonData)
+
+    let role = decodedJwtData.role
+
+    if (role === 'WikiAdmin') {
+      return true
+    } else {
+      return false
+    }
   }
 }
 

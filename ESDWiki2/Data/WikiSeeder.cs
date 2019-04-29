@@ -11,9 +11,9 @@ namespace ESDWiki2.Data
     {
         private readonly WikiContext _ctx;
         private readonly IHostingEnvironment _hosting;
-        private readonly UserManager<WikiUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public WikiSeeder(WikiContext ctx, IHostingEnvironment hosting, UserManager<WikiUser> userManager)
+        public WikiSeeder(WikiContext ctx, IHostingEnvironment hosting, UserManager<ApplicationUser> userManager)
         {
             _ctx = ctx;
             _hosting = hosting;
@@ -24,16 +24,18 @@ namespace ESDWiki2.Data
         {
             _ctx.Database.EnsureCreated();
 
-            WikiUser user = await userManager.FindByEmailAsync("parkertleavitt@gmail.com");
+            ApplicationUser user = await userManager.FindByEmailAsync("parkertleavitt@gmail.com");
 
             if (user == null)
             {
-                user = new WikiUser()
+                user = new ApplicationUser()
                 {
                     FirstName = "Parker",
                     LastName = "Leavitt",
                     Email = "parkertleavitt@gmail.com",
-                    UserName = "parkertleavitt@gmail.com"
+                    UserName = "parkertleavitt@gmail.com",
+                    Team = "ESD",
+                    IsWikiAdmin = true
                 };
 
                 var result = await userManager.CreateAsync(user, "P@ssw0rd!");

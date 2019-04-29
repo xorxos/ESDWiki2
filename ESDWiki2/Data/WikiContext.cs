@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESDWiki2.Data
 {
-    public class WikiContext : IdentityDbContext<WikiUser>
+    public class WikiContext : IdentityDbContext<ApplicationUser>
     {
         public WikiContext(DbContextOptions<WikiContext> options) : base(options)
         {
 
         }
 
-        public DbSet<ESDTeamUser> ESDTeamUsers { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Article> Articles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

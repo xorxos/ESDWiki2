@@ -10,7 +10,7 @@ namespace ESDWiki2.Data
         public string Description { get; set; }
         public ICollection<ArticleItem> ArticleItems { get; set; }
         public ICollection<Category> Categories { get; set; }
-        public WikiUser User { get; set; }
-        public WikiUser LastUpdateUser { get; set; }
+        public ApplicationUser User { get; set; }
+        public ApplicationUser LastUpdateUser { get; set; }
     }
 }

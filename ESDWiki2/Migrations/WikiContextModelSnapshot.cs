@@ -42,6 +42,73 @@ namespace ESDWiki2.Migrations
                     b.ToTable("Articles");
                 });
 
+            modelBuilder.Entity("ESDWiki2.Data.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("IdentityId");
+
+                    b.Property<bool>("IsESDTeamAdmin");
+
+                    b.Property<bool>("IsESDTeamMember");
+
+                    b.Property<bool>("IsWikiAdmin");
+
+                    b.Property<bool>("IsWikiUser");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Team");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("ESDWiki2.Data.Entities.ArticleItem", b =>
                 {
                     b.Property<int>("Id")
@@ -70,78 +137,6 @@ namespace ESDWiki2.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("ESDWiki2.Data.Entities.ESDTeamUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("IdentityId");
-
-                    b.Property<string>("Team");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdentityId");
-
-                    b.ToTable("ESDTeamUsers");
-                });
-
-            modelBuilder.Entity("ESDWiki2.Data.Entities.WikiUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -256,11 +251,11 @@ namespace ESDWiki2.Migrations
 
             modelBuilder.Entity("ESDWiki2.Data.Article", b =>
                 {
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser", "LastUpdateUser")
+                    b.HasOne("ESDWiki2.Data.Entities.ApplicationUser", "LastUpdateUser")
                         .WithMany()
                         .HasForeignKey("LastUpdateUserId");
 
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser", "User")
+                    b.HasOne("ESDWiki2.Data.Entities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -279,13 +274,6 @@ namespace ESDWiki2.Migrations
                         .HasForeignKey("ArticleId");
                 });
 
-            modelBuilder.Entity("ESDWiki2.Data.Entities.ESDTeamUser", b =>
-                {
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -296,7 +284,7 @@ namespace ESDWiki2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser")
+                    b.HasOne("ESDWiki2.Data.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -304,7 +292,7 @@ namespace ESDWiki2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser")
+                    b.HasOne("ESDWiki2.Data.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -317,7 +305,7 @@ namespace ESDWiki2.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser")
+                    b.HasOne("ESDWiki2.Data.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -325,7 +313,7 @@ namespace ESDWiki2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ESDWiki2.Data.Entities.WikiUser")
+                    b.HasOne("ESDWiki2.Data.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

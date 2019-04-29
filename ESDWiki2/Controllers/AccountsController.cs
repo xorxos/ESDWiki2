@@ -13,10 +13,10 @@ namespace ESDWiki2.Controllers
     public class AccountsController : Controller
     {
         private readonly WikiContext _appDbContext;
-        private readonly UserManager<WikiUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public AccountsController(UserManager<WikiUser> userManager, IMapper mapper, WikiContext appDbContext)
+        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, WikiContext appDbContext)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -32,13 +32,13 @@ namespace ESDWiki2.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userIdentity = _mapper.Map<WikiUser>(model);
+            var userIdentity = _mapper.Map<ApplicationUser>(model);
 
             var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _appDbContext.ESDTeamUsers.AddAsync(new ESDTeamUser { IdentityId = userIdentity.Id, Team = model.Team });
+            await _appDbContext.ApplicationUsers.AddAsync(new ApplicationUser { IdentityId = userIdentity.Id, Team = model.Team });
             await _appDbContext.SaveChangesAsync();
 
             return new OkObjectResult("Account created");

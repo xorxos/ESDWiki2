@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
+using System.Security.Claims;
 using System.Text;
 
 namespace ESDWiki2
@@ -68,8 +69,7 @@ namespace ESDWiki2
 
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
-
-                RequireExpirationTime = false,
+                
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
@@ -89,7 +89,44 @@ namespace ESDWiki2
             // api user claim policy
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+                options.AddPolicy(
+                    "WikiUser",
+                    policy =>
+                    {
+                        policy.RequireAssertion(context =>
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiUser) ||
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin) ||
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamMember) ||
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamAdmin)
+                        );
+                    });
+                options.AddPolicy(
+                    "WikiAdmin",
+                    policy =>
+                    {
+                        policy.RequireAssertion(context =>
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin)
+                        );
+                    });
+                options.AddPolicy(
+                    "ESDUser",
+                    policy =>
+                    {
+                        policy.RequireAssertion(context =>
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamMember) ||
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamAdmin) ||
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin)
+                        );
+                    });
+                options.AddPolicy(
+                    "ESDAdmin",
+                    policy =>
+                    {
+                        policy.RequireAssertion(context =>
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamAdmin) ||
+                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin)
+                        );
+                    });
             });
 
             // In production, the Angular files will be served from this directory
@@ -99,7 +136,7 @@ namespace ESDWiki2
             });
 
             // add identity
-            var builder = services.AddIdentityCore<WikiUser>(o =>
+            var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
                 // configure identity options
                 o.Password.RequireDigit = false;
@@ -117,6 +154,7 @@ namespace ESDWiki2
             services.AddTransient<WikiSeeder>();
 
             services.AddScoped<IWikiRepository, WikiRepository>();
+            services.AddScoped<IJwtFactory, JwtFactory>();
 
 
             services.AddMvc()

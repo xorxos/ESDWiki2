@@ -6,6 +6,9 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using ESDWiki2.Data;
+using ESDWiki2.Data.Entities;
+using ESDWiki2.Helpers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
  
 
@@ -14,22 +17,42 @@ namespace ESDWiki2.Auth
     public class JwtFactory : IJwtFactory
     {
         private readonly JwtIssuerOptions _jwtOptions;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions)
+        public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions, UserManager<ApplicationUser> userManager)
         {
             _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);
+            this.userManager = userManager;
+        }
+
+        public async Task<Claim> GetRoleClaim(string userName)
+        {
+            ApplicationUser user = await userManager.FindByEmailAsync(userName);
+            Console.WriteLine(user.IsWikiAdmin);
+            if (user.IsWikiAdmin)
+            {
+                return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.WikiAdmin);
+            }
+            else if (user.IsESDTeamMember) {
+                return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.ESDTeamMember);
+            }
+            else if (user.IsESDTeamAdmin)
+            {
+                return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.ESDTeamAdmin);
+            }
+            else return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.WikiUser);
         }
 
         public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
         {
             var claims = new[]
-         {
-                 new Claim(JwtRegisteredClaimNames.Sub, userName),
-                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                 identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol),
-                 identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Id)
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, userName),
+                new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
+                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
+                await GetRoleClaim(userName),
+                identity.FindFirst(Constants.Strings.JwtClaimIdentifiers.Id)
              };
 
             // Create the JWT security token and encode it.
@@ -51,7 +74,7 @@ namespace ESDWiki2.Auth
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
-                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess)
+                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Role, Helpers.Constants.Strings.JwtClaims.WikiUser)
             });
         }
 

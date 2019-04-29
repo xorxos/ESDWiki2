@@ -15,11 +15,11 @@ namespace ESDWiki2.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private readonly UserManager<WikiUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
 
-        public AuthController(UserManager<WikiUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+        public AuthController(UserManager<ApplicationUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
         {
             _userManager = userManager;
             _jwtFactory = jwtFactory;
@@ -50,7 +50,7 @@ namespace ESDWiki2.Controllers
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 return await Task.FromResult<ClaimsIdentity>(null);
 
-            // get the user to verifty
+            // get the user to verify
             var userToVerify = await _userManager.FindByNameAsync(userName);
 
             if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
@@ -64,5 +64,5 @@ namespace ESDWiki2.Controllers
             // Credentials are invalid, or account doesn't exist
             return await Task.FromResult<ClaimsIdentity>(null);
         }
-    }
+    } 
 }

@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace ESDWiki2.Data.Entities
 {
-    public class WikiUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public string IdentityId { get; set; }
+        public string Team { get; set; }
+        public bool IsWikiUser { get; set; }
+        public bool IsWikiAdmin { get; set; }
+        public bool IsESDTeamMember { get; set; }
+        public bool IsESDTeamAdmin { get; set; }
+        
     }
 }

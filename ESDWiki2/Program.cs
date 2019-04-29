@@ -11,11 +11,11 @@ namespace ESDWiki2
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            //RunSeeding(host);
+            RunSeeding(host);
             host.Run();
         }
 
-        /** private static void RunSeeding(IWebHost host)
+        private static void RunSeeding(IWebHost host)
         {
             var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
@@ -23,7 +23,7 @@ namespace ESDWiki2
                 var seeder = scope.ServiceProvider.GetService<WikiSeeder>();
                 seeder.SeedAsync().Wait();
             }
-        } **/
+        }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
