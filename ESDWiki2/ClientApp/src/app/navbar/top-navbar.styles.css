@@ -72,9 +72,11 @@
   border-radius: 4px;
 }
 
-.login-out-button:hover {
-  border: 2px solid black;
-}
+  .login-out-button:hover {
+    border: 2px solid white;
+    background-color: white;
+    color: #43AFFF !important;
+  }
 
 .fa-sort-down {
   color: white;
