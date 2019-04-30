@@ -27,6 +27,7 @@ import { AccountModule } from './account/account.module';
 import { ConfigService } from './shared/utils/config.service';
 import { XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
   providers: [ 
     CategoryService,
     ArticleService,
+    AuthGuard,
     ConfigService, {
       provide: XHRBackend,
       useClass: AuthenticateXHRBackend

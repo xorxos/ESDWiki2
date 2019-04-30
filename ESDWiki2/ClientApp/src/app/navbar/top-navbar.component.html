@@ -10,12 +10,12 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <ul class="navbar-nav mr-auto">
             <li *ngIf="status" class="nav-item active">
-              <a class="nav-link mr-auto" routerLink="/team-wiki">Team Wiki</a>
+              <a class="nav-link nav-link-border mr-auto" routerLink="/team-wiki">Team Wiki</a>
             </li>
           </ul>
           <ul class="navbar-nav">
             <li *ngIf="status" class="nav-item active dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight:500">
+              <a class="nav-link nav-link-border dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight:500">
                 {{email}}
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -25,7 +25,9 @@
               </div>
             </li>
             <li *ngIf="!status" class="nav-item active">
-              <a class="nav-link login-out-button" routerLink="/login">LOG IN</a>
+              <div class="login-out-button" routerLink="/login">
+                <a class="nav-link login-out-button-link">LOG IN</a>
+              </div>
             </li>
           </ul>
         </div>

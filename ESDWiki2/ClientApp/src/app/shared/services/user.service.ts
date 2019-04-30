@@ -88,17 +88,19 @@ export class UserService extends BaseService {
 
   isWikiAdmin(): boolean {
     let jwt = localStorage.getItem('auth_token')
-    let jwtData = jwt.split('.')[1]
-    let decodedJwtJsonData = window.atob(jwtData)
-    let decodedJwtData = JSON.parse(decodedJwtJsonData)
+    if (jwt != null) {
+      let jwtData = jwt.split('.')[1]
+      let decodedJwtJsonData = window.atob(jwtData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
 
-    let role = decodedJwtData.role
+      let role = decodedJwtData.role
 
-    if (role === 'WikiAdmin') {
-      return true
-    } else {
-      return false
-    }
+      if (role === 'WikiAdmin') {
+        return true
+      } else {
+        return false
+      }
+    } else return false
   }
 }
 

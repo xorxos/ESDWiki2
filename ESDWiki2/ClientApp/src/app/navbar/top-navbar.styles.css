@@ -3,7 +3,7 @@
     padding: 0px !important;
 }
 
-.nav-link {
+.nav-link-border {
   font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
   font-weight: 600;
   color: white;
@@ -12,7 +12,7 @@
   border-bottom: 2px solid transparent;
 }
 
-.nav-link:hover {
+.nav-link-border:hover {
     border-bottom: 2px solid white;
     color: white;
 }
@@ -65,17 +65,32 @@
     cursor: pointer;
 }
 
-.login-out-button {
+.login-out-button-link {
+  font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
   padding-top: 5px !important;
   padding-bottom: 5px;
-  border: 2px solid white;
+  font-weight: 600;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  font-size: 13px;
+  color: white !important;
+  cursor: pointer;
+}
+
+  .login-out-button-link:hover {
+    color: #43AFFF !important;
+  }
+
+.login-out-button {
+  border: 1px solid white;
   border-radius: 4px;
+  height: 30px;
 }
 
   .login-out-button:hover {
-    border: 2px solid white;
+    border: 1px solid white;
     background-color: white;
-    color: #43AFFF !important;
+    border-bottom: 1px solid white;
   }
 
 .fa-sort-down {
