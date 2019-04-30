@@ -46,10 +46,71 @@ namespace ESDWiki2.Data
                 }
             }
 
-            /** if (!_ctx.Products.Any())
+            user = await userManager.FindByEmailAsync("parkertleavitt2@gmail.com");
+
+            if (user == null)
             {
-                _ctx.SaveChanges();
-            } **/
+                user = new ApplicationUser()
+                {
+                    FirstName = "Parker",
+                    LastName = "Leavitt",
+                    Email = "parkertleavitt2@gmail.com",
+                    UserName = "parkertleavitt2@gmail.com",
+                    Team = "ESD",
+                    IsWikiUser = true
+                };
+
+                var result = await userManager.CreateAsync(user, "P@ssw0rd!");
+
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+            }
+
+            user = await userManager.FindByEmailAsync("parkertleavitt3@gmail.com");
+
+            if (user == null)
+            {
+                user = new ApplicationUser()
+                {
+                    FirstName = "Parker",
+                    LastName = "Leavitt",
+                    Email = "parkertleavitt3@gmail.com",
+                    UserName = "parkertleavitt3@gmail.com",
+                    Team = "ESD",
+                    IsESDTeamMember = true
+                };
+
+                var result = await userManager.CreateAsync(user, "P@ssw0rd!");
+
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+            }
+
+            user = await userManager.FindByEmailAsync("parkertleavitt4@gmail.com");
+
+            if (user == null)
+            {
+                user = new ApplicationUser()
+                {
+                    FirstName = "Parker",
+                    LastName = "Leavitt",
+                    Email = "parkertleavitt4@gmail.com",
+                    UserName = "parkertleavitt4@gmail.com",
+                    Team = "ESD",
+                    IsESDTeamAdmin = true
+                };
+
+                var result = await userManager.CreateAsync(user, "P@ssw0rd!");
+
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const destination: string = route.pathFromRoot[route.pathFromRoot.length - 1].url[0].toString()
+    console.log(destination)
 
     if(!this.user.isLoggedIn())
     {
@@ -16,6 +17,28 @@ export class AuthGuard implements CanActivate {
        return false;
     }
 
-    return true;
+    switch (destination) {
+      case 'team-wiki': {
+        if (this.user.isESDTeamMember()) {
+          console.log("Route to team-wiki page?: True")
+          return true
+        } else {
+          console.log("Routing to login")
+          this.router.navigate(['login'])
+          return false
+        }
+      }
+      case 'team-wiki/create': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['login'])
+          return false
+        }
+      }
+      default:
+        return false
+      
+    }
   }
 }

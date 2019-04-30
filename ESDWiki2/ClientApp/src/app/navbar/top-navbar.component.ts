@@ -16,6 +16,9 @@ export class TopNavBarComponent implements OnInit, OnDestroy {
   subscription: Subscription
   userName: Subscription
   isWikiAdmin: boolean = false
+  isWikiUser: boolean = false
+  isESDTeamMember: boolean = false
+  isESDTeamAdmin: boolean = false
 
   constructor(private userService: UserService) {
 
@@ -29,6 +32,9 @@ export class TopNavBarComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status)
     this.userName = this.userService.currentUserEmail$.subscribe(userName => this.email = userName);
     this.isWikiAdmin = this.userService.isWikiAdmin()
+    this.isWikiUser = this.userService.isWikiUser()
+    this.isESDTeamMember = this.userService.isESDTeamMember()
+    this.isESDTeamAdmin = this.userService.isESDTeamAdmin()
   }
 
   ngOnDestroy() {

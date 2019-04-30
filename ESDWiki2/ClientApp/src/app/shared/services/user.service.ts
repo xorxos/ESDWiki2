@@ -86,20 +86,62 @@ export class UserService extends BaseService {
     return this.loggedIn;
   }
 
-  isWikiAdmin(): boolean {
+  public isWikiAdmin(): boolean {
     let jwt = localStorage.getItem('auth_token')
     if (jwt != null) {
       let jwtData = jwt.split('.')[1]
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
-
       let role = decodedJwtData.role
 
-      if (role === 'WikiAdmin') {
+      if ( role === 'WikiAdmin' ) {
         return true
-      } else {
-        return false
-      }
+      } else return false
+    } else return false
+  }
+
+  public isWikiUser(): boolean {
+    let jwt = localStorage.getItem('auth_token')
+    if (jwt != null) {
+      let jwtData = jwt.split('.')[1]
+      let decodedJwtJsonData = window.atob(jwtData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
+      let role = decodedJwtData.role
+
+      console.log("WikiUser?: " + role)
+
+      if ( role === 'WikiUser' || role === 'WikiAdmin' || role === 'ESDTeamMember' || role === 'ESDTeamAdmin' ) {
+        return true
+      } else return false
+    } else return false
+  }
+
+  public isESDTeamMember(): boolean {
+    let jwt = localStorage.getItem('auth_token')
+
+    if (jwt != null) {
+      let jwtData = jwt.split('.')[1]
+      let decodedJwtJsonData = window.atob(jwtData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
+      let role = decodedJwtData.role
+
+      if (role === 'ESDTeamMember' || role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
+        return true
+      } else return false
+    } else return false
+  }
+
+  public isESDTeamAdmin(): boolean {
+    let jwt = localStorage.getItem('auth_token')
+    if (jwt != null) {
+      let jwtData = jwt.split('.')[1]
+      let decodedJwtJsonData = window.atob(jwtData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
+      let role = decodedJwtData.role
+
+      if ( role === 'ESDTeamAdmin' || role === 'WikiAdmin' ) {
+        return true
+      } else return false
     } else return false
   }
 }

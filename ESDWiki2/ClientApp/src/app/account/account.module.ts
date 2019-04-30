@@ -9,6 +9,7 @@ import { EmailValidator } from '../directives/email.validator.directive';
 
 import { routing }  from './account.routing';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { AuthGuard } from '../auth.guard';
 
 
 @NgModule({
