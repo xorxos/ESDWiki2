@@ -18,12 +18,24 @@ import { Local } from 'protractor/built/driverProviders';
 export class UserService extends BaseService {
   
   baseUrl: string = '';
+
+  // Observable items, mainly for navigation bar
   private _currentUserEmail = new BehaviorSubject<string>("");
   currentUserEmail$ = this._currentUserEmail.asObservable();
 
-  // Observable navItem source
+  private _isWikiAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  public isWikiAdminObservable: Observable<boolean> = this._isWikiAdminSubject.asObservable()
+
+  private _isWikiUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  public isWikiUserObservable: Observable<boolean> = this._isWikiUserSubject.asObservable()
+  
+  private _isESDTeamMemberSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  public isESDTeamMemberObservable: Observable<boolean> = this._isESDTeamMemberSubject.asObservable()
+
+  private _isESDTeamAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  public isESDTeamAdminObservable: Observable<boolean> = this._isESDTeamAdminSubject.asObservable()
+
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
-  // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
   private loggedIn = false;
@@ -66,9 +78,16 @@ export class UserService extends BaseService {
       map(res => {
         localStorage.setItem('auth_token', res.auth_token);
         localStorage.setItem('user_name', JSON.stringify(userName));
+
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         this._currentUserEmail.next(userName);
+
+        this.isESDTeamAdmin();
+        this.isESDTeamMember();
+        this.isWikiAdmin();
+        this.isWikiUser();
+
         return true;
       }),
       catchError(this.handleError));
@@ -79,6 +98,10 @@ export class UserService extends BaseService {
     localStorage.removeItem('user_name');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
+    this._isWikiAdminSubject.next(false);
+    this._isWikiUserSubject.next(false);
+    this._isESDTeamMemberSubject.next(false);
+    this._isESDTeamAdminSubject.next(false);
     this._currentUserEmail.next("");
   }
 
@@ -94,7 +117,9 @@ export class UserService extends BaseService {
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
 
-      if ( role === 'WikiAdmin' ) {
+      if (role === 'WikiAdmin') {
+        this._isWikiAdminSubject.next(true);
+        console.log("Setting up wiki admin permissions")
         return true
       } else return false
     } else return false
@@ -108,9 +133,9 @@ export class UserService extends BaseService {
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
 
-      console.log("WikiUser?: " + role)
-
-      if ( role === 'WikiUser' || role === 'WikiAdmin' || role === 'ESDTeamMember' || role === 'ESDTeamAdmin' ) {
+      if (role === 'WikiUser' || role === 'WikiAdmin' || role === 'ESDTeamMember' || role === 'ESDTeamAdmin') {
+        this._isWikiUserSubject.next(true);
+        console.log("Setting up wiki user permissions")
         return true
       } else return false
     } else return false
@@ -126,6 +151,8 @@ export class UserService extends BaseService {
       let role = decodedJwtData.role
 
       if (role === 'ESDTeamMember' || role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
+        this._isESDTeamMemberSubject.next(true);
+        console.log("Setting up ESD team member permissions")
         return true
       } else return false
     } else return false
@@ -139,7 +166,9 @@ export class UserService extends BaseService {
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
 
-      if ( role === 'ESDTeamAdmin' || role === 'WikiAdmin' ) {
+      if (role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
+        this._isESDTeamAdminSubject.next(true);
+        console.log("Setting up ESD team admin permissions")
         return true
       } else return false
     } else return false

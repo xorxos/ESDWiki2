@@ -16,13 +16,13 @@
 .col-lg-3 {
     background-color:#ebeced; 
     padding: 0px;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 63px);
     overflow-y: auto;
     overflow-x: hidden;
 }
 
 .col-lg-9 {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 63px);
     background-color: white;
     overflow-y: auto;
 }
