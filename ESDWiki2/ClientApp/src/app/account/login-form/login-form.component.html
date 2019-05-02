@@ -1,18 +1,8 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 offset-3 new-user-alert">
-      <div *ngIf="brandNew" class="alert alert-success" role="alert">
-        <strong>All set!</strong> Please login with your account
-      </div>
-      <h2>Log in to your account</h2>
-    </div>
-  </div>
-
-  <div class="row" style="padding-top: 20px;">
+  <div class="row" style="padding-top: 40px;">
     <div class="col-md-6 offset-3">
       <form class="login-form" #f="ngForm" novalidate (ngSubmit)="login(f)">
-
-        <div *ngIf="errors" class="alert alert-danger" role="alert">
+        <div *ngIf="errors" style="padding-top:20px;" class="alert alert-danger" role="alert">
           <strong>Oops!</strong> {{errors}}
         </div>
 

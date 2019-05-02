@@ -16,11 +16,11 @@
 }
 
 .soft-gray-section1 {
-  background-color: #f4f5f5;
+  background-color: #DAE0E6;
 }
 
 .soft-gray-section2 {
-  background-color: #f4f5f5;
+  background-color: #DAE0E6;
   height: 100%;
   padding-bottom: 80px;
 }
@@ -44,15 +44,16 @@
   margin-right: 5px;
   margin-left: 5px;
   background-color: white;
+  border-bottom: 5px solid white;
   border-radius: 3px;
   height: 140px;
   font-size: 1rem;
 }
 
-.hoverwell:hover {
-  background-color: #DAE0E6;
-  cursor: pointer;
-}
+  .hoverwell:hover {
+    border-bottom: 5px solid #43AFFF;
+    cursor: pointer;
+  }
 
 .article-image {
   max-height: 50px;

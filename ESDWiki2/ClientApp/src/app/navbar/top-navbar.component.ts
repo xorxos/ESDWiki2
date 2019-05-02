@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { UserService } from '../shared/services/user.service';
-import { COMPONENT_FACTORY_RESOLVER } from '@angular/core/src/render3/ng_module_ref';
 
 @Component({
   selector: 'top-navbar',
@@ -37,11 +36,6 @@ export class TopNavBarComponent implements OnInit, OnDestroy {
     this.userService.isWikiUser();
     this.userService.isESDTeamAdmin();
     this.userService.isESDTeamMember();
-
-    console.log("ESDTeamMember?:  " + this.userService.isESDTeamMember())
-    console.log("ESDTeamAdmin?:  " + this.userService.isESDTeamAdmin())
-    console.log("WikiUser?:  " + this.userService.isWikiUser())
-    console.log("WikiAdmin?:  " + this.userService.isWikiAdmin())
   }
 
   ngOnDestroy() {

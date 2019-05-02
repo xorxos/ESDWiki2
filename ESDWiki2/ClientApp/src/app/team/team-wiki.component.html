@@ -29,7 +29,7 @@
                         <div class="filter-item">Duo Mobile</div>
                         <div class="filter-item">Egnyte</div>
                         <div style="flex-grow:1; border-right: 1px solid #d0d2d3;"></div>
-                        <div class="create-button" routerLink="/team-wiki/create">Create Article</div>
+                        <div *ngIf="userService.isESDTeamAdminObservable | async" class="create-button" routerLink="/team-wiki/create">Create Article</div>
                     </div>
                     <div class="col-lg-9"
                         style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px;">

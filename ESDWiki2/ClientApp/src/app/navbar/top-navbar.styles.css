@@ -96,3 +96,9 @@
   color: white;
   padding-top: 12px;
 }
+
+.dropdown-item {
+  font-size: 13px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}

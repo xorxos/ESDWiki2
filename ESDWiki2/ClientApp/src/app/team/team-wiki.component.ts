@@ -16,6 +16,11 @@ export class TeamWikiComponent implements OnInit {
 
     ngOnInit(): void {
       this.articleList = this.ArticleService.getTeamArticleByCategory("Active Directory")
-      this.userService.isWikiAdmin()
+
+      // Need to set our Role subscriptions in case of page reload without re-login
+      this.userService.isWikiAdmin();
+      this.userService.isWikiUser();
+      this.userService.isESDTeamAdmin();
+      this.userService.isESDTeamMember();
     }
 }
