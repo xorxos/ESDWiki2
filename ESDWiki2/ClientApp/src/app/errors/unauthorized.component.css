@@ -1,0 +1,20 @@
+.error-section {
+  padding-top: 80px;
+}
+
+.error-header {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.error-details {
+  font-size: 22px;
+}
+
+.btn {
+  width: 200px;
+}
+
+.buttons-container {
+  padding-top: 20px;
+}

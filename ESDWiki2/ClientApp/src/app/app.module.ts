@@ -28,6 +28,7 @@ import { ConfigService } from './shared/utils/config.service';
 import { XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { AuthGuard } from './auth.guard';
+import { UnauthorizedComponent } from './errors/unauthorized.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { AuthGuard } from './auth.guard';
     TextSettingsMenuComponent,
     BulletedListSettingsMenuComponent,
     NumberedListSettingsMenuComponent,
-    FullWidthImageSettingsMenuComponent
+    FullWidthImageSettingsMenuComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,

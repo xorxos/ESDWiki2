@@ -8,8 +8,8 @@ export class AuthGuard implements CanActivate {
   constructor(private user: UserService,private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const destination: string = route.pathFromRoot[route.pathFromRoot.length - 1].url[0].toString()
-    console.log(destination)
+    const destination: string = route.pathFromRoot[route.pathFromRoot.length - 1].url.toString()
+    console.log("Destination: " + destination)
 
     if(!this.user.isLoggedIn())
     {
@@ -18,21 +18,22 @@ export class AuthGuard implements CanActivate {
     }
 
     switch (destination) {
-      case 'team-wiki': {
-        if (this.user.isESDTeamMember()) {
-          console.log("Route to team-wiki page?: True")
+      case 'team-wiki,create': {
+        if (this.user.isESDTeamAdmin()) {
+          console.log('I AM TEAM ADMIN')
           return true
         } else {
-          console.log("Routing to login")
-          this.router.navigate(['login'])
+          this.router.navigate(['error/unauthorized'])
           return false
         }
       }
-      case 'team-wiki/create': {
-        if (this.user.isESDTeamAdmin()) {
+      case 'team-wiki': {
+        if (this.user.isESDTeamMember()) {
+          console.log("I am ignoring the admin rules")
           return true
         } else {
-          this.router.navigate(['login'])
+          console.log("Routing to login")
+          this.router.navigate(['error/unauthorized'])
           return false
         }
       }
