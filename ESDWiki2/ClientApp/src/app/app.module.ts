@@ -23,12 +23,16 @@ import { BulletedListSettingsMenuComponent } from './create/menus/article-compon
 import { NumberedListSettingsMenuComponent } from './create/menus/article-component-menus/numberedlist-settings-menu.component';
 import { FullWidthImageSettingsMenuComponent } from './create/menus/article-component-menus/fullwidthimage-settings-menu.component';
 import { SharedModule } from './shared/modules/shared.module';
-import { AccountModule } from './account/account.module';
+import { AccountModule } from './login/account.module';
 import { ConfigService } from './shared/utils/config.service';
 import { XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { AuthGuard } from './auth.guard';
 import { UnauthorizedComponent } from './errors/unauthorized.component';
+import { CreateAccountComponent } from './admin/account/create_account/create-account.component';
+import { PromoteAccountComponent } from './admin/account/promote_account/promote-account.component';
+import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
+import { TeamCategoryAdminComponent } from './admin/team/category-admin.component';
 
 
 @NgModule({
@@ -48,7 +52,11 @@ import { UnauthorizedComponent } from './errors/unauthorized.component';
     BulletedListSettingsMenuComponent,
     NumberedListSettingsMenuComponent,
     FullWidthImageSettingsMenuComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    CreateAccountComponent,
+    PromoteAccountComponent,
+    PublicCategoryAdminComponent,
+    TeamCategoryAdminComponent
   ],
   imports: [
     BrowserModule,
