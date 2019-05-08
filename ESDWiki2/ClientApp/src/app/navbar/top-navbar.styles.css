@@ -98,7 +98,12 @@
 }
 
 .dropdown-item {
-  font-size: 13px;
-  padding-top: 7px;
-  padding-bottom: 7px;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #c8ced3;
+
+}
+
+.dropdown-menu {
+  padding: 0;
 }

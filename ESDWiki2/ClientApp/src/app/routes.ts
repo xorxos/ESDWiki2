@@ -8,6 +8,13 @@ import { CategoryListComponent } from './search/articles-by-category/category-ar
 import { TeamWikiComponent } from './team/team-wiki.component';
 import { CreateArticleComponent } from './create/create-article.component';
 import { UnauthorizedComponent } from './errors/unauthorized.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard.component';
+import { CreateAccountComponent } from './admin/users/new/create-account.component';
+import { EditAccountComponent } from './admin/users/edit/edit-account.component';
+import { AccountPermissionsComponent } from './admin/users/permissions/permissions.component';
+import { TeamMembersAdminComponent } from './admin/team/members/members.component';
+import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
+import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
 
 const appRoutes: Routes = [
   { path: 'browse', component: ArticleCategoriesComponent },
@@ -15,6 +22,13 @@ const appRoutes: Routes = [
   { path: 'error/unauthorized', component: UnauthorizedComponent },
   { path: 'team-wiki/create', component: CreateArticleComponent, canActivate: [AuthGuard] },
   { path: 'team-wiki', component: TeamWikiComponent, canActivate: [AuthGuard] },
+  { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'admin/users/new', component: CreateAccountComponent, canActivate: [AuthGuard] },
+  { path: 'admin/users/edit', component: EditAccountComponent, canActivate: [AuthGuard] },
+  { path: 'admin/users/permissions', component: AccountPermissionsComponent, canActivate: [AuthGuard] },
+  { path: 'admin/team/members', component: TeamMembersAdminComponent, canActivate: [AuthGuard] },
+  { path: 'admin/team/categories', component: TeamCategoryAdminComponent, canActivate: [AuthGuard] },
+  { path: 'admin/wiki/categories', component: PublicCategoryAdminComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/browse', pathMatch: 'full' }
 ];
 

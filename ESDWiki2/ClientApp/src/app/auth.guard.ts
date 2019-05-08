@@ -33,6 +33,62 @@ export class AuthGuard implements CanActivate {
           return false
         }
       }
+      case '/admin/dashboard': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/users/new': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/users/edit': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/users/permissions': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/team/members': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/team/categories': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/wiki/categories': {
+        if (this.user.isWikiAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
       default:
         return false
       

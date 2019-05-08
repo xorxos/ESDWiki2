@@ -29,10 +29,13 @@ import { XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { AuthGuard } from './auth.guard';
 import { UnauthorizedComponent } from './errors/unauthorized.component';
-import { CreateAccountComponent } from './admin/account/create_account/create-account.component';
-import { PromoteAccountComponent } from './admin/account/promote_account/promote-account.component';
+import { CreateAccountComponent } from './admin/users/new/create-account.component';
+import { AccountPermissionsComponent } from './admin/users/permissions/permissions.component';
 import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
-import { TeamCategoryAdminComponent } from './admin/team/category-admin.component';
+import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard.component';
+import { EditAccountComponent } from './admin/users/edit/edit-account.component';
+import { TeamMembersAdminComponent } from './admin/team/members/members.component';
 
 
 @NgModule({
@@ -54,9 +57,12 @@ import { TeamCategoryAdminComponent } from './admin/team/category-admin.componen
     FullWidthImageSettingsMenuComponent,
     UnauthorizedComponent,
     CreateAccountComponent,
-    PromoteAccountComponent,
+    AccountPermissionsComponent,
     PublicCategoryAdminComponent,
-    TeamCategoryAdminComponent
+    TeamCategoryAdminComponent,
+    AdminDashboardComponent,
+    EditAccountComponent,
+    TeamMembersAdminComponent
   ],
   imports: [
     BrowserModule,
