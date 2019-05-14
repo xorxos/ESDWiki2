@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using ESDWiki2.Helpers;
 using System.Threading.Tasks;
 using ESDWiki2.Data;
+using System;
 
 namespace ESDWiki2.Controllers
 {
@@ -29,6 +30,7 @@ namespace ESDWiki2.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("ModelState is not valid");
                 return BadRequest(ModelState);
             }
 
@@ -41,7 +43,7 @@ namespace ESDWiki2.Controllers
             await _appDbContext.ApplicationUsers.AddAsync(new ApplicationUser { IdentityId = userIdentity.Id, Team = model.Team });
             await _appDbContext.SaveChangesAsync();
 
-            return new OkObjectResult("Account created");
+            return new OkObjectResult(true);
         }
     }
 }

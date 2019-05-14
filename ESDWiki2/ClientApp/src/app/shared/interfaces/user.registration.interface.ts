@@ -3,5 +3,9 @@ export interface UserRegistration {
     password: string;
     firstName: string;
     lastName:  string;
-    location: string;
+    team: string;
+    isWikiUser: boolean;
+    isWikiAdmin: boolean;
+    isESDTeamMember: boolean;
+    isESDTeamAdmin: boolean;
 }

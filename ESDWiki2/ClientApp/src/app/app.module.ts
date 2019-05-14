@@ -36,6 +36,8 @@ import { TeamCategoryAdminComponent } from './admin/team/categories/category-adm
 import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 import { TeamMembersAdminComponent } from './admin/team/members/members.component';
+import { UserService } from './shared/services/user.service';
+import { BaseService } from './shared/services/base.service';
 
 
 @NgModule({
@@ -78,6 +80,8 @@ import { TeamMembersAdminComponent } from './admin/team/members/members.componen
     CategoryService,
     ArticleService,
     AuthGuard,
+    UserService,
+    BaseService,
     ConfigService, {
       provide: XHRBackend,
       useClass: AuthenticateXHRBackend

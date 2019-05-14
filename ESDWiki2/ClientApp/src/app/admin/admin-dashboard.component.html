@@ -20,28 +20,40 @@
           </div>
         </div>
       </div>
-      <div *ngIf="userService.isESDTeamAdminObservable | async" class="col-12 col-lg-6 col-md-7 col-sm-12">
+      <div *ngIf="userService.isESDTeamAdminObservable | async" class="col-12 col-lg-6 col-md-12 col-sm-12">
         <div class="card">
           <div class="card-header">Team Admin</div>
           <div class="card-body">
-            <div class="well hoverwell"  routerLink="/admin/team/members">
+            <div class="well hoverwell" routerLink="/admin/team/members">
               <i class="fa fa-users well-icon"></i>
               <div>Members</div>
             </div>
             <div class="well hoverwell" routerLink="/admin/team/categories">
-              <i class="fa fa-boxes well-icon"></i>
+              <i class="fa fa-th-large well-icon"></i>
               <div>Categories</div>
+            </div>
+            <div class="well hoverwell" routerLink="/admin/wiki/categories">
+              <i class="fa fa-th well-icon"></i>
+              <div>Sub-Categories</div>
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="userService.isWikiAdminObservable | async" class="col-12 col-lg-6 col-md-5 col-sm-12">
+      <div *ngIf="userService.isWikiAdminObservable | async" class="col-12 col-lg-6 col-md-12 col-sm-12">
         <div class="card">
           <div class="card-header">Wiki Admin</div>
           <div class="card-body">
+            <div class="well hoverwell" routerLink="/admin/team/members">
+              <i class="fa fa-users well-icon"></i>
+              <div>Members</div>
+            </div>
             <div class="well hoverwell" routerLink="/admin/wiki/categories">
-              <i class="fa fa-boxes well-icon"></i>
+              <i class="fa fa-th-large well-icon"></i>
               <div>Categories</div>
+            </div>
+            <div class="well hoverwell" routerLink="/admin/wiki/categories">
+              <i class="fa fa-th well-icon"></i>
+              <div>Sub-Categories</div>
             </div>
           </div>
         </div>

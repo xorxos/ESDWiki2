@@ -10,7 +10,7 @@ import { BaseService } from "./base.service";
 import { Observable, BehaviorSubject } from 'rxjs';
 
 // Add the RxJS Observable operators we need in this app.
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, tap } from "rxjs/operators";
 import { Local } from 'protractor/built/driverProviders';
 
 @Injectable()
@@ -53,15 +53,15 @@ export class UserService extends BaseService {
     
   }
 
-    register(email: string, password: string, firstName: string, lastName: string, team: string): Observable<UserRegistration> {
-    let body = JSON.stringify({ email, password, firstName, lastName, team });
+  register(email: string, password: string, firstName: string, lastName: string, team: string, isWikiUser: boolean, isWikiAdmin: boolean, isESDTeamMember: boolean, isESDTeamAdmin: boolean): Observable<UserRegistration> {
+    let body = JSON.stringify({ email, password, firstName, lastName, team, isWikiUser, isWikiAdmin, isESDTeamMember, isESDTeamAdmin });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.baseUrl + "/accounts", body, options)
       .pipe(
         map(res => res.json()),
-        catchError(this.handleError)
+        catchError(error => this.handleError(error))
       );
     }
 
@@ -90,7 +90,7 @@ export class UserService extends BaseService {
 
         return true;
       }),
-      catchError(this.handleError));
+      catchError((err) => this.handleError(err)));
   }
 
   logout() {
