@@ -25,10 +25,15 @@ export class ArticleContentsMenuComponent implements OnInit {
     
     showSections: boolean
     showArticleSettings: boolean
+    isPublicChecked: boolean = false
 
     ngOnInit(): void {
         this.showArticleSettings = false
         this.showSections = true
+    }
+
+    checked(event) {
+      this.isPublicChecked = event.target.checked;
     }
 
     showAddItemMenu() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HttpClient, HttpParams } from '@angular/common/http'
 
 import { UserRegistration } from '../interfaces/user.registration.interface';
 import { ConfigService } from '../utils/config.service';
@@ -12,12 +12,15 @@ import { Observable, BehaviorSubject } from 'rxjs';
 // Add the RxJS Observable operators we need in this app.
 import { map, catchError, tap } from "rxjs/operators";
 import { Local } from 'protractor/built/driverProviders';
+import { User } from '../user';
 
 @Injectable()
 
 export class UserService extends BaseService {
   
   baseUrl: string = '';
+
+  public users: User[] = [];
 
   // Observable items, mainly for navigation bar
   private _currentUserEmail = new BehaviorSubject<string>("");
@@ -41,7 +44,7 @@ export class UserService extends BaseService {
   private loggedIn = false;
   private username = "";
 
-  constructor(private http: Http, private configService: ConfigService) {
+  constructor(private http: Http, private configService: ConfigService, private httpClient: HttpClient) {
     super();
     this.loggedIn = !!localStorage.getItem('auth_token');
     this.username = JSON.parse(localStorage.getItem('user_name'));
@@ -168,6 +171,17 @@ export class UserService extends BaseService {
         return true
       } else return false
     } else return false
+  }
+
+  public getUserBySearchTerm(lastName: string, filter: string): Observable<boolean> {
+    let params = new HttpParams();
+    params = params.append('searchTerm', lastName);
+    params = params.append('filter', filter);
+    
+    return this.httpClient.get(this.baseUrl + "/accounts", { params: params }).pipe(map((data: any[]) => {
+      this.users = data;
+      return true;
+    }));
   }
 }
 

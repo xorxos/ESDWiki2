@@ -7,6 +7,8 @@ using ESDWiki2.Helpers;
 using System.Threading.Tasks;
 using ESDWiki2.Data;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ESDWiki2.Controllers
 {
@@ -44,6 +46,37 @@ namespace ESDWiki2.Controllers
             await _appDbContext.SaveChangesAsync();
 
             return new OkObjectResult(true);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<ApplicationUser>> Get([FromQuery]string searchTerm, [FromQuery]string filter)
+        {
+            try
+            {
+                Console.WriteLine($"SearchTerm:  {searchTerm}. Filter:  {filter}");
+                if (filter == "Email")
+                {
+                    return Ok(_appDbContext.Users.Where(u => u.UserName.Contains(searchTerm)).ToList());
+                }
+                else if (filter == "Firstname")
+                {
+                    return Ok(_appDbContext.Users.Where(u => u.FirstName.Contains(searchTerm)).ToList());
+                }
+                else if (filter == "Lastname")
+                {
+                    return Ok(_appDbContext.Users.Where(u => u.LastName.Contains(searchTerm)).ToList());
+                }
+                else if (filter == "Team")
+                {
+                    return Ok(_appDbContext.Users.Where(u => u.Team.Contains(searchTerm)).ToList());
+                }
+                else return BadRequest("Failed to get users");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return BadRequest($"Failed to get users: {exception}");
+            }
         }
     }
 }
