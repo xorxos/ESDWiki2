@@ -26,7 +26,6 @@ import { SharedModule } from './shared/modules/shared.module';
 import { AccountModule } from './login/account.module';
 import { ConfigService } from './shared/utils/config.service';
 import { XHRBackend } from '@angular/http';
-import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { AuthGuard } from './auth.guard';
 import { UnauthorizedComponent } from './errors/unauthorized.component';
 import { CreateAccountComponent } from './admin/users/new/create-account.component';
@@ -81,11 +80,7 @@ import { BaseService } from './shared/services/base.service';
     ArticleService,
     AuthGuard,
     UserService,
-    BaseService,
-    ConfigService, {
-      provide: XHRBackend,
-      useClass: AuthenticateXHRBackend
-    }
+    ConfigService
   ],
   bootstrap: [ArticleAppComponent]
 })

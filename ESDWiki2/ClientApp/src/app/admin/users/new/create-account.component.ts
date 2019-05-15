@@ -30,9 +30,8 @@ export class CreateAccountComponent implements OnInit {
     if (valid) {
       this.userService.register(value.email, value.password, value.firstName, value.lastName, value.team, true, false, false, false)
         .pipe( finalize(() => this.isRequesting = false) )
-        .subscribe((result) => console.log('HTTP response', result),
-                    error => console.log('HTTP Error', error),
-                    () => console.log('HTTP request completed.')
+        .subscribe((result) => { if (result) { this.router.navigate(['/admin/dashboard']) } },
+                    err => this.errors = JSON.parse(err._body).DuplicateUserName
       );
     }
   } 

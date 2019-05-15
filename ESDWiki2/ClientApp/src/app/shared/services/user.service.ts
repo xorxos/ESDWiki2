@@ -59,10 +59,7 @@ export class UserService extends BaseService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.baseUrl + "/accounts", body, options)
-      .pipe(
-        map(res => res.json()),
-        catchError(error => this.handleError(error))
-      );
+      .pipe(map(res => res.json()));
     }
 
    login(userName, password) {
@@ -89,8 +86,7 @@ export class UserService extends BaseService {
         this.isWikiUser();
 
         return true;
-      }),
-      catchError((err) => this.handleError(err)));
+      }));
   }
 
   logout() {
