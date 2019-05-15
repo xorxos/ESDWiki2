@@ -1,4 +1,5 @@
-.container {
+.login-form {
+  padding: 20px;
   background-color: #DAE0E6;
   border-radius: 5px;
 }
