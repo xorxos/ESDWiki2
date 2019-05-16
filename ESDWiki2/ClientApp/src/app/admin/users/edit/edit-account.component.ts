@@ -1,41 +1,33 @@
-import { Component } from '@angular/core'
-import { User } from 'src/app/shared/user';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core'
 import { UserService } from 'src/app/shared/services/user.service';
+import { Router } from '@angular/router';
+import { UserRegistration } from 'src/app/shared/interfaces/user.registration.interface';
+import { finalize, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { User } from 'src/app/shared/user';
+import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
-  selector: 'edit-user',
+  selector: 'create-account',
   templateUrl: './edit-account.component.html',
   styleUrls: ['./edit-account.component.css']
 })
 
-export class EditAccountComponent {
+export class EditAccountComponent implements OnInit {
+  user: User
+  errors: string = '';
+  isRequesting: boolean = false;
+  submitted: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router, private dataService: DataService) {
 
-  filter: string = "Email"
-  searchString: string = ''
-
-  public users: User[] = [];
-
-  filterSelected(event) {
-    this.filter = event.target.value
   }
 
-  updateSearchString(event) {
-    if (event != null) {
-      this.searchString = event.target.value
+  ngOnInit(): void {
+    this.user = this.dataService.selectedUserToEdit
+    if (this.user == undefined) {
+      this.router.navigate(['admin/users'])
     }
   }
-  search() {
-    if (this.searchString !== "") {
-      this.userService.getUserBySearchTerm(this.searchString, this.filter)
-        .subscribe(success => {
-          if (success) {
-            this.users = this.userService.users;
-            console.log(this.users[0])
-          }
-        })
-    }
-  }
+  
 }

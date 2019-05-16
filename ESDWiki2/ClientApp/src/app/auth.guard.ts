@@ -2,10 +2,11 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from './shared/services/user.service';
+import { DataService } from './shared/services/data.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private user: UserService,private router: Router) {}
+  constructor(private user: UserService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const destination: string = state.url
@@ -42,6 +43,14 @@ export class AuthGuard implements CanActivate {
         }
       }
       case '/admin/users/new': {
+        if (this.user.isESDTeamAdmin()) {
+          return true
+        } else {
+          this.router.navigate(['error/unauthorized'])
+          return false
+        }
+      }
+      case '/admin/users': {
         if (this.user.isESDTeamAdmin()) {
           return true
         } else {

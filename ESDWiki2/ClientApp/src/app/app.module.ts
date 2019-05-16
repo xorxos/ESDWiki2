@@ -33,10 +33,12 @@ import { AccountPermissionsComponent } from './admin/users/permissions/permissio
 import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
 import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard.component';
-import { EditAccountComponent } from './admin/users/edit/edit-account.component';
+import { SearchAccountComponent } from './admin/users/search/search-account.component';
 import { TeamMembersAdminComponent } from './admin/team/members/members.component';
 import { UserService } from './shared/services/user.service';
 import { BaseService } from './shared/services/base.service';
+import { DataService } from './shared/services/data.service';
+import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 
 
 @NgModule({
@@ -61,8 +63,9 @@ import { BaseService } from './shared/services/base.service';
     AccountPermissionsComponent,
     PublicCategoryAdminComponent,
     TeamCategoryAdminComponent,
-    AdminDashboardComponent,
     EditAccountComponent,
+    AdminDashboardComponent,
+    SearchAccountComponent,
     TeamMembersAdminComponent
   ],
   imports: [
@@ -80,7 +83,8 @@ import { BaseService } from './shared/services/base.service';
     ArticleService,
     AuthGuard,
     UserService,
-    ConfigService
+    ConfigService,
+    DataService
   ],
   bootstrap: [ArticleAppComponent]
 })

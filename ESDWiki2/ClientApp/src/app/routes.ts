@@ -15,6 +15,7 @@ import { AccountPermissionsComponent } from './admin/users/permissions/permissio
 import { TeamMembersAdminComponent } from './admin/team/members/members.component';
 import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
 import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
+import { SearchAccountComponent } from './admin/users/search/search-account.component';
 
 const appRoutes: Routes = [
   { path: 'browse', component: ArticleCategoriesComponent },
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'team-wiki', component: TeamWikiComponent, canActivate: [AuthGuard] },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/new', component: CreateAccountComponent, canActivate: [AuthGuard] },
+  { path: 'admin/users', component: SearchAccountComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/edit', component: EditAccountComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/permissions', component: AccountPermissionsComponent, canActivate: [AuthGuard] },
   { path: 'admin/team/members', component: TeamMembersAdminComponent, canActivate: [AuthGuard] },
