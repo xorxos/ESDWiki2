@@ -115,10 +115,9 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-
+      console.log(role)
       if (role === 'WikiAdmin') {
         this._isWikiAdminSubject.next(true);
-        console.log("Setting up wiki admin permissions")
         return true
       } else return false
     } else return false
@@ -131,10 +130,9 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-
+      console.log(role)
       if (role === 'WikiUser' || role === 'WikiAdmin' || role === 'ESDTeamMember' || role === 'ESDTeamAdmin') {
         this._isWikiUserSubject.next(true);
-        console.log("Setting up wiki user permissions")
         return true
       } else return false
     } else return false
@@ -148,10 +146,9 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-
+      console.log(role)
       if (role === 'ESDTeamMember' || role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
         this._isESDTeamMemberSubject.next(true);
-        console.log("Setting up ESD team member permissions")
         return true
       } else return false
     } else return false
@@ -164,10 +161,9 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-
+      console.log(role)
       if (role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
         this._isESDTeamAdminSubject.next(true);
-        console.log("Setting up ESD team admin permissions")
         return true
       } else return false
     } else return false

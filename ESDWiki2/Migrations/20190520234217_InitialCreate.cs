@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ESDWiki2.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,10 +45,7 @@ namespace ESDWiki2.Migrations
                     LastName = table.Column<string>(nullable: true),
                     IdentityId = table.Column<string>(nullable: true),
                     Team = table.Column<string>(nullable: true),
-                    IsWikiUser = table.Column<bool>(nullable: false),
-                    IsWikiAdmin = table.Column<bool>(nullable: false),
-                    IsESDTeamMember = table.Column<bool>(nullable: false),
-                    IsESDTeamAdmin = table.Column<bool>(nullable: false)
+                    Permissions = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

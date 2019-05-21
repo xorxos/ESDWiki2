@@ -29,5 +29,4 @@ export class EditAccountComponent implements OnInit {
       this.router.navigate(['admin/users'])
     }
   }
-  
 }

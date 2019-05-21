@@ -35,7 +35,7 @@ namespace ESDWiki2.Data
                     Email = "parkertleavitt@gmail.com",
                     UserName = "parkertleavitt@gmail.com",
                     Team = "ESD",
-                    IsWikiAdmin = true
+                    Permissions = "WikiAdmin"
                 };
 
                 var result = await userManager.CreateAsync(user, "P@ssw0rd!");
@@ -57,7 +57,7 @@ namespace ESDWiki2.Data
                     Email = "parkertleavitt2@gmail.com",
                     UserName = "parkertleavitt2@gmail.com",
                     Team = "ESD",
-                    IsWikiUser = true
+                    Permissions = "WikiUser"
                 };
 
                 var result = await userManager.CreateAsync(user, "P@ssw0rd!");
@@ -79,7 +79,7 @@ namespace ESDWiki2.Data
                     Email = "parkertleavitt3@gmail.com",
                     UserName = "parkertleavitt3@gmail.com",
                     Team = "ESD",
-                    IsESDTeamMember = true
+                    Permissions = "ESDTeamMember"
                 };
 
                 var result = await userManager.CreateAsync(user, "P@ssw0rd!");
@@ -101,7 +101,7 @@ namespace ESDWiki2.Data
                     Email = "parkertleavitt4@gmail.com",
                     UserName = "parkertleavitt4@gmail.com",
                     Team = "ESD",
-                    IsESDTeamAdmin = true
+                    Permissions = "ESDTeamAdmin"
                 };
 
                 var result = await userManager.CreateAsync(user, "P@ssw0rd!");

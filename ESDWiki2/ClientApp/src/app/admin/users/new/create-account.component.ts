@@ -15,12 +15,24 @@ export class CreateAccountComponent implements OnInit {
   errors: string = '';
   isRequesting: boolean = false;
   submitted: boolean = false;
+  selectedValue: string = "ESD";
+  options = ["ESD"]
+  selectedPermission: string = "Default User"
+  permissionOptions = [ "Default User", "ESD Member", "ESD Admin", "Wiki Admin"]
 
   constructor(private userService: UserService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+  }
+
+  onSelectedChange(value: string) {
+    this.selectedValue = value;
+  }
+
+  onPermissionChange(value: string) {
+    this.selectedPermission = value;
   }
 
   registerUser({ value, valid }: { value: UserRegistration, valid: boolean }) {

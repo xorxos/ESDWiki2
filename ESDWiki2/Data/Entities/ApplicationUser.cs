@@ -14,10 +14,7 @@ namespace ESDWiki2.Data.Entities
         public string LastName { get; set; }
         public string IdentityId { get; set; }
         public string Team { get; set; }
-        public bool IsWikiUser { get; set; }
-        public bool IsWikiAdmin { get; set; }
-        public bool IsESDTeamMember { get; set; }
-        public bool IsESDTeamAdmin { get; set; }
+        public string Permissions { get; set; }
         
     }
 }

@@ -61,14 +61,6 @@ namespace ESDWiki2.Migrations
 
                     b.Property<string>("IdentityId");
 
-                    b.Property<bool>("IsESDTeamAdmin");
-
-                    b.Property<bool>("IsESDTeamMember");
-
-                    b.Property<bool>("IsWikiAdmin");
-
-                    b.Property<bool>("IsWikiUser");
-
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
@@ -82,6 +74,8 @@ namespace ESDWiki2.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
+
+                    b.Property<string>("Permissions");
 
                     b.Property<string>("PhoneNumber");
 

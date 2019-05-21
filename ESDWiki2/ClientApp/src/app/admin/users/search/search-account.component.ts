@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { User } from 'src/app/shared/user';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -10,10 +10,14 @@ import { DataService } from 'src/app/shared/services/data.service';
   styleUrls: ['./search-account.component.css']
 })
 
-export class SearchAccountComponent implements OnDestroy {
+export class SearchAccountComponent implements OnDestroy, OnInit {
+    
   selectedUser:User
 
   constructor(private userService: UserService, private dataService: DataService) { }
+
+  ngOnInit(): void {
+  }
 
   ngOnDestroy() {
     this.dataService.selectedUserToEdit = this.selectedUser

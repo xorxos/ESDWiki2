@@ -29,15 +29,14 @@ namespace ESDWiki2.Auth
         public async Task<Claim> GetRoleClaim(string userName)
         {
             ApplicationUser user = await userManager.FindByEmailAsync(userName);
-            Console.WriteLine(user.IsWikiAdmin);
-            if (user.IsWikiAdmin)
+            if (user.Permissions == "WikiAdmin")
             {
                 return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.WikiAdmin);
             }
-            else if (user.IsESDTeamMember) {
+            else if (user.Permissions == "ESDTeamMember") {
                 return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.ESDTeamMember);
             }
-            else if (user.IsESDTeamAdmin)
+            else if (user.Permissions == "ESDTeamAdmin")
             {
                 return new Claim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.ESDTeamAdmin);
             }

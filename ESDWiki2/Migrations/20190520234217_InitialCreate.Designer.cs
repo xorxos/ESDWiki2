@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESDWiki2.Migrations
 {
     [DbContext(typeof(WikiContext))]
-    [Migration("20190429134612_Initial")]
-    partial class Initial
+    [Migration("20190520234217_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,14 +63,6 @@ namespace ESDWiki2.Migrations
 
                     b.Property<string>("IdentityId");
 
-                    b.Property<bool>("IsESDTeamAdmin");
-
-                    b.Property<bool>("IsESDTeamMember");
-
-                    b.Property<bool>("IsWikiAdmin");
-
-                    b.Property<bool>("IsWikiUser");
-
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
@@ -84,6 +76,8 @@ namespace ESDWiki2.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
+
+                    b.Property<string>("Permissions");
 
                     b.Property<string>("PhoneNumber");
 

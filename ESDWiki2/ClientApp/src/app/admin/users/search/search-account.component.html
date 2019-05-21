@@ -36,10 +36,10 @@
               <td>{{user?.firstName}}</td>
               <td>{{user?.email}}</td>
               <td>{{user?.team}}</td>
-              <td *ngIf="user?.isWikiAdmin">Wiki Admin</td>
-              <td *ngIf="user?.isESDTeamAdmin">ESD Admin</td>
-              <td *ngIf="user?.isESDTeamMember">ESD Member</td>
-              <td *ngIf="user?.isWikiUser">Default User</td>
+              <td *ngIf="user?.permissions == 'WikiAdmin'">Wiki Admin</td>
+              <td *ngIf="user?.permissions == 'ESDTeamAdmin'">ESD Admin</td>
+              <td *ngIf="user?.permissions == 'ESDTeamMember'">ESD Member</td>
+              <td *ngIf="user?.permissions == 'WikiUser'">Default User</td>
             </tr>
           </tbody>
         </table>

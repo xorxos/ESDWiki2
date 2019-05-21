@@ -42,9 +42,6 @@ namespace ESDWiki2.Controllers
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _appDbContext.ApplicationUsers.AddAsync(new ApplicationUser { IdentityId = userIdentity.Id, Team = model.Team });
-            await _appDbContext.SaveChangesAsync();
-
             return new OkObjectResult(true);
         }
 
