@@ -12,7 +12,6 @@ import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { CreateAccountComponent } from './admin/users/new/create-account.component';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 import { AccountPermissionsComponent } from './admin/users/permissions/permissions.component';
-import { TeamMembersAdminComponent } from './admin/team/members/members.component';
 import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
 import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
 import { SearchAccountComponent } from './admin/users/search/search-account.component';
@@ -28,7 +27,6 @@ const appRoutes: Routes = [
   { path: 'admin/users', component: SearchAccountComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/edit', component: EditAccountComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/permissions', component: AccountPermissionsComponent, canActivate: [AuthGuard] },
-  { path: 'admin/team/members', component: TeamMembersAdminComponent, canActivate: [AuthGuard] },
   { path: 'admin/team/categories', component: TeamCategoryAdminComponent, canActivate: [AuthGuard] },
   { path: 'admin/wiki/categories', component: PublicCategoryAdminComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/browse', pathMatch: 'full' }

@@ -13,10 +13,10 @@ namespace ESDWiki2.Helpers{
 
             public static class JwtClaims
             {
-                public const string WikiUser = "WikiUser";
-                public const string WikiAdmin = "WikiAdmin";
-                public const string ESDTeamMember = "ESDTeamMember";
-                public const string ESDTeamAdmin = "ESDTeamAdmin"; 
+                public const string WikiUser = "Default User";
+                public const string WikiAdmin = "Wiki Admin";
+                public const string ESDTeamMember = "ESD Member";
+                public const string ESDTeamAdmin = "ESD Admin"; 
             }
         }
     }

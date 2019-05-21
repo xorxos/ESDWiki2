@@ -1,1 +1,40 @@
-﻿
+.soft-gray-section {
+  background-color: #e4e5e6;
+  min-height: calc(100vh - 63px);
+}
+
+.card {
+  margin-top: 30px;
+  border: solid 1px lightgray;
+}
+
+.card-header {
+  background-color: #f0f3f5;
+  border-bottom: 1px solid #c8ced3;
+  font-size: 15px;
+}
+
+.card-body {
+  display: inline;
+}
+
+.hoverwell {
+  padding: 15px 15px;
+  margin: 10px 10px;
+  width: 140px;
+  display: inline-block;
+  background-color: #f0f3f5;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+  .hoverwell:hover {
+    background-color: #DAE0E6;
+    cursor: pointer;
+  }
+
+.well-icon {
+  color: gray;
+  font-size: 30px;
+}

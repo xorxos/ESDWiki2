@@ -13,6 +13,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from "rxjs/operators";
 import { Local } from 'protractor/built/driverProviders';
 import { User } from '../user';
+import { EditUser } from '../interfaces/edit.user.interface';
 
 @Injectable()
 
@@ -56,14 +57,24 @@ export class UserService extends BaseService {
     
   }
 
-  register(email: string, password: string, firstName: string, lastName: string, team: string, isWikiUser: boolean, isWikiAdmin: boolean, isESDTeamMember: boolean, isESDTeamAdmin: boolean): Observable<UserRegistration> {
-    let body = JSON.stringify({ email, password, firstName, lastName, team, isWikiUser, isWikiAdmin, isESDTeamMember, isESDTeamAdmin });
+  register(email: string, password: string, firstName: string, lastName: string, team: string, permissions: string): Observable<UserRegistration> {
+    let body = JSON.stringify({ email, password, firstName, lastName, team, permissions });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.baseUrl + "/accounts", body, options)
+    return this.http.post("api/accounts", body, options)
       .pipe(map(res => res.json()));
-    }
+  }
+
+  edit(originalEmail: string, email: string, firstName: string, lastName: string, team: string, permissions: string): Observable<EditUser> {
+    let body = JSON.stringify({ originalEmail, email, firstName, lastName, team, permissions });
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    console.log(originalEmail)
+    return this.http.post("api/accounts/" + originalEmail, body, options)
+      .pipe(map(res => res.json()));
+
+  }
 
    login(userName, password) {
     let headers = new Headers();
@@ -115,8 +126,7 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-      console.log(role)
-      if (role === 'WikiAdmin') {
+      if (role === 'Wiki Admin') {
         this._isWikiAdminSubject.next(true);
         return true
       } else return false
@@ -130,8 +140,7 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-      console.log(role)
-      if (role === 'WikiUser' || role === 'WikiAdmin' || role === 'ESDTeamMember' || role === 'ESDTeamAdmin') {
+      if (role === 'Default User' || role === 'Wiki Admin' || role === 'ESD Member' || role === 'ESD Admin') {
         this._isWikiUserSubject.next(true);
         return true
       } else return false
@@ -146,8 +155,7 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-      console.log(role)
-      if (role === 'ESDTeamMember' || role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
+      if (role === 'ESD Member' || role === 'ESD Admin' || role === 'Wiki Admin') {
         this._isESDTeamMemberSubject.next(true);
         return true
       } else return false
@@ -161,8 +169,7 @@ export class UserService extends BaseService {
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
       let role = decodedJwtData.role
-      console.log(role)
-      if (role === 'ESDTeamAdmin' || role === 'WikiAdmin') {
+      if (role === 'ESD Admin' || role === 'Wiki Admin') {
         this._isESDTeamAdminSubject.next(true);
         return true
       } else return false

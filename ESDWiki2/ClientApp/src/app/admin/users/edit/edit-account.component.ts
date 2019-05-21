@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core'
-import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
-import { UserRegistration } from 'src/app/shared/interfaces/user.registration.interface';
-import { finalize, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { User } from 'src/app/shared/user';
 import { DataService } from 'src/app/shared/services/data.service';
+import { EditUser } from 'src/app/shared/interfaces/edit.user.interface';
+import { UserService } from 'src/app/shared/services/user.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'create-account',
@@ -19,7 +18,12 @@ export class EditAccountComponent implements OnInit {
   isRequesting: boolean = false;
   submitted: boolean = false;
 
-  constructor(private userService: UserService, private router: Router, private dataService: DataService) {
+  selectedPermission: string;
+  permissionOptions = ["Default User", "ESD Member", "ESD Admin", "Wiki Admin"]
+  selectedValue: string;
+  options = ["ESD"]
+
+  constructor(private router: Router, private dataService: DataService, private userService: UserService) {
 
   }
 
@@ -27,6 +31,31 @@ export class EditAccountComponent implements OnInit {
     this.user = this.dataService.selectedUserToEdit
     if (this.user == undefined) {
       this.router.navigate(['admin/users'])
+    } else {
+      this.selectedValue = this.user.team;
+      this.selectedPermission = this.user.permissions
     }
   }
+  
+  onSelectedChange(value: string) {
+    this.selectedValue = value;
+  }
+
+  onPermissionChange(value: string) {
+    this.selectedPermission = value;
+  }
+
+  editUser({ value, valid }: { value: EditUser, valid: boolean }) {
+    this.submitted = true;
+    this.isRequesting = true;
+    this.errors = '';
+    let originalEmail = this.user.email;
+    if (valid) {
+      this.userService.edit(originalEmail, value.email, value.firstName, value.lastName, value.team, value.permissions)
+        .pipe(finalize(() => this.isRequesting = false))
+        .subscribe((result) => { if (result) { this.router.navigate(['/admin/dashboard']) } },
+        err => this.errors = JSON.parse(err._body).DuplicateUserName
+        );
+    }
+  } 
 }

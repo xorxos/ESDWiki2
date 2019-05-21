@@ -45,6 +45,41 @@ namespace ESDWiki2.Controllers
             return new OkObjectResult(true);
         }
 
+        // POST api/accounts/emailAddress
+        [HttpPost("{email}")]
+        public async Task<IActionResult> Edit([FromBody]EditViewModel model, string email)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("ModelState is not valid");
+                    return BadRequest(ModelState);
+                }
+
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+                    user.Email = model.Email;
+                    user.UserName = model.Email;
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Team = model.Team;
+                    user.Permissions = model.Permissions;
+
+                    var result = await _userManager.UpdateAsync(user);
+                    if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+                    return new OkObjectResult(true);
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return BadRequest($"Failed to get users: {exception}");
+            }
+            return new OkObjectResult(true);
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<ApplicationUser>> Get([FromQuery]string searchTerm, [FromQuery]string filter)
         {

@@ -25,7 +25,6 @@ import { FullWidthImageSettingsMenuComponent } from './create/menus/article-comp
 import { SharedModule } from './shared/modules/shared.module';
 import { AccountModule } from './login/account.module';
 import { ConfigService } from './shared/utils/config.service';
-import { XHRBackend } from '@angular/http';
 import { AuthGuard } from './auth.guard';
 import { UnauthorizedComponent } from './errors/unauthorized.component';
 import { CreateAccountComponent } from './admin/users/new/create-account.component';
@@ -34,7 +33,6 @@ import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.compon
 import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { SearchAccountComponent } from './admin/users/search/search-account.component';
-import { TeamMembersAdminComponent } from './admin/team/members/members.component';
 import { UserService } from './shared/services/user.service';
 import { BaseService } from './shared/services/base.service';
 import { DataService } from './shared/services/data.service';
@@ -65,8 +63,7 @@ import { EditAccountComponent } from './admin/users/edit/edit-account.component'
     TeamCategoryAdminComponent,
     EditAccountComponent,
     AdminDashboardComponent,
-    SearchAccountComponent,
-    TeamMembersAdminComponent
+    SearchAccountComponent
   ],
   imports: [
     BrowserModule,

@@ -74,14 +74,6 @@ export class AuthGuard implements CanActivate {
           return false
         }
       }
-      case '/admin/team/members': {
-        if (this.user.isESDTeamAdmin()) {
-          return true
-        } else {
-          this.router.navigate(['error/unauthorized'])
-          return false
-        }
-      }
       case '/admin/team/categories': {
         if (this.user.isESDTeamAdmin()) {
           return true

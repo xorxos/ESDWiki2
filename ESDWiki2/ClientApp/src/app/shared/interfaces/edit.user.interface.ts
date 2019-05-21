@@ -1,7 +1,7 @@
-export interface User {
+export interface EditUser {
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
   team: string;
   permissions: string;
 }
