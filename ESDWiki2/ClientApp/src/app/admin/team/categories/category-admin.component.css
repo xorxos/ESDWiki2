@@ -15,17 +15,17 @@
 }
 
 .card-body {
+  padding: 40px;
   display: inline;
 }
 
 .hoverwell {
-  padding: 15px 15px;
-  margin: 10px 10px;
-  width: 140px;
-  display: inline-block;
+  padding: 0 10px;
+  margin: 10px 5px;
   background-color: #f0f3f5;
   border-radius: 3px;
-  text-align: center;
+  font-weight: 500;
+  height: 100px;
   font-size: 1rem;
 }
 
@@ -34,7 +34,32 @@
     cursor: pointer;
   }
 
-.well-icon {
-  color: gray;
-  font-size: 30px;
+.hoverwell-text {
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.new-category {
+  padding: 25px 10px;
+  margin: 10px 10px;
+  background-color: white;
+  border-radius: 3px;
+  font-weight: 500;
+  height: 100px;
+  font-size: 1rem;
+  border: dashed 3px #DAE0E6;
+}
+
+  .new-category:hover {
+    background-color: #DAE0E6;
+    cursor: pointer;
+  }
+
+.article-image {
+  max-height: 50px;
+  display: block;
+  margin: auto;
 }

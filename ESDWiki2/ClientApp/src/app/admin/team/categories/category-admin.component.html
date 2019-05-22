@@ -5,7 +5,18 @@
         <div class="card">
           <div class="card-header">Team Categories</div>
           <div class="card-body">
-
+            <div class="row">
+              <div *ngFor="let category of categories" class="col-12 col-lg-3 col-md-4 col-sm-6">
+                <div class="well hoverwell" style="position:relative;" [routerLink]="['/browse', category.categoryUrl]">
+                  <div class="hoverwell-text">{{category.name}}</div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                <div class="well new-category">
+                  <div class="hoverwell-text">Add Category</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

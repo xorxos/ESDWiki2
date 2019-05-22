@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ESDWiki2.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,19 @@ namespace ESDWiki2.Data
             return null;
         }
         
+        public IEnumerable<WikiCategory> GetAllWikiCategories()
+        {
+            return ctx.WikiCategories
+                      .OrderBy(c => c.Name)
+                      .ToList();
+        }
+
+        public IEnumerable<TeamCategory> GetAllTeamCategories()
+        {
+            return ctx.TeamCategories
+                      .OrderBy(c => c.Name)
+                      .ToList();
+        }
 
         public bool SaveAll()
         {

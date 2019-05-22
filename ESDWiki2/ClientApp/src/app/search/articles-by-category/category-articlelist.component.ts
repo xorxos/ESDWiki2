@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { CategoryService } from '../../shared/category.service'
-import { ICategory } from '../../shared/category.model'
+import { Category } from '../../shared/category.model'
 import { ArticleService } from '../../shared/article.service'
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './category-articlelist.component.html',
     styleUrls: ['./category-articlelist.component.css']
 })
 export class CategoryListComponent implements OnInit {
-    category: ICategory
-    allCategories: ICategory[]
-    categoryListOne: ICategory[]
-    categoryListTwo: ICategory[]
-    categoryListThree: ICategory[]
+  category: Category
+  allCategories: Category[]
+    categoryListOne: Category[]
+    categoryListTwo: Category[]
+    categoryListThree: Category[]
     selectedFilter: string
     articles: any
 
@@ -21,14 +22,18 @@ export class CategoryListComponent implements OnInit {
 
     }
 
-    ngOnInit() {
-        this.allCategories = this.CategoryService.getAllCategories()
-        this.category = this.CategoryService.getCategory(String(this.route.snapshot.params['name']))
-        this.articles = this.ArticleService.getArticleByCategory("Skype")
-        this.selectedFilter = "All"
+  ngOnInit() {
+    this.CategoryService.getAllWikiCategories().subscribe(success => {
+      if (success) {
+        this.allCategories = this.CategoryService.wikiCategories;
+        this.splitAllCategories();
+      }
+    })
+    this.category = this.CategoryService.getWikiCategory(String(this.route.snapshot.params['name']))
+    this.articles = this.ArticleService.getArticleByCategory("Skype")
+    this.selectedFilter = "All"
 
-        this.splitAllCategories()
-    }
+  }
 
     // Function to split allCategories into three lists so they can be displayed in carousel
     splitAllCategories() {

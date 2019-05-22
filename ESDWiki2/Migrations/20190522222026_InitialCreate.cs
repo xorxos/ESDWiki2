@@ -53,6 +53,21 @@ namespace ESDWiki2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeamCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    CategoryUrl = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -206,18 +221,21 @@ namespace ESDWiki2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "WikiCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    CategoryUrl = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     ArticleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_WikiCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Category_Articles_ArticleId",
+                        name: "FK_WikiCategories_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
@@ -279,8 +297,8 @@ namespace ESDWiki2.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_ArticleId",
-                table: "Category",
+                name: "IX_WikiCategories_ArticleId",
+                table: "WikiCategories",
                 column: "ArticleId");
         }
 
@@ -305,7 +323,10 @@ namespace ESDWiki2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "TeamCategories");
+
+            migrationBuilder.DropTable(
+                name: "WikiCategories");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

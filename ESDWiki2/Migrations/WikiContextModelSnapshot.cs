@@ -118,7 +118,24 @@ namespace ESDWiki2.Migrations
                     b.ToTable("ArticleItem");
                 });
 
-            modelBuilder.Entity("ESDWiki2.Data.Entities.Category", b =>
+            modelBuilder.Entity("ESDWiki2.Data.Entities.TeamCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryUrl");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeamCategories");
+                });
+
+            modelBuilder.Entity("ESDWiki2.Data.Entities.WikiCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,11 +143,17 @@ namespace ESDWiki2.Migrations
 
                     b.Property<int?>("ArticleId");
 
+                    b.Property<string>("CategoryUrl");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
-                    b.ToTable("Category");
+                    b.ToTable("WikiCategories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -261,7 +284,7 @@ namespace ESDWiki2.Migrations
                         .HasForeignKey("ArticleId");
                 });
 
-            modelBuilder.Entity("ESDWiki2.Data.Entities.Category", b =>
+            modelBuilder.Entity("ESDWiki2.Data.Entities.WikiCategory", b =>
                 {
                     b.HasOne("ESDWiki2.Data.Article")
                         .WithMany("Categories")

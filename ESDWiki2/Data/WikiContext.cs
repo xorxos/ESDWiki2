@@ -11,6 +11,8 @@ namespace ESDWiki2.Data
 
         }
 
+        public DbSet<WikiCategory> WikiCategories { get; set; }
+        public DbSet<TeamCategory> TeamCategories { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Article> Articles { get; set; }
 
