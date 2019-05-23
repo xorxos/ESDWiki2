@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core'
-import  { Category } from './category.model'
+import { Category } from './category.model'
+import { Http, Headers, RequestOptions } from '@angular/http'
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private http2: Http) { }
 
   public wikiCategories: Category[] = [];
   public teamCategories: Category[] = [];
+  public newTeamCategory: Category;
 
   getWikiCategory(categoryUrl: string): Category {
     return this.wikiCategories.find(category => category.categoryUrl === categoryUrl)
@@ -32,6 +34,21 @@ export class CategoryService {
       .pipe(
         map((data: any[]) => {
           this.teamCategories = data;
+          return true;
+        }));
+  }
+
+  public SaveNewTeamCategory() {
+    var name = this.newTeamCategory.name
+    var categoryUrl = this.newTeamCategory.categoryUrl
+    var imageUrl = this.newTeamCategory.imageUrl
+    let body = JSON.stringify({ name, categoryUrl, imageUrl })
+    let headers = new Headers({ 'Content-Type': 'application/json' })
+    let options = new RequestOptions({ headers: headers})
+    return this.http2.post("/api/teamcategories", body, options)
+      .pipe(
+        map(response => {
+          this.newTeamCategory = new Category();
           return true;
         }));
   }

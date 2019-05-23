@@ -64,8 +64,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\account\" />
-    <Folder Include="ClientApp\src\app\admin\team\add\" />
-    <Folder Include="ClientApp\src\app\admin\team\edit\" />
     <Folder Include="ClientApp\src\app\article\" />
   </ItemGroup>
 

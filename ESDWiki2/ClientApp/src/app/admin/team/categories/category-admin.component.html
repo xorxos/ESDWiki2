@@ -7,15 +7,16 @@
           <div class="card-body">
             <div class="row">
               <div *ngFor="let category of categories" class="col-12 col-lg-3 col-md-4 col-sm-6">
-                <div class="well hoverwell" style="position:relative;" [routerLink]="['/browse', category.categoryUrl]">
+                <div class="well hoverwell" style="position:relative;">
                   <div class="hoverwell-text">{{category.name}}</div>
                 </div>
               </div>
               <div class="col-12 col-lg-3 col-md-4 col-sm-6">
-                <div class="well new-category">
+                <div class="well new-category" [ngbPopover]="popNewCategory" [autoClose]="false" triggers="manual" #p="ngbPopover" (click)="p.open()">
                   <div class="hoverwell-text">Add Category</div>
                 </div>
               </div>
+                <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
           </div>
         </div>
@@ -23,3 +24,21 @@
     </div>
   </div>
 </div>
+
+<ng-template #popEditCategory>
+  Category Name:
+  <input /><button>Save</button>
+</ng-template>
+
+<ng-template #popNewCategory>
+  <div style="padding:20px 20px 0 20px;">
+      <div class="form-group row">
+        <label style="font-weight: 500;">New Category: </label>
+        <input class="form-control" placeholder="Category name" (input)="updateNewCategoryName($event)"/>
+      </div>
+      <div class="form-group row">
+        <button class="btn btn-primary" style="margin-right:10px;" (click)="saveCategory(p);">Save</button>
+        <button class="btn btn-danger" (click)="p.close(); clearNewCategory();">Cancel</button>
+      </div>
+  </div>
+</ng-template>

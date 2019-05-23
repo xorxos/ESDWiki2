@@ -41,6 +41,11 @@ namespace ESDWiki2.Data
                       .ToList();
         }
 
+        public void AddTeamCategory(TeamCategory teamCategory)
+        {
+            AddEntity(teamCategory);
+        }
+
         public bool SaveAll()
         {
             return ctx.SaveChanges() > 0;

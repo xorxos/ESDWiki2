@@ -100,10 +100,14 @@
 .dropdown-item {
   font-size: 14px;
   padding: 10px 20px;
+  cursor: pointer;
   border-bottom: 1px solid #c8ced3;
-
 }
 
 .dropdown-menu {
   padding: 0;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
 }

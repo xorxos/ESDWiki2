@@ -9,10 +9,13 @@ import { CategoryService } from 'src/app/shared/category.service';
 })
 
 export class PublicCategoryAdminComponent {
+
   categories: Category[] = [];
+
   constructor(private CategoryService: CategoryService) {
 
   }
+
   ngOnInit() {
     this.CategoryService.getAllWikiCategories().subscribe(success => {
       if (success) {

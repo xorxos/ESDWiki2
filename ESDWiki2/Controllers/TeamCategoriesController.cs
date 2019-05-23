@@ -1,5 +1,6 @@
 ﻿using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
+using ESDWiki2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,38 @@ namespace ESDWiki2.Controllers
                 Console.WriteLine(exception);
                 return BadRequest("Failed to get team categories");
             }
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody]TeamCategoryViewModel model)
+        {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    var newCategory = new TeamCategory()
+                    {
+                        Name = model.Name,
+                        CategoryUrl = model.CategoryUrl,
+                        ImageUrl = model.ImageUrl
+                    };
+
+                    repository.AddTeamCategory(newCategory);
+                    if(repository.SaveAll())
+                    {
+                        return Ok("New team category has been saved");
+                    }
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+            return BadRequest("Failed to save new team category");
         }
     }
 }

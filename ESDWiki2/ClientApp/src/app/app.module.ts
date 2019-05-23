@@ -36,6 +36,7 @@ import { SearchAccountComponent } from './admin/users/search/search-account.comp
 import { UserService } from './shared/services/user.service';
 import { BaseService } from './shared/services/base.service';
 import { DataService } from './shared/services/data.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 
 
@@ -73,6 +74,7 @@ import { EditAccountComponent } from './admin/users/edit/edit-account.component'
     ReactiveFormsModule,
     FormsModule,
     AccountModule,
+    NgbModule,
     routing
   ],
   providers: [ 
