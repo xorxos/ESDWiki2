@@ -11,6 +11,7 @@ export class CategoryService {
   public wikiCategories: Category[] = [];
   public teamCategories: Category[] = [];
   public newTeamCategory: Category;
+  public newExistingCategory: Category;
 
   getWikiCategory(categoryUrl: string): Category {
     return this.wikiCategories.find(category => category.categoryUrl === categoryUrl)
@@ -34,6 +35,22 @@ export class CategoryService {
       .pipe(
         map((data: any[]) => {
           this.teamCategories = data;
+          return true;
+        }));
+  }
+
+  public SaveExistingCategory(originalCategory:string) {
+    var name = this.newExistingCategory.name
+    var categoryUrl = this.newExistingCategory.categoryUrl
+    var imageUrl = this.newExistingCategory.imageUrl
+    let body = JSON.stringify({ name })
+    let headers = new Headers({ 'Content-Type': 'application/json' })
+    let options = new RequestOptions({ headers: headers })
+    return this.http2.post("/api/teamcategories/" + originalCategory, body, options)
+      .pipe(
+        map(response => {
+        this.newExistingCategory = new Category();
+        console.log(response.status)
           return true;
         }));
   }

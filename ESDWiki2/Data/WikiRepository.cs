@@ -41,6 +41,13 @@ namespace ESDWiki2.Data
                       .ToList();
         }
 
+        public TeamCategory GetTeamCategoryByName(string name)
+        {
+            return ctx.TeamCategories
+                .Where(c => c.Name == name)
+                .FirstOrDefault();
+        }
+
         public void AddTeamCategory(TeamCategory teamCategory)
         {
             AddEntity(teamCategory);

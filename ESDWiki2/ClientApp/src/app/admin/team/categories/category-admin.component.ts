@@ -13,6 +13,7 @@ export class TeamCategoryAdminComponent {
   categories: Category[] = [];
   isRequesting: boolean = false;
   newCategory: Category = new Category();
+  selectedExistingCategory: Category;
   constructor(private CategoryService: CategoryService) {
 
   }
@@ -30,11 +31,36 @@ export class TeamCategoryAdminComponent {
     }
   }
 
+  public selectExistingCategory(category: Category) {
+    this.selectedExistingCategory = category
+  }
+
+  public editCategoryName(event) {
+    this.selectedExistingCategory.name = event.target.value;
+  }
+
   public updateNewCategoryName(event: any) {
     this.newCategory.name = event.target.value;
   }
 
-  saveCategory(popover: NgbPopover) {
+  public editCategory(popover: NgbPopover) {
+    this.isRequesting = true;
+    this.CategoryService.newExistingCategory = this.selectedExistingCategory
+    this.CategoryService.SaveExistingCategory(this.selectedExistingCategory.name).subscribe(success => {
+      if (success) {
+        this.isRequesting = false;
+        this.clearNewCategory()
+        this.CategoryService.getAllTeamCategories().subscribe(success => {
+          if (success) {
+            this.categories = this.CategoryService.teamCategories;
+            console.log("successful edit");
+          }
+        })
+      }
+    })
+  }
+
+  public saveCategory(popover: NgbPopover) {
     this.isRequesting = true;
     this.CategoryService.newTeamCategory = this.newCategory
     this.CategoryService.SaveNewTeamCategory().subscribe(success => {
@@ -51,7 +77,7 @@ export class TeamCategoryAdminComponent {
     })
   }
 
-  clearNewCategory() {
+  public clearNewCategory() {
     this.newCategory.name = ""
   }
 }

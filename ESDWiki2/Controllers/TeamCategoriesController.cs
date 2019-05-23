@@ -1,6 +1,8 @@
 ﻿using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
+using ESDWiki2.Helpers;
 using ESDWiki2.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,14 @@ namespace ESDWiki2.Controllers
     public class TeamCategoriesController : ControllerBase
     {
         private readonly IWikiRepository repository;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly WikiContext appDbContext;
 
-        public TeamCategoriesController(IWikiRepository repository)
+        public TeamCategoriesController(IWikiRepository repository, UserManager<ApplicationUser> userManager, WikiContext appDbContext)
         {
             this.repository = repository;
+            this.userManager = userManager;
+            this.appDbContext = appDbContext;
         }
 
         [HttpGet]
@@ -65,6 +71,35 @@ namespace ESDWiki2.Controllers
                 Console.WriteLine(exception);
             }
             return BadRequest("Failed to save new team category");
+        }
+
+        [HttpPost("{originalCategory}")]
+        public IActionResult Edit([FromBody]TeamCategoryViewModel model, string originalCategory)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("ModelState is not valid");
+                    return BadRequest(ModelState);
+                }
+
+                var category = repository.GetTeamCategoryByName(originalCategory);
+                if (category != null)
+                {
+                    category.Name = model.Name;
+                    Console.WriteLine(category.Name);
+                    appDbContext.SaveChanges();
+                    return new OkObjectResult("Successfully saved category");
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return BadRequest($"Failed to save category: {exception}");
+            }
+            Console.WriteLine("Successfully saved category outside");
+            return new OkObjectResult("Successfully saved category outside");
         }
     }
 }

@@ -6,8 +6,8 @@
           <div class="card-header">Team Categories</div>
           <div class="card-body">
             <div class="row">
-              <div *ngFor="let category of categories" class="col-12 col-lg-3 col-md-4 col-sm-6">
-                <div class="well hoverwell" style="position:relative;">
+              <div *ngFor="let category of categories; let i = index" class="col-12 col-lg-3 col-md-4 col-sm-6">
+                <div class="well hoverwell" [ngbPopover]="popEditCategory" [autoClose]="'outside'" #b="ngbPopover" (click)="selectExistingCategory(category)">
                   <div class="hoverwell-text">{{category.name}}</div>
                 </div>
               </div>
@@ -26,19 +26,31 @@
 </div>
 
 <ng-template #popEditCategory>
-  Category Name:
-  <input /><button>Save</button>
+  <div style="padding:0 20px 0 20px;">
+    <div class="form-group row" style="padding-top:20px;">
+      <label style="font-weight: 500;">Edit Category: </label>
+      <input class="form-control" placeholder="Category name" (input)="editCategoryName($event)" [value]="selectedExistingCategory.name"/>
+    </div>
+    <div class="form-group row">
+      <button class="btn btn-primary" style="margin-right:10px;" (click)="editCategory(p2);">Save</button>
+      <button class="btn btn-danger">Delete</button>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #popNewCategory>
-  <div style="padding:20px 20px 0 20px;">
-      <div class="form-group row">
+  <div style="padding:0 20px 0 20px;">
+    <div class="form-group row" style="margin-bottom: 0px;">
+      <button style="position:absolute; right:0; padding-right:10px;" type="button" class="close" aria-label="Close" (click)="p.close(); clearNewCategory();">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      <div class="form-group row" style="padding-top:20px;">
         <label style="font-weight: 500;">New Category: </label>
         <input class="form-control" placeholder="Category name" (input)="updateNewCategoryName($event)"/>
       </div>
       <div class="form-group row">
         <button class="btn btn-primary" style="margin-right:10px;" (click)="saveCategory(p);">Save</button>
-        <button class="btn btn-danger" (click)="p.close(); clearNewCategory();">Cancel</button>
       </div>
   </div>
 </ng-template>
