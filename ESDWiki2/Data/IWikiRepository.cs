@@ -10,7 +10,9 @@ namespace ESDWiki2.Data
         IEnumerable<Article> GetAllArticles(bool includeItems);
         IEnumerable<TeamCategory> GetAllTeamCategories();
         IEnumerable<WikiCategory> GetAllWikiCategories();
+        TeamCategory GetTeamCategoryById(int id);
         TeamCategory GetTeamCategoryByName(string name);
         bool SaveAll();
+        void UpdateEntity(object model);
     }
 }

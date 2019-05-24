@@ -22,6 +22,11 @@ namespace ESDWiki2.Data
             ctx.Add(model);
         }
 
+        public void UpdateEntity(object model)
+        {
+            ctx.Update(model);
+        }
+
         public IEnumerable<Article> GetAllArticles(bool includeItems)
         {
             return null;
@@ -45,6 +50,13 @@ namespace ESDWiki2.Data
         {
             return ctx.TeamCategories
                 .Where(c => c.Name == name)
+                .FirstOrDefault();
+        }
+
+        public TeamCategory GetTeamCategoryById(int id)
+        {
+            return ctx.TeamCategories
+                .Where(c => c.Id == id)
                 .FirstOrDefault();
         }
 

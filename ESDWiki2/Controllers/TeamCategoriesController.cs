@@ -46,7 +46,7 @@ namespace ESDWiki2.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var newCategory = new TeamCategory()
                     {
@@ -56,7 +56,7 @@ namespace ESDWiki2.Controllers
                     };
 
                     repository.AddTeamCategory(newCategory);
-                    if(repository.SaveAll())
+                    if (repository.SaveAll())
                     {
                         return Ok("New team category has been saved");
                     }
@@ -76,30 +76,44 @@ namespace ESDWiki2.Controllers
         [HttpPost("{originalCategory}")]
         public IActionResult Edit([FromBody]TeamCategoryViewModel model, string originalCategory)
         {
-            try
+            Console.WriteLine("Trying to update team category");
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    Console.WriteLine("ModelState is not valid");
-                    return BadRequest(ModelState);
-                }
+                Console.WriteLine("ModelState is not valid");
+                return BadRequest(ModelState);
+            }
 
-                var category = repository.GetTeamCategoryByName(originalCategory);
-                if (category != null)
+            var category = repository.GetTeamCategoryByName(originalCategory);
+            if (category != null)
+            {
+                category.Name = model.Name;
+                if (repository.SaveAll())
                 {
-                    category.Name = model.Name;
-                    Console.WriteLine(category.Name);
-                    appDbContext.SaveChanges();
-                    return new OkObjectResult("Successfully saved category");
+                    return new OkObjectResult("Successfully saved category inside");
                 }
             }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                return BadRequest($"Failed to save category: {exception}");
-            }
+
             Console.WriteLine("Successfully saved category outside");
             return new OkObjectResult("Successfully saved category outside");
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult Delete(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest("Not a valid category ID");
+            }
+            var category = repository.GetTeamCategoryById(id);
+            appDbContext.Remove(category);
+            if (category != null)
+            {
+                if (repository.SaveAll())
+                {
+                    return new OkObjectResult("Successfully deleted category");
+                }
+            }
+            return BadRequest("Could not delete category");
         }
     }
 }

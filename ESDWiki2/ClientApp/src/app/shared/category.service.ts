@@ -69,4 +69,17 @@ export class CategoryService {
           return true;
         }));
   }
+
+  public DeleteTeamCategory(id: number) {
+    let url = "/api/teamcategories/" + id.toString()
+    let headers = new Headers({ 'Content-Type': 'application/json' })
+    let options = new RequestOptions({ headers: headers })
+    return this.http2.delete(url, options) //DELETE api/teamcategories/16
+      .pipe(
+      map(response => {
+        this.getAllTeamCategories();
+        console.log(response.status)
+          return true;
+        }));
+  }
 }

@@ -13,7 +13,9 @@ export class TeamCategoryAdminComponent {
   categories: Category[] = [];
   isRequesting: boolean = false;
   newCategory: Category = new Category();
-  selectedExistingCategory: Category;
+  newExistingCategory: Category = new Category;
+  selectedCategoryName: string;
+  selectedCategoryId: number;
   constructor(private CategoryService: CategoryService) {
 
   }
@@ -24,19 +26,28 @@ export class TeamCategoryAdminComponent {
       }
     })
     this.newCategory = {
+      id: 0,
       name: "",
       categoryUrl: "",
       imageUrl: ""
-
+    }
+    this.newExistingCategory = {
+      id: 0,
+      name: "",
+      categoryUrl: "",
+      imageUrl: ""
     }
   }
 
   public selectExistingCategory(category: Category) {
-    this.selectedExistingCategory = category
+    console.log(category.name)
+    this.selectedCategoryName = category.name
+    this.newExistingCategory.name = category.name
+    this.selectedCategoryId = category.id
   }
 
   public editCategoryName(event) {
-    this.selectedExistingCategory.name = event.target.value;
+    this.newExistingCategory.name = event.target.value;
   }
 
   public updateNewCategoryName(event: any) {
@@ -45,8 +56,8 @@ export class TeamCategoryAdminComponent {
 
   public editCategory(popover: NgbPopover) {
     this.isRequesting = true;
-    this.CategoryService.newExistingCategory = this.selectedExistingCategory
-    this.CategoryService.SaveExistingCategory(this.selectedExistingCategory.name).subscribe(success => {
+    this.CategoryService.newExistingCategory = this.newExistingCategory
+    this.CategoryService.SaveExistingCategory(this.selectedCategoryName).subscribe(success => {
       if (success) {
         this.isRequesting = false;
         this.clearNewCategory()
@@ -60,22 +71,39 @@ export class TeamCategoryAdminComponent {
     })
   }
 
+  public deleteCategory(popover: NgbPopover, index: number) {
+    this.isRequesting = true;
+    this.CategoryService.DeleteTeamCategory(this.selectedCategoryId).subscribe(success => {
+      if (success) {
+        this.isRequesting = false;
+        this.CategoryService.getAllTeamCategories().subscribe(success => {
+          if (success) {
+            this.categories = this.CategoryService.teamCategories;
+            console.log("successful delete");
+          }
+        })
+      }
+    })
+  }
+
   public saveCategory(popover: NgbPopover) {
     this.isRequesting = true;
     this.CategoryService.newTeamCategory = this.newCategory
     this.CategoryService.SaveNewTeamCategory().subscribe(success => {
       if (success) {
         this.isRequesting = false;
-        this.clearNewCategory()
+        this.clearNewCategory();
+        popover.close();
         this.CategoryService.getAllTeamCategories().subscribe(success => {
           if (success) {
             this.categories = this.CategoryService.teamCategories;
           }
         })
-        popover.close()
       }
     })
   }
+
+  
 
   public clearNewCategory() {
     this.newCategory.name = ""
