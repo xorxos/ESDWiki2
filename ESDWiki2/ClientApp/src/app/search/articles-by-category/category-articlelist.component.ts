@@ -30,7 +30,7 @@ export class CategoryListComponent implements OnInit {
       }
     })
     this.category = this.CategoryService.getWikiCategory(String(this.route.snapshot.params['name']))
-    this.articles = this.ArticleService.getArticleByCategory("Skype")
+    this.articles = this.ArticleService.getWikiArticleByCategory(new WikiCategory({ name: "Skype" }))
     this.selectedFilter = "All"
 
   }

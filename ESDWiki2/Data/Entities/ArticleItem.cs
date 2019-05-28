@@ -11,6 +11,9 @@ namespace ESDWiki2.Data.Entities
         public string Selector { get; set; }
         public string DisplayName { get; set; }
         public bool Hovered { get; set; }
+        public int TopSpacing { get; set; }
         public int BottomSpacing { get; set; }
+        public int LeftSpacing { get; set; }
+        public int ItemSpacing { get; set; }
     }
 }

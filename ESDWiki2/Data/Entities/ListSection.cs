@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ESDWiki2.Data.Entities
 {
-    public class BulletedListSection: ArticleItem
+    public class ListSection: ArticleItem
     {
         public ICollection<BulletItem> Contents { get; set; }
-        public int LeftSpacing { get; set; }
-        public int TopSpacing { get; set; }
-        public int ItemSpacing { get; set; }
     }
 }

@@ -29,7 +29,8 @@ namespace ESDWiki2.Migrations
 
                     b.Property<string>("LastUpdateUserId");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
 
                     b.Property<string>("UserId");
 
@@ -120,7 +121,13 @@ namespace ESDWiki2.Migrations
 
                     b.Property<bool>("Hovered");
 
+                    b.Property<int>("ItemSpacing");
+
+                    b.Property<int>("LeftSpacing");
+
                     b.Property<string>("Selector");
+
+                    b.Property<int>("TopSpacing");
 
                     b.HasKey("Id");
 
@@ -137,17 +144,13 @@ namespace ESDWiki2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BulletedListSectionId");
-
                     b.Property<string>("Content");
 
-                    b.Property<int?>("NumberedListSectionId");
+                    b.Property<int?>("ListSectionId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BulletedListSectionId");
-
-                    b.HasIndex("NumberedListSectionId");
+                    b.HasIndex("ListSectionId");
 
                     b.ToTable("BulletItem");
                 });
@@ -306,33 +309,11 @@ namespace ESDWiki2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ESDWiki2.Data.Entities.BulletedListSection", b =>
+            modelBuilder.Entity("ESDWiki2.Data.Entities.ListSection", b =>
                 {
                     b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
 
-                    b.Property<int>("ItemSpacing");
-
-                    b.Property<int>("LeftSpacing");
-
-                    b.Property<int>("TopSpacing");
-
-                    b.HasDiscriminator().HasValue("BulletedListSection");
-                });
-
-            modelBuilder.Entity("ESDWiki2.Data.Entities.NumberedListSection", b =>
-                {
-                    b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
-
-                    b.Property<int>("ItemSpacing")
-                        .HasColumnName("NumberedListSection_ItemSpacing");
-
-                    b.Property<int>("LeftSpacing")
-                        .HasColumnName("NumberedListSection_LeftSpacing");
-
-                    b.Property<int>("TopSpacing")
-                        .HasColumnName("NumberedListSection_TopSpacing");
-
-                    b.HasDiscriminator().HasValue("NumberedListSection");
+                    b.HasDiscriminator().HasValue("ListSection");
                 });
 
             modelBuilder.Entity("ESDWiki2.Data.Entities.SubheaderSection", b =>
@@ -340,12 +321,6 @@ namespace ESDWiki2.Migrations
                     b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
 
                     b.Property<string>("Contents");
-
-                    b.Property<int>("LeftSpacing")
-                        .HasColumnName("SubheaderSection_LeftSpacing");
-
-                    b.Property<int>("TopSpacing")
-                        .HasColumnName("SubheaderSection_TopSpacing");
 
                     b.HasDiscriminator().HasValue("SubheaderSection");
                 });
@@ -356,12 +331,6 @@ namespace ESDWiki2.Migrations
 
                     b.Property<string>("Contents")
                         .HasColumnName("TextSection_Contents");
-
-                    b.Property<int>("LeftSpacing")
-                        .HasColumnName("TextSection_LeftSpacing");
-
-                    b.Property<int>("TopSpacing")
-                        .HasColumnName("TextSection_TopSpacing");
 
                     b.HasDiscriminator().HasValue("TextSection");
                 });
@@ -396,13 +365,9 @@ namespace ESDWiki2.Migrations
 
             modelBuilder.Entity("ESDWiki2.Data.Entities.BulletItem", b =>
                 {
-                    b.HasOne("ESDWiki2.Data.Entities.BulletedListSection")
+                    b.HasOne("ESDWiki2.Data.Entities.ListSection")
                         .WithMany("Contents")
-                        .HasForeignKey("BulletedListSectionId");
-
-                    b.HasOne("ESDWiki2.Data.Entities.NumberedListSection")
-                        .WithMany("Contents")
-                        .HasForeignKey("NumberedListSectionId");
+                        .HasForeignKey("ListSectionId");
                 });
 
             modelBuilder.Entity("ESDWiki2.Data.Entities.TeamCategory", b =>

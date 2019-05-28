@@ -1,17 +1,22 @@
+import { WikiCategory, TeamCategory } from "./category.model";
+
 export class Article {
-    id: number
-    title: string
-    description: string
-    articleContents: any[]
-    wikiCategories: string[]
-    teamCategories: string[]
+  id: number
+  title: string
+  description: string
+  articleItems: ArticleItem[]
+  wikiCategories: WikiCategory[]
+  teamCategories: TeamCategory[]
 }
 
 export class ArticleItem {
   selector: string
   displayName: string
   hovered: boolean
+  topSpacing: number
   bottomSpacing: number
+  leftSpacing: number
+  itemSpacing: number
 }
 
 export class BulletItem {
@@ -25,40 +30,25 @@ export class BulletItem {
 }
 
 export class TitleSection extends ArticleItem {
-    contents: string
+  contents: string
 }
 
-export class TextSection extends ArticleItem  {
-    contents: string
-    leftSpacing: number
-    topSpacing: number
+export class TextSection extends ArticleItem {
+  contents: string
 }
 
-export class BulletedListSection extends ArticleItem  {
-    contents: BulletItem[]
-    leftSpacing: number
-    topSpacing: number
-    itemSpacing: number
+export class ListSection extends ArticleItem {
+  contents: BulletItem[]
 }
 
-export class NumberedListSection extends ArticleItem  {
-    contents: BulletItem[]
-    leftSpacing: number
-    topSpacing: number
-    itemSpacing: number
+export class SubheaderSection extends ArticleItem {
+  contents: string
 }
 
-export class SubheaderSection extends ArticleItem  {
-    contents: string
-    leftSpacing: number
-    topSpacing: number
-}
-
-export class FullWidthImageSection extends ArticleItem  {
-    image: any
-    name: string
-    imageSrc: string
-    width: number
-    placeholder: string
-    topSpacing: number
+export class FullWidthImageSection extends ArticleItem {
+  image: any
+  name: string
+  imageSrc: string
+  width: number
+  placeholder: string
 }

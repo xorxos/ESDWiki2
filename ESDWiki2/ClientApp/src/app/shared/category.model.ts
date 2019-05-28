@@ -1,6 +1,12 @@
 export class TeamCategory {
-    id: number
-    name: string
+  id: number
+  name: string
+  public constructor(
+    fields?: {
+      name?: string
+    }) {
+    if (fields) Object.assign(this, fields);
+  }
 }
 
 export class WikiCategory {
@@ -11,5 +17,16 @@ export class WikiCategory {
   imagePlaceholder: string  //default image
   imageName: string //example.png
   imagePath: string //path in database to image
+  public constructor(
+    fields?: {
+      name?: string
+      categoryUrl?: string
+      imageUrl?: string
+      imagePlaceholder?: string
+      imageName?: string
+      imagePath?: string
+    }) {
+    if (fields) Object.assign(this, fields);
+  }
 }
 

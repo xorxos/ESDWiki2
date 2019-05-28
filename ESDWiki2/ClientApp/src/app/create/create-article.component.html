@@ -91,7 +91,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="article-view">
-                    <ng-container *ngFor="let component of newArticle.articleContents; let i = index;">
+                    <ng-container *ngFor="let component of newArticle.articleItems; let i = index;">
                         <ng-container *ngIf="isTitleComponent(component)">
                             <div
                                 [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">
@@ -118,7 +118,7 @@
                                 [style.paddingBottom.px]="component.bottomSpacing"
                                 [style.paddingLeft.px]="component.leftSpacing">
                                 <li [style.paddingBottom.px]="component.itemSpacing"
-                                    *ngFor="let item of component.contents">{{item}}</li>
+                                    *ngFor="let item of component.contents">{{item.content}}</li>
                             </ul>
                         </ng-container>
                         <ng-container *ngIf="isNumberedListComponent(component)">
@@ -127,7 +127,7 @@
                                 [style.paddingBottom.px]="component.bottomSpacing"
                                 [style.paddingLeft.px]="component.leftSpacing">
                                 <li [style.paddingBottom.px]="component.itemSpacing"
-                                    *ngFor="let item of component.contents">{{item}}</li>
+                                    *ngFor="let item of component.contents">{{item.content}}</li>
                             </ol>
                         </ng-container>
                         <ng-container *ngIf="isFullWidthImageComponent(component)">
@@ -135,7 +135,7 @@
                                [style.paddingBottom.px]="component.bottomSpacing"
                                [style.paddingTop.px]="component.topSpacing"
                                [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">
-                            <img [src]="component.src || component.placeholder"
+                            <img [src]="component.imageSrc || component.placeholder"
                                  [ngStyle]="{ 'border': '2px solid #ebeced' }"
                                  [style.width]="component.width + '%'"
                                  style="max-width:100%; margin:10px; margin-left: 5px;" />

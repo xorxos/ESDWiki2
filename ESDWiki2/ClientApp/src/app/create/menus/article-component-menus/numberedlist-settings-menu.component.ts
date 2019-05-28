@@ -1,77 +1,77 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { Article, NumberedListSection } from '../../../shared/article.model'
+import { Article, ListSection } from '../../../shared/article.model'
 
 @Component({
-    selector: 'numberedlist-settings-menu',
-    templateUrl: './numberedlist-settings-menu.component.html',
-    styleUrls: ['./shared-settings-styles.component.css']
+  selector: 'numberedlist-settings-menu',
+  templateUrl: './numberedlist-settings-menu.component.html',
+  styleUrls: ['./shared-settings-styles.component.css']
 })
 export class NumberedListSettingsMenuComponent implements OnInit {
-    @Input() newArticle: Article
-    @Input() sectionIndex: number
-    @Output() updateNumberedListContentMessage = new EventEmitter<object>()
-    @Output() updateLeftSpacingMessage = new EventEmitter<Input>()
-    @Output() updateTopSpacingMessage = new EventEmitter<Input>()
-    @Output() updateBottomSpacingMessage = new EventEmitter<Input>()
-    @Output() updateItemSpacingMessage = new EventEmitter<Input>()
-    @Output() updateDisplayNameMessage = new EventEmitter<Input>()
-    @Output() closeNumberedListSettingsMenuMessage = new EventEmitter<boolean>()
-    @Output() deleteComponentMessage = new EventEmitter<number>()
-    @Output() deleteListItemMessage = new EventEmitter<number>()
-    @Output() createListItemMessage = new EventEmitter()
+  @Input() newArticle: Article
+  @Input() sectionIndex: number
+  @Output() updateNumberedListContentMessage = new EventEmitter<object>()
+  @Output() updateLeftSpacingMessage = new EventEmitter<Input>()
+  @Output() updateTopSpacingMessage = new EventEmitter<Input>()
+  @Output() updateBottomSpacingMessage = new EventEmitter<Input>()
+  @Output() updateItemSpacingMessage = new EventEmitter<Input>()
+  @Output() updateDisplayNameMessage = new EventEmitter<Input>()
+  @Output() closeNumberedListSettingsMenuMessage = new EventEmitter<boolean>()
+  @Output() deleteComponentMessage = new EventEmitter<number>()
+  @Output() deleteListItemMessage = new EventEmitter<number>()
+  @Output() createListItemMessage = new EventEmitter()
 
-    numberedList: NumberedListSection
+  numberedList: ListSection
 
-    ngOnInit() {
-        this.getNumberedList()
-    }
+  ngOnInit() {
+    this.getNumberedList()
+  }
 
-    closeNumberedListSettingsMenu() {
-        this.closeNumberedListSettingsMenuMessage.emit(true)
-    }
+  closeNumberedListSettingsMenu() {
+    this.closeNumberedListSettingsMenuMessage.emit(true)
+  }
 
-    updateDisplayName(event:Input) {
-        this.updateDisplayNameMessage.emit(event)
-    }
+  updateDisplayName(event: Input) {
+    this.updateDisplayNameMessage.emit(event)
+  }
 
-    updateNumberedListContent(event: Input, index: number) {
-        this.updateNumberedListContentMessage.emit({ index: index, event: event })
-    }
-    
-    updateLeftSpacing(event:Input) {
-        this.updateLeftSpacingMessage.emit(event)
-    }
+  updateNumberedListContent(event: Input, index: number) {
+    this.updateNumberedListContentMessage.emit({ index: index, event: event })
+  }
 
-    updateTopSpacing(event:Input) {
-        this.updateTopSpacingMessage.emit(event)
-    }
+  updateLeftSpacing(event: Input) {
+    this.updateLeftSpacingMessage.emit(event)
+  }
 
-    updateBottomSpacing(event:Input) {
-        this.updateBottomSpacingMessage.emit(event)
-    }
+  updateTopSpacing(event: Input) {
+    this.updateTopSpacingMessage.emit(event)
+  }
 
-    updateItemSpacing(event:Input) {
-        this.updateItemSpacingMessage.emit(event)
-    }
+  updateBottomSpacing(event: Input) {
+    this.updateBottomSpacingMessage.emit(event)
+  }
 
-    getNumberedList() {
-        this.numberedList = this.newArticle.articleContents[this.sectionIndex]
-    }
+  updateItemSpacing(event: Input) {
+    this.updateItemSpacingMessage.emit(event)
+  }
 
-    deleteComponent() {
-        this.deleteComponentMessage.emit(this.sectionIndex)
-        this.closeNumberedListSettingsMenuMessage.emit(true)
-    }
+  getNumberedList() {
+    this.numberedList = <ListSection>this.newArticle.articleItems[this.sectionIndex]
+  }
 
-    createListItem() {
-        this.createListItemMessage.emit()
-    }
+  deleteComponent() {
+    this.deleteComponentMessage.emit(this.sectionIndex)
+    this.closeNumberedListSettingsMenuMessage.emit(true)
+  }
 
-    deleteListItem(index) {
-        this.deleteListItemMessage.emit(index)
-    }
+  createListItem() {
+    this.createListItemMessage.emit()
+  }
 
-    trackByFn(index: any, item: any) {
-        return index;
-    }
+  deleteListItem(index) {
+    this.deleteListItemMessage.emit(index)
+  }
+
+  trackByFn(index: any, item: any) {
+    return index;
+  }
 }

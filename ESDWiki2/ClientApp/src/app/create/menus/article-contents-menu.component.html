@@ -7,7 +7,7 @@
                 (click)="toggleShowArticleSettings()">Settings</div>
         </div>
         <div *ngIf="showSections">
-            <div *ngFor="let component of newArticle.articleContents;let i = index" (mouseenter)="highlightComponent(i)"
+            <div *ngFor="let component of newArticle.articleItems;let i = index" (mouseenter)="highlightComponent(i)"
                 (mouseleave)="dehighlightComponent(i)">
                 <div *ngIf="isTitleComponent(component)" class="configuration-object-container"
                     style="margin-top: 10px;" (click)="toggleTitleSettings(i)">

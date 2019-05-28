@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { BulletedListSection, Article } from '../../../shared/article.model';
+import { ListSection, Article } from '../../../shared/article.model';
 
 @Component({
     selector: 'bulletedlist-settings-menu',
@@ -20,7 +20,7 @@ export class BulletedListSettingsMenuComponent implements OnInit{
     @Output() deleteListItemMessage = new EventEmitter<number>()
     @Output() createListItemMessage = new EventEmitter<number>()
 
-    bulletedList:BulletedListSection
+    bulletedList:ListSection
 
     ngOnInit() {
         this.getBulletedList()
@@ -55,7 +55,7 @@ export class BulletedListSettingsMenuComponent implements OnInit{
     }
 
     getBulletedList() {
-        this.bulletedList = this.newArticle.articleContents[this.sectionIndex]
+      this.bulletedList = <ListSection>this.newArticle.articleItems[this.sectionIndex]
     }
 
     deleteComponent() {

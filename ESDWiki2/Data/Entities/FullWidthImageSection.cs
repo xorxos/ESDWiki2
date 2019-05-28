@@ -12,6 +12,5 @@ namespace ESDWiki2.Data.Entities
         public string ImageSrc { get; set; }
         public int Width { get; set; }
         public string Placeholder { get; set; }
-        public int TopSpacing { get; set; }
     }
 }

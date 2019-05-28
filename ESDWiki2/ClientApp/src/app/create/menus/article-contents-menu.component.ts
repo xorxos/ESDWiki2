@@ -35,6 +35,7 @@ export class ArticleContentsMenuComponent implements OnInit {
   ngOnInit(): void {
     this.showArticleSettings = false
     this.showSections = true
+    console.log(this.newArticle)
   }
 
   public saveArticle() {
@@ -106,6 +107,7 @@ export class ArticleContentsMenuComponent implements OnInit {
 
   /** Functions to check which component is in newArticle.articleContents */
   isTitleComponent(component): boolean {
+    console.log(component)
     if (component.selector === "Title") {
       return true
     } else return false

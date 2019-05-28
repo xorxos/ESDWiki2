@@ -79,7 +79,7 @@ namespace ESDWiki2.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     LastUpdateUserId = table.Column<string>(nullable: true)
@@ -195,21 +195,14 @@ namespace ESDWiki2.Migrations
                     Selector = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     Hovered = table.Column<bool>(nullable: false),
+                    TopSpacing = table.Column<int>(nullable: false),
                     BottomSpacing = table.Column<int>(nullable: false),
+                    LeftSpacing = table.Column<int>(nullable: false),
+                    ItemSpacing = table.Column<int>(nullable: false),
                     ArticleId = table.Column<int>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
-                    LeftSpacing = table.Column<int>(nullable: true),
-                    TopSpacing = table.Column<int>(nullable: true),
-                    ItemSpacing = table.Column<int>(nullable: true),
-                    NumberedListSection_LeftSpacing = table.Column<int>(nullable: true),
-                    NumberedListSection_TopSpacing = table.Column<int>(nullable: true),
-                    NumberedListSection_ItemSpacing = table.Column<int>(nullable: true),
                     Contents = table.Column<string>(nullable: true),
-                    SubheaderSection_LeftSpacing = table.Column<int>(nullable: true),
-                    SubheaderSection_TopSpacing = table.Column<int>(nullable: true),
                     TextSection_Contents = table.Column<string>(nullable: true),
-                    TextSection_LeftSpacing = table.Column<int>(nullable: true),
-                    TextSection_TopSpacing = table.Column<int>(nullable: true),
                     TitleSection_Contents = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -275,21 +268,14 @@ namespace ESDWiki2.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Content = table.Column<string>(nullable: true),
-                    BulletedListSectionId = table.Column<int>(nullable: true),
-                    NumberedListSectionId = table.Column<int>(nullable: true)
+                    ListSectionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BulletItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BulletItem_ArticleItems_BulletedListSectionId",
-                        column: x => x.BulletedListSectionId,
-                        principalTable: "ArticleItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_BulletItem_ArticleItems_NumberedListSectionId",
-                        column: x => x.NumberedListSectionId,
+                        name: "FK_BulletItem_ArticleItems_ListSectionId",
+                        column: x => x.ListSectionId,
                         principalTable: "ArticleItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -350,14 +336,9 @@ namespace ESDWiki2.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BulletItem_BulletedListSectionId",
+                name: "IX_BulletItem_ListSectionId",
                 table: "BulletItem",
-                column: "BulletedListSectionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BulletItem_NumberedListSectionId",
-                table: "BulletItem",
-                column: "NumberedListSectionId");
+                column: "ListSectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamCategories_ArticleId",

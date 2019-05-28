@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ArticleService } from '../shared/article.service'
 import { Article } from '../shared/article.model';
 import { UserService } from '../shared/services/user.service';
+import { WikiCategory, TeamCategory } from '../shared/category.model';
 
 @Component({
     selector: 'team-wiki',
@@ -14,8 +15,8 @@ export class TeamWikiComponent implements OnInit {
   constructor(private ArticleService: ArticleService, private userService: UserService) {
     }
 
-    ngOnInit(): void {
-      this.articleList = this.ArticleService.getTeamArticleByCategory("Active Directory")
+  ngOnInit(): void {
+    this.articleList = this.ArticleService.getTeamArticleByCategory(new TeamCategory({ name: "Active Directory" }))
 
       // Need to set our Role subscriptions in case of page reload without re-login
       this.userService.isWikiAdmin();

@@ -5,9 +5,8 @@ import {
   TextSection,
   SubheaderSection,
   FullWidthImageSection,
-  BulletedListSection,
-  NumberedListSection,
-  BulletItem
+  BulletItem,
+  ListSection
 } from '../shared/article.model';
 
 @Component({
@@ -38,8 +37,8 @@ export class CreateArticleComponent implements OnInit {
   textSection: TextSection
   subheaderSection: SubheaderSection
   fullWidthImageSection: FullWidthImageSection
-  bulletedListSection: BulletedListSection
-  numberedListSection: NumberedListSection
+  bulletedListSection: ListSection
+  numberedListSection: ListSection
 
   ngOnInit() {
     /** Setting the initial boolean values to dictate which menu to show */
@@ -50,12 +49,15 @@ export class CreateArticleComponent implements OnInit {
       displayName: "Title",
       contents: "This is a Title",
       bottomSpacing: 0,
+      topSpacing: 0,
+      leftSpacing: 0,
+      itemSpacing: 0,
       hovered: false
     }
     this.newArticle = {
       id: 20,
       description: "",
-      articleContents: [this.titleSection],
+      articleItems: [this.titleSection],
       title: this.titleSection.contents.toString(),
       wikiCategories: [],
       teamCategories: []
@@ -129,49 +131,49 @@ export class CreateArticleComponent implements OnInit {
 
   /** Shared component update functions */
   updateDisplayName(event) {
-    this.newArticle.articleContents[this.sectionIndex].displayName = event.target.value
+    this.newArticle.articleItems[this.sectionIndex].displayName = event.target.value
   }
 
   /** Functions to re-arrange newArticle.articleContents */
   moveComponentUp(index) {
     var oldIndex = index
     var newIndex = index - 1
-    var item = this.newArticle.articleContents[oldIndex]
+    var item = this.newArticle.articleItems[oldIndex]
     if (newIndex > 0) {
-      this.newArticle.articleContents.splice(oldIndex, 1)
-      this.newArticle.articleContents.splice(newIndex, 0, item)
+      this.newArticle.articleItems.splice(oldIndex, 1)
+      this.newArticle.articleItems.splice(newIndex, 0, item)
     }
   }
 
   moveComponentDown(index) {
     var oldIndex = index
     var newIndex = index + 1
-    var item = this.newArticle.articleContents[oldIndex]
-    if (newIndex <= this.newArticle.articleContents.length) {
-      this.newArticle.articleContents.splice(oldIndex, 1)
-      this.newArticle.articleContents.splice(newIndex, 0, item)
+    var item = this.newArticle.articleItems[oldIndex]
+    if (newIndex <= this.newArticle.articleItems.length) {
+      this.newArticle.articleItems.splice(oldIndex, 1)
+      this.newArticle.articleItems.splice(newIndex, 0, item)
     }
   }
 
   /** Function to highlight the hovered component */
   highlightComponent(index) {
     /** Remove all existing highlights */
-    for (let i = 0; i < this.newArticle.articleContents.length; i++) {
-      this.newArticle.articleContents[i].hovered = false
+    for (let i = 0; i < this.newArticle.articleItems.length; i++) {
+      this.newArticle.articleItems[i].hovered = false
     }
 
     /** Highlight the new hovered component */
-    this.newArticle.articleContents[index].hovered = true
+    this.newArticle.articleItems[index].hovered = true
   }
 
   dehighlightComponent(index) {
-    this.newArticle.articleContents[index].hovered = false
+    this.newArticle.articleItems[index].hovered = false
   }
 
   /** Functions To Update Component Spacing */
   updateLeftSpacing(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].leftSpacing = event.target.value
+      this.newArticle.articleItems[this.sectionIndex].leftSpacing = event.target.value
     } catch (e) {
       console.log('could not set left spacing value')
     }
@@ -179,7 +181,7 @@ export class CreateArticleComponent implements OnInit {
 
   updateTopSpacing(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].topSpacing = event.target.value
+      this.newArticle.articleItems[this.sectionIndex].topSpacing = event.target.value
     } catch (e) {
       console.log('could not set top spacing value')
     }
@@ -187,7 +189,7 @@ export class CreateArticleComponent implements OnInit {
 
   updateBottomSpacing(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].bottomSpacing = event.target.value
+      this.newArticle.articleItems[this.sectionIndex].bottomSpacing = event.target.value
     } catch (e) {
       console.log('could not set bottom spacing value')
     }
@@ -195,7 +197,7 @@ export class CreateArticleComponent implements OnInit {
 
   updateItemSpacing(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].itemSpacing = event.target.value
+      this.newArticle.articleItems[this.sectionIndex].itemSpacing = event.target.value
     } catch (e) {
       console.log('could not set item spacing value')
     }
@@ -204,7 +206,9 @@ export class CreateArticleComponent implements OnInit {
   /** Update Title Component Functions */
   updateTitleContent(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].contents = event.target.value
+      var titleSection = <TitleSection>this.newArticle.articleItems[this.sectionIndex]
+      titleSection.contents = event.target.value
+      this.newArticle.articleItems[this.sectionIndex] = titleSection
     } catch (e) {
       console.log('could not set text-area value')
       console.log(e)
@@ -214,7 +218,9 @@ export class CreateArticleComponent implements OnInit {
   /** Update Subheader Component Functions */
   updateSubheaderContent(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].contents = event.target.value
+      var subheaderSection = <SubheaderSection>this.newArticle.articleItems[this.sectionIndex]
+      subheaderSection.contents = event.target.value
+      this.newArticle.articleItems[this.sectionIndex] = subheaderSection
     } catch (e) {
       console.log('could not set text-area value')
     }
@@ -223,7 +229,9 @@ export class CreateArticleComponent implements OnInit {
   /** Update Text Component Functions */
   updateTextContent(event) {
     try {
-      this.newArticle.articleContents[this.sectionIndex].contents = event.target.value
+      var richTextSection = <TextSection>this.newArticle.articleItems[this.sectionIndex]
+      richTextSection.contents = event.target.value
+      this.newArticle.articleItems[this.sectionIndex] = richTextSection
     } catch (e) {
       console.log('could not set text-area value')
     }
@@ -233,7 +241,9 @@ export class CreateArticleComponent implements OnInit {
   updateBulletedListContent(event) {
     console.log("Updating Bullets")
     try {
-      this.newArticle.articleContents[this.sectionIndex].contents[event.index] = event.event.target.value
+      var bulletedListSection = <ListSection>this.newArticle.articleItems[this.sectionIndex]
+      bulletedListSection.contents[event.index].content = event.event.target.value
+      this.newArticle.articleItems[this.sectionIndex] = bulletedListSection
     } catch (e) {
       console.log('could not set text-area value')
     }
@@ -242,7 +252,9 @@ export class CreateArticleComponent implements OnInit {
   updateNumberedListContent(event) {
     console.log("Updating Numbered")
     try {
-      this.newArticle.articleContents[this.sectionIndex].contents[event.index] = event.event.target.value
+      var numberedListSection = <ListSection>this.newArticle.articleItems[this.sectionIndex]
+      numberedListSection.contents[event.index].content = event.event.target.value
+      this.newArticle.articleItems[this.sectionIndex] = numberedListSection
     } catch (e) {
       console.log('could not set text-area value')
     }
@@ -250,36 +262,36 @@ export class CreateArticleComponent implements OnInit {
 
   deleteListItem(index) {
     if (index !== -1) {
-      this.newArticle.articleContents[this.sectionIndex].contents.splice(index, 1)
+      (<ListSection>this.newArticle.articleItems[this.sectionIndex]).contents.splice(index, 1)
       console.log("Deleting list item: " + index)
     }
   }
 
   createListItem() {
-    this.newArticle.articleContents[this.sectionIndex].contents.push("New Item")
+    (<ListSection>this.newArticle.articleItems[this.sectionIndex]).contents.push(new BulletItem({ content: "New Item" }))
   }
 
   /** Functions to update and get images */
   updateFullWidthImageContent(file) {
-    this.newArticle.articleContents[this.sectionIndex].image = file
+    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).image = file
   }
 
   updateFullWidthImageSrc(src) {
-    this.newArticle.articleContents[this.sectionIndex].src = src
+    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).imageSrc = src
   }
 
   updateFullWidthImageName(name: string) {
-    this.newArticle.articleContents[this.sectionIndex].name = name
+    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).name = name
   }
 
   rangeChange(event: number) {
-    this.newArticle.articleContents[this.sectionIndex].width = event
+    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).width = event
   }
 
   /** Function to remove component */
   deleteComponent(index: number) {
     if (index !== -1) {
-      this.newArticle.articleContents.splice(index, 1)
+      this.newArticle.articleItems.splice(index, 1)
     }
   }
 
@@ -307,9 +319,10 @@ export class CreateArticleComponent implements OnInit {
       leftSpacing: 2,
       topSpacing: 0,
       bottomSpacing: 0,
+      itemSpacing: 0,
       hovered: false
     }
-    this.newArticle.articleContents.push(this.textSection)
+    this.newArticle.articleItems.push(this.textSection)
   }
 
   addSubheaderComponent() {
@@ -320,9 +333,10 @@ export class CreateArticleComponent implements OnInit {
       leftSpacing: 0,
       topSpacing: 0,
       bottomSpacing: 0,
+      itemSpacing: 0,
       hovered: false
     }
-    this.newArticle.articleContents.push(this.subheaderSection)
+    this.newArticle.articleItems.push(this.subheaderSection)
   }
 
   addBulletedListComponent() {
@@ -336,7 +350,7 @@ export class CreateArticleComponent implements OnInit {
       itemSpacing: 14,
       hovered: false
     }
-    this.newArticle.articleContents.push(this.bulletedListSection)
+    this.newArticle.articleItems.push(this.bulletedListSection)
   }
 
   addNumberedListComponent() {
@@ -350,7 +364,7 @@ export class CreateArticleComponent implements OnInit {
       itemSpacing: 14,
       hovered: false
     }
-    this.newArticle.articleContents.push(this.numberedListSection)
+    this.newArticle.articleItems.push(this.numberedListSection)
   }
 
   addFullWidthImageComponent() {
@@ -364,13 +378,16 @@ export class CreateArticleComponent implements OnInit {
       width: 100,
       topSpacing: 0,
       bottomSpacing: 0,
+      leftSpacing: 0,
+      itemSpacing: 0,
       hovered: false
     }
-    this.newArticle.articleContents.push(this.fullWidthImageSection)
+    this.newArticle.articleItems.push(this.fullWidthImageSection)
   }
 
   /** Functions to check which component is in newArticle.articleContents */
   isTitleComponent(component): boolean {
+    console.log(component)
     if (component.selector === "Title") {
       return true
     } else return false
