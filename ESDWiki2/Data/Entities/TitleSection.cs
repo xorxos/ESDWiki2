@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESDWiki2.ViewModels
+namespace ESDWiki2.Data.Entities
 {
-    public class TeamCategoryViewModel
+    public class TitleSection: ArticleItem
     {
-        public string Name { get; set; }
+        public string Contents { get; set; }
     }
 }

@@ -6,17 +6,16 @@
           <div class="card-header">Team Categories</div>
           <div class="card-body">
             <div class="row">
-              <div *ngFor="let category of categories; let i = index" class="col-12 col-lg-3 col-md-4 col-sm-6">
+              <div *ngFor="let category of categories; let i = index" class="col-12 col-lg-3 col-md-4 col-sm-6" style="padding:0;">
                 <div class="well hoverwell" [ngbPopover]="popEditCategory" [autoClose]="'outside'" #p2="ngbPopover" (click)="selectExistingCategory(category)">
                   <div class="hoverwell-text">{{category.name}}</div>
                 </div>
               </div>
-              <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+              <div class="col-12 col-lg-3 col-md-4 col-sm-6" style="padding:0;">
                 <div class="well new-category" [ngbPopover]="popNewCategory" [autoClose]="'outside'" triggers="manual" #p="ngbPopover" (click)="p.open()">
                   <div class="hoverwell-text">Add Category</div>
                 </div>
               </div>
-                <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
           </div>
         </div>
@@ -28,24 +27,26 @@
 <ng-template #popEditCategory>
   <div style="padding:0 20px 0 20px;">
     <div class="form-group row" style="padding-top:20px;">
-      <label style="font-weight: 500;">Edit Category: </label>
-      <input class="form-control" placeholder="Category name" (input)="editCategoryName($event)" [value]="selectedCategoryName"/>
+      <label class="pop-label">Edit Category: </label>
+      <input class="form-control" placeholder="Category name" (input)="editCategoryName($event)" [value]="selectedCategoryName" />
     </div>
     <div class="form-group row">
       <button class="btn btn-primary" style="margin-right:10px;" (click)="editCategory(p2);">Save</button>
       <button class="btn btn-danger" (click)="deleteCategory(p2, i);">Delete</button>
     </div>
+    <app-spinner [isRunning]="isRequesting"></app-spinner>
   </div>
 </ng-template>
 
 <ng-template #popNewCategory>
   <div style="padding:20px 20px 0 20px;">
-      <div class="form-group row">
-        <label style="font-weight: 500;">New Category: </label>
-        <input class="form-control" placeholder="Category name" (input)="updateNewCategoryName($event)"/>
-      </div>
-      <div class="form-group row">
-        <button class="btn btn-primary" style="margin-right:10px;" (click)="saveCategory(p);">Create</button>
-      </div>
+    <div class="form-group row">
+      <label class="pop-label">New Category: </label>
+      <input class="form-control" placeholder="Category name" (input)="updateNewCategoryName($event)" />
+    </div>
+    <div class="form-group row">
+      <button class="btn btn-primary" style="margin-right:10px;" (click)="saveCategory(p);">Create</button>
+    </div>
+    <app-spinner [isRunning]="isRequesting"></app-spinner>
   </div>
 </ng-template>

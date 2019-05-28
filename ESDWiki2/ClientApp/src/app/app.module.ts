@@ -29,8 +29,8 @@ import { AuthGuard } from './auth.guard';
 import { UnauthorizedComponent } from './errors/unauthorized.component';
 import { CreateAccountComponent } from './admin/users/new/create-account.component';
 import { AccountPermissionsComponent } from './admin/users/permissions/permissions.component';
-import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
-import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
+import { PublicCategoryAdminComponent } from './admin/wiki/wiki-category-admin.component';
+import { TeamCategoryAdminComponent } from './admin/team/categories/team-category-admin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { SearchAccountComponent } from './admin/users/search/search-account.component';
 import { UserService } from './shared/services/user.service';
@@ -38,6 +38,7 @@ import { BaseService } from './shared/services/base.service';
 import { DataService } from './shared/services/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
+import { UploadComponent } from './upload/upload.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { EditAccountComponent } from './admin/users/edit/edit-account.component'
     TeamCategoryAdminComponent,
     EditAccountComponent,
     AdminDashboardComponent,
-    SearchAccountComponent
+    SearchAccountComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

@@ -50,9 +50,7 @@ namespace ESDWiki2.Controllers
                 {
                     var newCategory = new TeamCategory()
                     {
-                        Name = model.Name,
-                        CategoryUrl = model.CategoryUrl,
-                        ImageUrl = model.ImageUrl
+                        Name = model.Name
                     };
 
                     repository.AddTeamCategory(newCategory);
@@ -73,8 +71,8 @@ namespace ESDWiki2.Controllers
             return BadRequest("Failed to save new team category");
         }
 
-        [HttpPost("{originalCategory}")]
-        public IActionResult Edit([FromBody]TeamCategoryViewModel model, string originalCategory)
+        [HttpPost("{id:int}")]
+        public IActionResult Edit([FromBody]TeamCategoryViewModel model, int id)
         {
             Console.WriteLine("Trying to update team category");
             if (!ModelState.IsValid)
@@ -83,7 +81,7 @@ namespace ESDWiki2.Controllers
                 return BadRequest(ModelState);
             }
 
-            var category = repository.GetTeamCategoryByName(originalCategory);
+            var category = repository.GetTeamCategoryById(id);
             if (category != null)
             {
                 category.Name = model.Name;

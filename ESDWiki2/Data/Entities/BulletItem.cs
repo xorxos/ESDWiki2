@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ESDWiki2.Data.Entities
 {
-    public class TeamCategory
+    public class BulletItem
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Content { get; set; }
     }
 }

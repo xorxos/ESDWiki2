@@ -12,8 +12,8 @@ import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { CreateAccountComponent } from './admin/users/new/create-account.component';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 import { AccountPermissionsComponent } from './admin/users/permissions/permissions.component';
-import { TeamCategoryAdminComponent } from './admin/team/categories/category-admin.component';
-import { PublicCategoryAdminComponent } from './admin/wiki/category-admin.component';
+import { TeamCategoryAdminComponent } from './admin/team/categories/team-category-admin.component';
+import { PublicCategoryAdminComponent } from './admin/wiki/wiki-category-admin.component';
 import { SearchAccountComponent } from './admin/users/search/search-account.component';
 
 const appRoutes: Routes = [

@@ -53,21 +53,6 @@ namespace ESDWiki2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TeamCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    CategoryUrl = table.Column<string>(nullable: true),
-                    ImageUrl = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeamCategories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -202,18 +187,56 @@ namespace ESDWiki2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleItem",
+                name: "ArticleItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Selector = table.Column<string>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: true),
+                    Hovered = table.Column<bool>(nullable: false),
+                    BottomSpacing = table.Column<int>(nullable: false),
+                    ArticleId = table.Column<int>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    LeftSpacing = table.Column<int>(nullable: true),
+                    TopSpacing = table.Column<int>(nullable: true),
+                    ItemSpacing = table.Column<int>(nullable: true),
+                    NumberedListSection_LeftSpacing = table.Column<int>(nullable: true),
+                    NumberedListSection_TopSpacing = table.Column<int>(nullable: true),
+                    NumberedListSection_ItemSpacing = table.Column<int>(nullable: true),
+                    Contents = table.Column<string>(nullable: true),
+                    SubheaderSection_LeftSpacing = table.Column<int>(nullable: true),
+                    SubheaderSection_TopSpacing = table.Column<int>(nullable: true),
+                    TextSection_Contents = table.Column<string>(nullable: true),
+                    TextSection_LeftSpacing = table.Column<int>(nullable: true),
+                    TextSection_TopSpacing = table.Column<int>(nullable: true),
+                    TitleSection_Contents = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArticleItems_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
                     ArticleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleItem", x => x.Id);
+                    table.PrimaryKey("PK_TeamCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArticleItem_Articles_ArticleId",
+                        name: "FK_TeamCategories_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
@@ -229,6 +252,9 @@ namespace ESDWiki2.Migrations
                     Name = table.Column<string>(nullable: true),
                     CategoryUrl = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
+                    ImagePlaceholder = table.Column<string>(nullable: true),
+                    ImageName = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: true),
                     ArticleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -242,9 +268,36 @@ namespace ESDWiki2.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BulletItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Content = table.Column<string>(nullable: true),
+                    BulletedListSectionId = table.Column<int>(nullable: true),
+                    NumberedListSectionId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BulletItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BulletItem_ArticleItems_BulletedListSectionId",
+                        column: x => x.BulletedListSectionId,
+                        principalTable: "ArticleItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BulletItem_ArticleItems_NumberedListSectionId",
+                        column: x => x.NumberedListSectionId,
+                        principalTable: "ArticleItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleItem_ArticleId",
-                table: "ArticleItem",
+                name: "IX_ArticleItems_ArticleId",
+                table: "ArticleItems",
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
@@ -297,6 +350,21 @@ namespace ESDWiki2.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BulletItem_BulletedListSectionId",
+                table: "BulletItem",
+                column: "BulletedListSectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BulletItem_NumberedListSectionId",
+                table: "BulletItem",
+                column: "NumberedListSectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamCategories_ArticleId",
+                table: "TeamCategories",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WikiCategories_ArticleId",
                 table: "WikiCategories",
                 column: "ArticleId");
@@ -304,9 +372,6 @@ namespace ESDWiki2.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ArticleItem");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -323,6 +388,9 @@ namespace ESDWiki2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BulletItem");
+
+            migrationBuilder.DropTable(
                 name: "TeamCategories");
 
             migrationBuilder.DropTable(
@@ -330,6 +398,9 @@ namespace ESDWiki2.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ArticleItems");
 
             migrationBuilder.DropTable(
                 name: "Articles");

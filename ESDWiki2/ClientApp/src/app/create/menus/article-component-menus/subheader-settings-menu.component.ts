@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IArticle, ISubheaderSection } from '../../../shared/article.model';
+import { Article, SubheaderSection } from '../../../shared/article.model';
 
 @Component({
     selector: 'subheader-settings-menu',
@@ -8,7 +8,7 @@ import { IArticle, ISubheaderSection } from '../../../shared/article.model';
 })
 export class SubheaderSettingsMenuComponent implements OnInit{
     
-    @Input() newArticle:IArticle
+    @Input() newArticle:Article
     @Input() sectionIndex:number
     @Output() updateSubheaderContentMessage = new EventEmitter<Input>()
     @Output() updateLeftSpacingMessage = new EventEmitter<Input>()
@@ -18,7 +18,7 @@ export class SubheaderSettingsMenuComponent implements OnInit{
     @Output() closeSubheaderSettingsMenuMessage = new EventEmitter<boolean>()
     @Output() deleteComponentMessage = new EventEmitter<number>()
 
-    subheader:ISubheaderSection
+    subheader:SubheaderSection
 
     ngOnInit(): void {
         this.getSubheader()

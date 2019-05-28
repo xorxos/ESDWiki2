@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { CategoryService } from '../../shared/category.service'
-import { Category } from '../../shared/category.model'
+import { WikiCategory } from '../../shared/category.model'
 import { ArticleService } from '../../shared/article.service'
 import { Observable } from 'rxjs';
 
@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
     styleUrls: ['./category-articlelist.component.css']
 })
 export class CategoryListComponent implements OnInit {
-  category: Category
-  allCategories: Category[]
-    categoryListOne: Category[]
-    categoryListTwo: Category[]
-    categoryListThree: Category[]
+  category: WikiCategory
+  allCategories: WikiCategory[]
+  categoryListOne: WikiCategory[]
+  categoryListTwo: WikiCategory[]
+  categoryListThree: WikiCategory[]
     selectedFilter: string
     articles: any
 

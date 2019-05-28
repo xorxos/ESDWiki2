@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IArticle, IFullWidthImageSection } from '../../../shared/article.model';
+import { Article, FullWidthImageSection } from '../../../shared/article.model';
 
 @Component({
     selector: 'fullwidthimage-settings-menu',
@@ -8,7 +8,7 @@ import { IArticle, IFullWidthImageSection } from '../../../shared/article.model'
     styleUrls: ['./shared-settings-styles.component.css']
 })
 export class FullWidthImageSettingsMenuComponent implements OnInit {
-    @Input() newArticle: IArticle
+    @Input() newArticle: Article
     @Input() sectionIndex: number
     @Output() closeFullWidthImageSettingsMenuMessage = new EventEmitter<boolean>()
     @Output() updateFullWidthImageContentMessage = new EventEmitter<File>()
@@ -20,7 +20,7 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
     @Output() updateFullWidthImageWidthMessage = new EventEmitter<number>()
     @Output() deleteComponentMessage = new EventEmitter<number>()
 
-    fullWidthImage: IFullWidthImageSection
+    fullWidthImage: FullWidthImageSection
 
     @ViewChild('labelImport')
     labelImport: ElementRef

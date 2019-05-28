@@ -1,19 +1,19 @@
 import { Component } from '@angular/core'
 import { CategoryService } from 'src/app/shared/category.service';
-import { Category } from 'src/app/shared/category.model';
+import { TeamCategory } from 'src/app/shared/category.model';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'category-admin',
-  templateUrl: './category-admin.component.html',
-  styleUrls: ['./category-admin.component.css']
+  templateUrl: './team-category-admin.component.html',
+  styleUrls: ['./team-category-admin.component.css']
 })
 
 export class TeamCategoryAdminComponent {
-  categories: Category[] = [];
+  categories: TeamCategory[] = [];
   isRequesting: boolean = false;
-  newCategory: Category = new Category();
-  newExistingCategory: Category = new Category;
+  newCategory: TeamCategory = new TeamCategory();
+  newExistingCategory: TeamCategory = new TeamCategory;
   selectedCategoryName: string;
   selectedCategoryId: number;
   constructor(private CategoryService: CategoryService) {
@@ -27,19 +27,15 @@ export class TeamCategoryAdminComponent {
     })
     this.newCategory = {
       id: 0,
-      name: "",
-      categoryUrl: "",
-      imageUrl: ""
+      name: ""
     }
     this.newExistingCategory = {
       id: 0,
-      name: "",
-      categoryUrl: "",
-      imageUrl: ""
+      name: ""
     }
   }
 
-  public selectExistingCategory(category: Category) {
+  public selectExistingCategory(category: TeamCategory) {
     console.log(category.name)
     this.selectedCategoryName = category.name
     this.newExistingCategory.name = category.name
@@ -56,8 +52,8 @@ export class TeamCategoryAdminComponent {
 
   public editCategory(popover: NgbPopover) {
     this.isRequesting = true;
-    this.CategoryService.newExistingCategory = this.newExistingCategory
-    this.CategoryService.SaveExistingCategory(this.selectedCategoryName).subscribe(success => {
+    this.CategoryService.newExistingTeamCategory = this.newExistingCategory
+    this.CategoryService.SaveExistingTeamCategory(this.selectedCategoryId).subscribe(success => {
       if (success) {
         this.isRequesting = false;
         this.clearNewCategory()

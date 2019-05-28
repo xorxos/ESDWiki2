@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ArticleService } from '../shared/article.service'
-import { IArticle } from '../shared/article.model';
+import { Article } from '../shared/article.model';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { UserService } from '../shared/services/user.service';
     styleUrls: ['./team-wiki.component.css']
 })
 export class TeamWikiComponent implements OnInit {
-    articleList:IArticle[]
+    articleList:Article[]
 
   constructor(private ArticleService: ArticleService, private userService: UserService) {
     }

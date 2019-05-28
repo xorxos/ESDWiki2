@@ -8,5 +8,9 @@ namespace ESDWiki2.Data.Entities
     public class ArticleItem
     {
         public int Id { get; set; }
+        public string Selector { get; set; }
+        public string DisplayName { get; set; }
+        public bool Hovered { get; set; }
+        public int BottomSpacing { get; set; }
     }
 }

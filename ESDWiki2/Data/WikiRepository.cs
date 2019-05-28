@@ -27,7 +27,7 @@ namespace ESDWiki2.Data
             ctx.Update(model);
         }
 
-        public IEnumerable<Article> GetAllArticles(bool includeItems)
+        public IEnumerable<Article> GetAllArticles()
         {
             return null;
         }
@@ -53,9 +53,30 @@ namespace ESDWiki2.Data
                 .FirstOrDefault();
         }
 
+        public WikiCategory GetWikiCategoryByName(string name)
+        {
+            return ctx.WikiCategories
+                .Where(c => c.Name == name)
+                .FirstOrDefault();
+        }
+
+        public Article GetArticleById(int id)
+        {
+            return ctx.Articles
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+        }
+
         public TeamCategory GetTeamCategoryById(int id)
         {
             return ctx.TeamCategories
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+        }
+
+        public WikiCategory GetWikiCategoryById(int id)
+        {
+            return ctx.WikiCategories
                 .Where(c => c.Id == id)
                 .FirstOrDefault();
         }

@@ -14,6 +14,12 @@ namespace ESDWiki2.Data
         public DbSet<WikiCategory> WikiCategories { get; set; }
         public DbSet<TeamCategory> TeamCategories { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ArticleItem> ArticleItems { get; set; }
+        public DbSet<BulletedListSection> BulletedListSections { get; set; }
+        public DbSet<NumberedListSection> NumberedListSections { get; set; }
+        public DbSet<SubheaderSection> SubheaderSections { get; set; }
+        public DbSet<TextSection> TextSections { get; set; }
+        public DbSet<TitleSection> TitleSections { get; set; }
         public DbSet<Article> Articles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

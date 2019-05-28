@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { CategoryService } from '../shared/category.service';
-import { Category } from '../shared/category.model';
+import { WikiCategory } from '../shared/category.model';
 
 @Component({
     selector: 'articlecategories-component',
@@ -8,7 +8,7 @@ import { Category } from '../shared/category.model';
     styleUrls: ['./articlecategories.component.css']
 })
 export class ArticleCategoriesComponent implements OnInit {
-  categories: Category[] = [];
+  categories: WikiCategory[] = [];
     constructor(private CategoryService:CategoryService){
 
     }
@@ -18,5 +18,6 @@ export class ArticleCategoriesComponent implements OnInit {
           this.categories = this.CategoryService.wikiCategories;
         }
       })
+      console.log(this.categories)
     }
 }

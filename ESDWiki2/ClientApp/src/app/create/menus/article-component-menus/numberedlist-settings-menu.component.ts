@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IArticle, INumberedListSection } from '../../../shared/article.model'
+import { Article, NumberedListSection } from '../../../shared/article.model'
 
 @Component({
     selector: 'numberedlist-settings-menu',
@@ -7,7 +7,7 @@ import { IArticle, INumberedListSection } from '../../../shared/article.model'
     styleUrls: ['./shared-settings-styles.component.css']
 })
 export class NumberedListSettingsMenuComponent implements OnInit {
-    @Input() newArticle: IArticle
+    @Input() newArticle: Article
     @Input() sectionIndex: number
     @Output() updateNumberedListContentMessage = new EventEmitter<object>()
     @Output() updateLeftSpacingMessage = new EventEmitter<Input>()
@@ -20,7 +20,7 @@ export class NumberedListSettingsMenuComponent implements OnInit {
     @Output() deleteListItemMessage = new EventEmitter<number>()
     @Output() createListItemMessage = new EventEmitter()
 
-    numberedList: INumberedListSection
+    numberedList: NumberedListSection
 
     ngOnInit() {
         this.getNumberedList()

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { IBulletedListSection, IArticle } from '../../../shared/article.model';
+import { BulletedListSection, Article } from '../../../shared/article.model';
 
 @Component({
     selector: 'bulletedlist-settings-menu',
@@ -7,7 +7,7 @@ import { IBulletedListSection, IArticle } from '../../../shared/article.model';
     styleUrls: ['./shared-settings-styles.component.css']
 })
 export class BulletedListSettingsMenuComponent implements OnInit{
-    @Input() newArticle:IArticle
+    @Input() newArticle:Article
     @Input() sectionIndex:number
     @Output() updateBulletedListContentMessage = new EventEmitter<object>()
     @Output() updateLeftSpacingMessage = new EventEmitter<Input>()
@@ -20,7 +20,7 @@ export class BulletedListSettingsMenuComponent implements OnInit{
     @Output() deleteListItemMessage = new EventEmitter<number>()
     @Output() createListItemMessage = new EventEmitter<number>()
 
-    bulletedList:IBulletedListSection
+    bulletedList:BulletedListSection
 
     ngOnInit() {
         this.getBulletedList()

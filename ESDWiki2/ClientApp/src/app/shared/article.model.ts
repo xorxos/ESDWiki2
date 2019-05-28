@@ -1,70 +1,64 @@
-export interface IArticle {
+export class Article {
     id: number
     title: string
     description: string
     articleContents: any[]
-    categoryTags: string[]
+    wikiCategories: string[]
+    teamCategories: string[]
 }
 
-export interface ITitleSection {
-    selector: string,
-    displayName: string,
-    contents: string,
-    bottomSpacing: number,
-    hovered: boolean
+export class ArticleItem {
+  selector: string
+  displayName: string
+  hovered: boolean
+  bottomSpacing: number
 }
 
-export interface ITextSection {
-    selector: string,
-    displayName: string,
-    contents: string,
-    leftSpacing: number,
-    topSpacing: number,
-    bottomSpacing: number,
-    hovered: boolean
+export class BulletItem {
+  content: string
+  public constructor(
+    fields?: {
+      content?: string
+    }) {
+    if (fields) Object.assign(this, fields);
+  }
 }
 
-export interface IBulletedListSection {
-    selector: string,
-    displayName: string,
-    contents: string[],
-    leftSpacing: number,
-    topSpacing: number,
-    bottomSpacing: number,
-    itemSpacing: number,
-    hovered: boolean
+export class TitleSection extends ArticleItem {
+    contents: string
 }
 
-export interface INumberedListSection {
-    selector: string,
-    displayName: string,
-    contents: string[],
-    leftSpacing: number,
-    topSpacing: number,
-    bottomSpacing: number,
-    itemSpacing: number,
-    hovered: boolean
+export class TextSection extends ArticleItem  {
+    contents: string
+    leftSpacing: number
+    topSpacing: number
 }
 
-export interface ISubheaderSection {
-    selector: string,
-    displayName: string,
-    contents: string,
-    leftSpacing: number,
-    topSpacing: number,
-    bottomSpacing: number,
-    hovered: boolean
+export class BulletedListSection extends ArticleItem  {
+    contents: BulletItem[]
+    leftSpacing: number
+    topSpacing: number
+    itemSpacing: number
 }
 
-export interface IFullWidthImageSection {
-    selector: string,
-    image: any,
-    name: string,
-    displayName: string,
-    src: any,
-    width: number,
-    placeholder: string,
-    topSpacing: number,
-    bottomSpacing: number,
-    hovered: boolean
+export class NumberedListSection extends ArticleItem  {
+    contents: BulletItem[]
+    leftSpacing: number
+    topSpacing: number
+    itemSpacing: number
+}
+
+export class SubheaderSection extends ArticleItem  {
+    contents: string
+    leftSpacing: number
+    topSpacing: number
+}
+
+export class FullWidthImageSection extends ArticleItem  {
+    image: any
+    name: string
+    imageSrc: string
+    width: number
+    placeholder: string
+    topSpacing: number
 }

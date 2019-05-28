@@ -4,7 +4,7 @@
 }
 
 .card {
-  margin-top: 30px;
+  margin: 30px 0;
   border: solid 1px lightgray;
 }
 
@@ -15,16 +15,23 @@
 }
 
 .card-body {
-  padding: 40px;
+  padding: 20px 30px;
   display: inline;
 }
 
+.pop-label {
+  font-weight: 500 !important;
+  font-size: 1rem;
+
+}
+
 .hoverwell {
-  padding-top: 28px;
-  margin: 10px 5px;
+  padding: 0 10px;
+  margin: 10px 10px;
   background-color: #f0f3f5;
   border-radius: 3px;
-  height: 140px;
+  font-weight: 500;
+  height: 60px;
   font-size: 1rem;
 }
 
@@ -33,12 +40,21 @@
     cursor: pointer;
   }
 
+.hoverwell-text {
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
 .new-category {
-  padding-top: 45px;
-  margin: 10px 5px;
+  padding: 0px 10px;
+  margin: 10px 10px;
   background-color: white;
   border-radius: 3px;
-  height: 140px;
+  font-weight: 500;
+  height: 60px;
   font-size: 1rem;
   border: dashed 3px #DAE0E6;
 }

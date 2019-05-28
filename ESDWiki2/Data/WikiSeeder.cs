@@ -115,93 +115,63 @@ namespace ESDWiki2.Data
             {
                 new TeamCategory()
                 {
-                    Name = "Active Directory",
-                    CategoryUrl = "active_directory",
-                    ImageUrl = ""
+                    Name = "Active Directory"
                 },
                 new TeamCategory()
                 {
-                    Name = "Profile Manager",
-                    CategoryUrl = "profile_manager",
-                    ImageUrl = ""
+                    Name = "Profile Manager"
                 },
                 new TeamCategory()
                 {
-                    Name = "Exchange",
-                    CategoryUrl = "exchange",
-                    ImageUrl = ""
+                    Name = "Exchange"
                 },
                 new TeamCategory()
                 {
-                    Name = "Outlook",
-                    CategoryUrl = "outlook",
-                    ImageUrl = ""
+                    Name = "Outlook"
                 },
                 new TeamCategory()
                 {
-                    Name = "Pulse Secure",
-                    CategoryUrl = "pulse_secure",
-                    ImageUrl = ""
+                    Name = "Pulse Secure"
                 },
                 new TeamCategory()
                 {
-                    Name = "Microsoft MFA",
-                    CategoryUrl = "microsoft_mfa",
-                    ImageUrl = ""
+                    Name = "Microsoft MFA"
                 },
                 new TeamCategory()
                 {
-                    Name = "Duo Mobile",
-                    CategoryUrl = "duo_mobile",
-                    ImageUrl = ""
+                    Name = "Duo Mobile"
                 },
                 new TeamCategory()
                 {
-                    Name = "Egnyte",
-                    CategoryUrl = "egnyte",
-                    ImageUrl = ""
+                    Name = "Egnyte"
                 },
                 new TeamCategory()
                 {
-                    Name = "Splunk",
-                    CategoryUrl = "splunk",
-                    ImageUrl = ""
+                    Name = "Splunk"
                 },
                 new TeamCategory()
                 {
-                    Name = "OpenText",
-                    CategoryUrl = "opentext",
-                    ImageUrl = ""
+                    Name = "OpenText"
                 },
                 new TeamCategory()
                 {
-                    Name = "OpenPages",
-                    CategoryUrl = "openpages",
-                    ImageUrl = ""
+                    Name = "OpenPages"
                 },
                 new TeamCategory()
                 {
-                    Name = "Symantec",
-                    CategoryUrl = "symantec",
-                    ImageUrl = ""
+                    Name = "Symantec"
                 },
                 new TeamCategory()
                 {
-                    Name = "Password Resets",
-                    CategoryUrl = "password_resets",
-                    ImageUrl = ""
+                    Name = "Password Resets"
                 },
                 new TeamCategory()
                 {
-                    Name = "Account Lockouts",
-                    CategoryUrl = "account_lockouts",
-                    ImageUrl = ""
+                    Name = "Account Lockouts"
                 },
                 new TeamCategory()
                 {
-                    Name = "Modern Authentication",
-                    CategoryUrl = "modern_authentication",
-                    ImageUrl = ""
+                    Name = "Modern Authentication"
                 }
             };
 
