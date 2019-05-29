@@ -48,6 +48,7 @@ namespace ESDWiki2.Controllers
         {
             try
             {
+                Console.WriteLine("Article Model State Valid?: " + ModelState.IsValid);
                 if (ModelState.IsValid)
                 {
                     repository.AddEntity(model);
@@ -65,7 +66,7 @@ namespace ESDWiki2.Controllers
             {
                 Console.WriteLine(exception);
             }
-            return BadRequest("Failed to save new article");
+            return BadRequest("Failed to save new article: " + ModelState.Values);
         }
 
         [HttpPost("{id:int}")]

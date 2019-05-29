@@ -9,6 +9,6 @@ namespace ESDWiki2.Data.Entities
     public class BulletItem
     {
         public int Id { get; set; }
-        public string Content { get; set; }
+        public string BulletContents { get; set; }
     }
 }

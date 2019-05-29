@@ -15,5 +15,13 @@ namespace ESDWiki2.Data.Entities
         public int BottomSpacing { get; set; }
         public int LeftSpacing { get; set; }
         public int ItemSpacing { get; set; }
+        public string Name { get; set; }
+        public string ImageSrc { get; set; }
+        public int Width { get; set; }
+        public string Placeholder { get; set; }
+        public ICollection<BulletItem> ListContents { get; set; }
+        public string TitleContents { get; set; }
+        public string TextContents { get; set; }
+        public string SubheaderContents { get; set; }
     }
 }

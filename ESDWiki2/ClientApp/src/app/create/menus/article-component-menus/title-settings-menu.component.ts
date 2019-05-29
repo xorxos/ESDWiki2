@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { Article, TitleSection } from '../../../shared/article.model';
+import { Article, ArticleItem } from '../../../shared/article.model';
 import { ArticleService } from 'src/app/shared/article.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class TitleSettingsMenuComponent implements OnInit {
   @Output() updateDisplayNameMessage = new EventEmitter<Input>()
   @Output() closeTitleSettingsMenuMessage = new EventEmitter<boolean>()
 
-  title: TitleSection
+  title: ArticleItem
   constructor(private ArticleService: ArticleService) { }
   ngOnInit() {
     this.getTitle()
@@ -39,6 +39,6 @@ export class TitleSettingsMenuComponent implements OnInit {
   }
 
   getTitle() {
-    this.title = <TitleSection>this.newArticle.articleItems[this.sectionIndex]
+    this.title = this.newArticle.articleItems[this.sectionIndex]
   }
 }

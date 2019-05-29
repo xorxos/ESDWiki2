@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESDWiki2.Migrations
 {
     [DbContext(typeof(WikiContext))]
-    [Migration("20190529123642_Initial")]
+    [Migration("20190529221019_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,28 +116,37 @@ namespace ESDWiki2.Migrations
 
                     b.Property<int>("BottomSpacing");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("DisplayName");
 
                     b.Property<bool>("Hovered");
+
+                    b.Property<string>("ImageSrc");
 
                     b.Property<int>("ItemSpacing");
 
                     b.Property<int>("LeftSpacing");
 
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Placeholder");
+
                     b.Property<string>("Selector");
 
+                    b.Property<string>("SubheaderContents");
+
+                    b.Property<string>("TextContents");
+
+                    b.Property<string>("TitleContents");
+
                     b.Property<int>("TopSpacing");
+
+                    b.Property<int>("Width");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
                     b.ToTable("ArticleItems");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ArticleItem");
                 });
 
             modelBuilder.Entity("ESDWiki2.Data.Entities.BulletItem", b =>
@@ -146,13 +155,13 @@ namespace ESDWiki2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content");
+                    b.Property<int?>("ArticleItemId");
 
-                    b.Property<int?>("ListSectionId");
+                    b.Property<string>("BulletContents");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ListSectionId");
+                    b.HasIndex("ArticleItemId");
 
                     b.ToTable("BulletItem");
                 });
@@ -311,42 +320,6 @@ namespace ESDWiki2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ESDWiki2.Data.Entities.ListSection", b =>
-                {
-                    b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
-
-                    b.HasDiscriminator().HasValue("ListSection");
-                });
-
-            modelBuilder.Entity("ESDWiki2.Data.Entities.SubheaderSection", b =>
-                {
-                    b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
-
-                    b.Property<string>("Contents");
-
-                    b.HasDiscriminator().HasValue("SubheaderSection");
-                });
-
-            modelBuilder.Entity("ESDWiki2.Data.Entities.TextSection", b =>
-                {
-                    b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
-
-                    b.Property<string>("Contents")
-                        .HasColumnName("TextSection_Contents");
-
-                    b.HasDiscriminator().HasValue("TextSection");
-                });
-
-            modelBuilder.Entity("ESDWiki2.Data.Entities.TitleSection", b =>
-                {
-                    b.HasBaseType("ESDWiki2.Data.Entities.ArticleItem");
-
-                    b.Property<string>("Contents")
-                        .HasColumnName("TitleSection_Contents");
-
-                    b.HasDiscriminator().HasValue("TitleSection");
-                });
-
             modelBuilder.Entity("ESDWiki2.Data.Article", b =>
                 {
                     b.HasOne("ESDWiki2.Data.Entities.ApplicationUser", "LastUpdateUser")
@@ -367,9 +340,9 @@ namespace ESDWiki2.Migrations
 
             modelBuilder.Entity("ESDWiki2.Data.Entities.BulletItem", b =>
                 {
-                    b.HasOne("ESDWiki2.Data.Entities.ListSection")
-                        .WithMany("Contents")
-                        .HasForeignKey("ListSectionId");
+                    b.HasOne("ESDWiki2.Data.Entities.ArticleItem")
+                        .WithMany("ListContents")
+                        .HasForeignKey("ArticleItemId");
                 });
 
             modelBuilder.Entity("ESDWiki2.Data.Entities.TeamCategory", b =>

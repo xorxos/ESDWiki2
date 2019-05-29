@@ -199,11 +199,14 @@ namespace ESDWiki2.Migrations
                     BottomSpacing = table.Column<int>(nullable: false),
                     LeftSpacing = table.Column<int>(nullable: false),
                     ItemSpacing = table.Column<int>(nullable: false),
-                    ArticleId = table.Column<int>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Contents = table.Column<string>(nullable: true),
-                    TextSection_Contents = table.Column<string>(nullable: true),
-                    TitleSection_Contents = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    ImageSrc = table.Column<string>(nullable: true),
+                    Width = table.Column<int>(nullable: false),
+                    Placeholder = table.Column<string>(nullable: true),
+                    TitleContents = table.Column<string>(nullable: true),
+                    TextContents = table.Column<string>(nullable: true),
+                    SubheaderContents = table.Column<string>(nullable: true),
+                    ArticleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -267,15 +270,15 @@ namespace ESDWiki2.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(nullable: true),
-                    ListSectionId = table.Column<int>(nullable: true)
+                    BulletContents = table.Column<string>(nullable: true),
+                    ArticleItemId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BulletItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BulletItem_ArticleItems_ListSectionId",
-                        column: x => x.ListSectionId,
+                        name: "FK_BulletItem_ArticleItems_ArticleItemId",
+                        column: x => x.ArticleItemId,
                         principalTable: "ArticleItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -336,9 +339,9 @@ namespace ESDWiki2.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BulletItem_ListSectionId",
+                name: "IX_BulletItem_ArticleItemId",
                 table: "BulletItem",
-                column: "ListSectionId");
+                column: "ArticleItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamCategories_ArticleId",

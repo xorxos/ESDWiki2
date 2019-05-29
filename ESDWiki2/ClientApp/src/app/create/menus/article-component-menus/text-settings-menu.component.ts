@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { Article, TextSection } from '../../../shared/article.model';
+import { Article, ArticleItem } from '../../../shared/article.model';
 
 @Component({
   selector: 'text-settings-menu',
@@ -18,7 +18,7 @@ export class TextSettingsMenuComponent implements OnInit {
   @Output() closeTextSettingsMenuMessage = new EventEmitter<boolean>()
   @Output() deleteComponentMessage = new EventEmitter<number>()
 
-  textComponent: TextSection
+  textComponent: ArticleItem
 
   ngOnInit(): void {
     this.getText()
@@ -49,7 +49,7 @@ export class TextSettingsMenuComponent implements OnInit {
   }
 
   getText() {
-    this.textComponent = <TextSection>this.newArticle.articleItems[this.sectionIndex]
+    this.textComponent = this.newArticle.articleItems[this.sectionIndex]
   }
 
   deleteComponent() {

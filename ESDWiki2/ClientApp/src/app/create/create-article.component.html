@@ -52,7 +52,6 @@
             </div>
             <div class="col-lg-3" *ngIf="showFullWidthImageSettings">
                 <fullwidthimage-settings-menu [newArticle]="newArticle" [sectionIndex]="sectionIndex"
-                    (updateFullWidthImageContentMessage)="updateFullWidthImageContent($event)"
                     (updateDisplayNameMessage)="updateDisplayName($event)"
                     (updateFullWidthImageSrcMessage)="updateFullWidthImageSrc($event)"
                     (deleteComponentMessage)="deleteComponent($event)"
@@ -95,7 +94,7 @@
                         <ng-container *ngIf="isTitleComponent(component)">
                             <div
                                 [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">
-                                <h3 style="margin-bottom:20px;" [style.paddingBottom.px]="component.bottomSpacing">{{component.contents}}</h3>
+                                <h3 style="margin-bottom:20px;" [style.paddingBottom.px]="component.bottomSpacing">{{component.titleContents}}</h3>
                             </div>
                         </ng-container>
                         <ng-container *ngIf="isSubheaderComponent(component)">
@@ -103,14 +102,14 @@
                                 [style.paddingTop.px]="component.topSpacing"
                                 [style.paddingBottom.px]="component.bottomSpacing"
                                 [style.paddingLeft.px]="component.leftSpacing"
-                                [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">{{component.contents}}</div>
+                                [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">{{component.subheaderContents}}</div>
                         </ng-container>
                         <ng-container *ngIf="isTextComponent(component)">
                             <div style="white-space: pre-wrap; margin-top: 15px; margin-bottom: 15px;"
                                 [style.paddingTop.px]="component.topSpacing"
                                 [style.paddingBottom.px]="component.bottomSpacing"
                                 [style.paddingLeft.px]="component.leftSpacing"
-                                [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">{{component.contents}}</div>
+                                [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}">{{component.textContents}}</div>
                         </ng-container>
                         <ng-container *ngIf="isBulletedListComponent(component)">
                             <ul [ngStyle]="{ 'border-left' : (component.hovered ? '5px solid red' : '5px solid transparent')}"
@@ -118,7 +117,7 @@
                                 [style.paddingBottom.px]="component.bottomSpacing"
                                 [style.paddingLeft.px]="component.leftSpacing">
                                 <li [style.paddingBottom.px]="component.itemSpacing"
-                                    *ngFor="let item of component.contents">{{item.content}}</li>
+                                    *ngFor="let item of component.listContents">{{item.bulletContents}}</li>
                             </ul>
                         </ng-container>
                         <ng-container *ngIf="isNumberedListComponent(component)">
@@ -126,8 +125,8 @@
                                 [style.paddingTop.px]="component.topSpacing"
                                 [style.paddingBottom.px]="component.bottomSpacing"
                                 [style.paddingLeft.px]="component.leftSpacing">
-                                <li [style.paddingBottom.px]="component.itemSpacing"
-                                    *ngFor="let item of component.contents">{{item.content}}</li>
+                              <li [style.paddingBottom.px]="component.itemSpacing"
+                                  *ngFor="let item of component.listContents">{{item.bulletContents}}</li>
                             </ol>
                         </ng-container>
                         <ng-container *ngIf="isFullWidthImageComponent(component)">

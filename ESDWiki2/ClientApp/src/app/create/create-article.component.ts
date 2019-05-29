@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import {
   Article,
-  TitleSection,
-  TextSection,
-  SubheaderSection,
-  FullWidthImageSection,
   BulletItem,
-  ListSection
+  ArticleItem
 } from '../shared/article.model';
 
 @Component({
@@ -33,12 +29,12 @@ export class CreateArticleComponent implements OnInit {
   selectedBulletedList
 
   newArticle: Article
-  titleSection: TitleSection
-  textSection: TextSection
-  subheaderSection: SubheaderSection
-  fullWidthImageSection: FullWidthImageSection
-  bulletedListSection: ListSection
-  numberedListSection: ListSection
+  titleSection: ArticleItem
+  textSection: ArticleItem
+  subheaderSection: ArticleItem
+  fullWidthImageSection: ArticleItem
+  bulletedListSection: ArticleItem
+  numberedListSection: ArticleItem
 
   ngOnInit() {
     /** Setting the initial boolean values to dictate which menu to show */
@@ -47,18 +43,25 @@ export class CreateArticleComponent implements OnInit {
     this.titleSection = {
       selector: "Title",
       displayName: "Title",
-      contents: "This is a Title",
+      titleContents: "This is a Title",
       bottomSpacing: 0,
       topSpacing: 0,
       leftSpacing: 0,
       itemSpacing: 0,
-      hovered: false
+      hovered: false,
+      textContents: null,
+      listContents: null,
+      subheaderContents: null,
+      name: null,
+      imageSrc: null,
+      width: 0,
+      placeholder: null
     }
     this.newArticle = {
       id: 20,
       description: "",
       articleItems: [this.titleSection],
-      title: this.titleSection.contents.toString(),
+      title: this.titleSection.titleContents.toString(),
       wikiCategories: [],
       teamCategories: []
     }
@@ -206,8 +209,8 @@ export class CreateArticleComponent implements OnInit {
   /** Update Title Component Functions */
   updateTitleContent(event) {
     try {
-      var titleSection = <TitleSection>this.newArticle.articleItems[this.sectionIndex]
-      titleSection.contents = event.target.value
+      var titleSection = this.newArticle.articleItems[this.sectionIndex]
+      titleSection.titleContents = event.target.value
       this.newArticle.articleItems[this.sectionIndex] = titleSection
     } catch (e) {
       console.log('could not set text-area value')
@@ -218,8 +221,8 @@ export class CreateArticleComponent implements OnInit {
   /** Update Subheader Component Functions */
   updateSubheaderContent(event) {
     try {
-      var subheaderSection = <SubheaderSection>this.newArticle.articleItems[this.sectionIndex]
-      subheaderSection.contents = event.target.value
+      var subheaderSection = this.newArticle.articleItems[this.sectionIndex]
+      subheaderSection.subheaderContents = event.target.value
       this.newArticle.articleItems[this.sectionIndex] = subheaderSection
     } catch (e) {
       console.log('could not set text-area value')
@@ -229,8 +232,8 @@ export class CreateArticleComponent implements OnInit {
   /** Update Text Component Functions */
   updateTextContent(event) {
     try {
-      var richTextSection = <TextSection>this.newArticle.articleItems[this.sectionIndex]
-      richTextSection.contents = event.target.value
+      var richTextSection = this.newArticle.articleItems[this.sectionIndex]
+      richTextSection.textContents = event.target.value
       this.newArticle.articleItems[this.sectionIndex] = richTextSection
     } catch (e) {
       console.log('could not set text-area value')
@@ -241,8 +244,8 @@ export class CreateArticleComponent implements OnInit {
   updateBulletedListContent(event) {
     console.log("Updating Bullets")
     try {
-      var bulletedListSection = <ListSection>this.newArticle.articleItems[this.sectionIndex]
-      bulletedListSection.contents[event.index].content = event.event.target.value
+      var bulletedListSection = this.newArticle.articleItems[this.sectionIndex]
+      bulletedListSection.listContents[event.index].bulletContents = event.event.target.value
       this.newArticle.articleItems[this.sectionIndex] = bulletedListSection
     } catch (e) {
       console.log('could not set text-area value')
@@ -252,8 +255,8 @@ export class CreateArticleComponent implements OnInit {
   updateNumberedListContent(event) {
     console.log("Updating Numbered")
     try {
-      var numberedListSection = <ListSection>this.newArticle.articleItems[this.sectionIndex]
-      numberedListSection.contents[event.index].content = event.event.target.value
+      var numberedListSection = this.newArticle.articleItems[this.sectionIndex]
+      numberedListSection.listContents[event.index].bulletContents = event.event.target.value
       this.newArticle.articleItems[this.sectionIndex] = numberedListSection
     } catch (e) {
       console.log('could not set text-area value')
@@ -262,30 +265,26 @@ export class CreateArticleComponent implements OnInit {
 
   deleteListItem(index) {
     if (index !== -1) {
-      (<ListSection>this.newArticle.articleItems[this.sectionIndex]).contents.splice(index, 1)
+      (this.newArticle.articleItems[this.sectionIndex]).listContents.splice(index, 1)
       console.log("Deleting list item: " + index)
     }
   }
 
   createListItem() {
-    (<ListSection>this.newArticle.articleItems[this.sectionIndex]).contents.push(new BulletItem({ content: "New Item" }))
+    (this.newArticle.articleItems[this.sectionIndex]).listContents.push(new BulletItem({ bulletContents: "New Item" }))
   }
 
   /** Functions to update and get images */
-  updateFullWidthImageContent(file) {
-    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).image = file
-  }
-
   updateFullWidthImageSrc(src) {
-    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).imageSrc = src
+    (this.newArticle.articleItems[this.sectionIndex]).imageSrc = src
   }
 
   updateFullWidthImageName(name: string) {
-    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).name = name
+    (this.newArticle.articleItems[this.sectionIndex]).name = name
   }
 
   rangeChange(event: number) {
-    (<FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]).width = event
+    (this.newArticle.articleItems[this.sectionIndex]).width = event
   }
 
   /** Function to remove component */
@@ -315,12 +314,19 @@ export class CreateArticleComponent implements OnInit {
     this.textSection = {
       selector: "Text",
       displayName: "Text",
-      contents: "This is some text. Extra spaces and returns are shown exactly as entered.",
+      textContents: "This is some text. Extra spaces and returns are shown exactly as entered.",
       leftSpacing: 2,
       topSpacing: 0,
       bottomSpacing: 0,
       itemSpacing: 0,
-      hovered: false
+      hovered: false,
+      titleContents: null,
+      listContents: null,
+      subheaderContents: null,
+      name: null,
+      imageSrc: null,
+      width: 0,
+      placeholder: null
     }
     this.newArticle.articleItems.push(this.textSection)
   }
@@ -329,12 +335,19 @@ export class CreateArticleComponent implements OnInit {
     this.subheaderSection = {
       selector: "Subheader",
       displayName: "Subheader",
-      contents: "Step 1",
+      subheaderContents: "Step 1",
       leftSpacing: 0,
       topSpacing: 0,
       bottomSpacing: 0,
       itemSpacing: 0,
-      hovered: false
+      hovered: false,
+      textContents: null,
+      listContents: null,
+      titleContents: null,
+      name: null,
+      imageSrc: null,
+      width: 0,
+      placeholder: null
     }
     this.newArticle.articleItems.push(this.subheaderSection)
   }
@@ -343,12 +356,19 @@ export class CreateArticleComponent implements OnInit {
     this.bulletedListSection = {
       selector: "Bulleted List",
       displayName: "Bulleted List",
-      contents: [new BulletItem({ content: "Item 1" }), new BulletItem({ content: "Item 2" }), new BulletItem({ content: "Item 3" })],
+      listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
       leftSpacing: 40,
       topSpacing: 0,
       bottomSpacing: 0,
       itemSpacing: 14,
-      hovered: false
+      hovered: false,
+      textContents: null,
+      titleContents: null,
+      subheaderContents: null,
+      name: null,
+      imageSrc: null,
+      width: 0,
+      placeholder: null
     }
     this.newArticle.articleItems.push(this.bulletedListSection)
   }
@@ -357,12 +377,19 @@ export class CreateArticleComponent implements OnInit {
     this.numberedListSection = {
       selector: "Numbered List",
       displayName: "Numbered List",
-      contents: [new BulletItem({ content: "Item 1" }), new BulletItem({ content: "Item 2" }), new BulletItem({ content: "Item 3" }) ],
+      listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" }) ],
       leftSpacing: 40,
       topSpacing: 0,
       bottomSpacing: 0,
       itemSpacing: 14,
-      hovered: false
+      hovered: false,
+      textContents: null,
+      titleContents: null,
+      subheaderContents: null,
+      name: null,
+      imageSrc: null,
+      width: 0,
+      placeholder: null
     }
     this.newArticle.articleItems.push(this.numberedListSection)
   }
@@ -371,7 +398,6 @@ export class CreateArticleComponent implements OnInit {
     this.fullWidthImageSection = {
       selector: "Full-Width Image",
       displayName: "Full-Width Image",
-      image: null,
       imageSrc: null,
       name: null,
       placeholder: "images\\placeholder-image.jpg",
@@ -380,14 +406,17 @@ export class CreateArticleComponent implements OnInit {
       bottomSpacing: 0,
       leftSpacing: 0,
       itemSpacing: 0,
-      hovered: false
+      hovered: false,
+      textContents: null,
+      listContents: null,
+      subheaderContents: null,
+      titleContents: null
     }
     this.newArticle.articleItems.push(this.fullWidthImageSection)
   }
 
   /** Functions to check which component is in newArticle.articleContents */
   isTitleComponent(component): boolean {
-    console.log(component)
     if (component.selector === "Title") {
       return true
     } else return false

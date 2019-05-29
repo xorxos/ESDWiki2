@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Article, FullWidthImageSection } from '../../../shared/article.model';
+import { Article, ArticleItem } from '../../../shared/article.model';
 
 @Component({
   selector: 'fullwidthimage-settings-menu',
@@ -20,7 +20,7 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
   @Output() updateFullWidthImageWidthMessage = new EventEmitter<number>()
   @Output() deleteComponentMessage = new EventEmitter<number>()
 
-  fullWidthImage: FullWidthImageSection
+  fullWidthImage: ArticleItem
 
   @ViewChild('labelImport')
   labelImport: ElementRef
@@ -42,7 +42,6 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
 
   ngOnInit() {
     this.getFullWidthImage()
-    this.imgSrc = this.fullWidthImage.placeholder
   }
 
   onFileChange(files) {
@@ -103,24 +102,8 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
   }
 
   getFullWidthImage() {
-    this.fullWidthImage = <FullWidthImageSection>this.newArticle.articleItems[this.sectionIndex]
-    var files = this.fullWidthImage.image
-    if (files != null) {
-      var mimeType = files[0].type;
-      if (mimeType.match(/image\/*/) == null) {
-        this.message = "Only images are supported.";
-        return;
-      }
-
-      var reader = new FileReader();
-      this.imagePath = files;
-      reader.readAsDataURL(files[0]);
-      reader.onload = (_event) => {
-        this.imgSrc = reader.result;
-      }
-
-      this.labelImport.nativeElement.innerText = this.fullWidthImage.name
-    }
+    this.fullWidthImage = this.newArticle.articleItems[this.sectionIndex]
+    this.imgSrc = this.newArticle.articleItems[this.sectionIndex].imageSrc
   }
 
   deleteComponent() {

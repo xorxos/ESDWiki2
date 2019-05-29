@@ -14,9 +14,9 @@
             </div>
             <div class="form-group">
                 <label style="margin-bottom:5px;padding-left:3px;">List Items</label>
-                <div class="form-inline" *ngFor="let item of bulletedList.contents; let i = index; trackBy:trackByFn">
+                <div class="form-inline" *ngFor="let item of bulletedList.listContents; let i = index; trackBy:trackByFn">
                     <input class="form-control list-item-input" style="margin-bottom:10px; border-radius: 0.25rem 0px 0px 0.25rem;"
-                        (input)="updateBulletedListContent($event, i)" value="{{item.content}}" />
+                        (input)="updateBulletedListContent($event, i)" value="{{item.bulletContents}}" />
                     <button class="btn btn-danger trash-button" type="button" (click)="deleteListItem(i)">
                         <i class="fa fa-trash"></i>
                     </button>

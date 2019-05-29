@@ -17,38 +17,22 @@ export class ArticleItem {
   bottomSpacing: number
   leftSpacing: number
   itemSpacing: number
-}
-
-export class BulletItem {
-  content: string
-  public constructor(
-    fields?: {
-      content?: string
-    }) {
-    if (fields) Object.assign(this, fields);
-  }
-}
-
-export class TitleSection extends ArticleItem {
-  contents: string
-}
-
-export class TextSection extends ArticleItem {
-  contents: string
-}
-
-export class ListSection extends ArticleItem {
-  contents: BulletItem[]
-}
-
-export class SubheaderSection extends ArticleItem {
-  contents: string
-}
-
-export class FullWidthImageSection extends ArticleItem {
-  image: any
+  titleContents: string
+  textContents: string
+  listContents: BulletItem[]
+  subheaderContents: string
   name: string
   imageSrc: string
   width: number
   placeholder: string
+}
+
+export class BulletItem {
+  bulletContents: string
+  public constructor(
+    fields?: {
+      bulletContents?: string
+    }) {
+    if (fields) Object.assign(this, fields);
+  }
 }

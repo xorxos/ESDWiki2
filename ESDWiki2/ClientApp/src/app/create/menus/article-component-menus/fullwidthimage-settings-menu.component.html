@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label style="margin-bottom:5px;padding-left:3px;">Image</label>
                 <div style="border: 2px solid #ebeced;">
-                    <img #imagePreview [src]="imgSrc" style="max-width: 100%" />
+                    <img #imagePreview [src]="imgSrc || fullWidthImage?.placeholder" style="max-width: 100%" />
                 </div>
                 <div class="input-group mb-3" style="margin-top:10px;">
                     <div class="custom-file">

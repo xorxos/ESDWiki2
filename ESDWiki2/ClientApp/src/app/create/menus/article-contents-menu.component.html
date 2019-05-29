@@ -17,40 +17,60 @@
                     (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
                     <div class="configuration-object inline-block" (click)="toggleTextSettings(i)">{{component.displayName}}</div>
                     <div class="configuration-order">
-                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
-                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                      <div (click)="moveComponentUp(i)">
+                        <i class="fa fa-sort-up block up-icon"></i>
+                      </div>
+                      <div (click)="moveComponentDown(i)">
+                        <i class="fa fa-sort-down block down-icon"></i>
+                      </div>
                     </div>
                 </div>
                 <div *ngIf="isSubheaderComponent(component)" class="configuration-object-container"
                     (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
                     <div class="configuration-object inline-block" (click)="toggleSubheaderSettings(i)">{{component.displayName}}</div>
                     <div class="configuration-order">
-                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
-                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                      <div (click)="moveComponentUp(i)">
+                        <i class="fa fa-sort-up block up-icon"></i>
+                      </div>
+                      <div (click)="moveComponentDown(i)">
+                        <i class="fa fa-sort-down block down-icon"></i>
+                      </div>
                     </div>
                 </div>
                 <div *ngIf="isBulletedListComponent(component)" class="configuration-object-container"
                     (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
                     <div class="configuration-object inline-block" (click)="toggleBulletedListSettings(i)">{{component.displayName}}</div>
                     <div class="configuration-order">
-                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
-                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                      <div (click)="moveComponentUp(i)">
+                        <i class="fa fa-sort-up block up-icon"></i>
+                      </div>
+                      <div (click)="moveComponentDown(i)">
+                        <i class="fa fa-sort-down block down-icon"></i>
+                      </div>
                     </div>
                 </div>
                 <div *ngIf="isNumberedListComponent(component)" class="configuration-object-container"
                     (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
                     <div class="configuration-object inline-block" (click)="toggleNumberedListSettings(i)">{{component.displayName}}</div>
                     <div class="configuration-order">
-                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
-                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                      <div (click)="moveComponentUp(i)">
+                        <i class="fa fa-sort-up block up-icon"></i>
+                      </div>
+                      <div (click)="moveComponentDown(i)">
+                        <i class="fa fa-sort-down block down-icon"></i>
+                      </div>
                     </div>
                 </div>
                 <div *ngIf="isFullWidthImageComponent(component)" class="configuration-object-container"
                     (mouseenter)="highlightComponent(i)" (mouseleave)="dehighlightComponent(i)">
                     <div class="configuration-object inline-block" (click)="toggleFullWidthImageSettings(i)">{{component.displayName}}</div>
                     <div class="configuration-order">
-                        <i class="fa fa-sort-up block up-icon" (click)="moveComponentUp(i)"></i>
-                        <i class="fa fa-sort-down block down-icon" (click)="moveComponentDown(i)"></i>
+                      <div (click)="moveComponentUp(i)">
+                        <i class="fa fa-sort-up block up-icon"></i>
+                      </div>
+                      <div (click)="moveComponentDown(i)">
+                        <i class="fa fa-sort-down block down-icon"></i>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -65,12 +85,6 @@
                 <div class="form-group">
                     <label for="mainCategory" style="margin-bottom:5px;padding-left:3px;">Team Category</label>
                     <select class="form-control" id="mainCategory">
-                        <option selected>Choose...</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="subCategory" style="margin-bottom:5px;padding-left:3px;">Team Sub-Category</label>
-                    <select class="form-control" id="subCategory">
                         <option selected>Choose...</option>
                     </select>
                 </div>
@@ -95,12 +109,6 @@
                         <option>Browser Issues</option>
                         <option>Windows</option>
                         <option>Mac</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="publicCategory">Public Sub-Category</label>
-                    <select [disabled]="!isPublicChecked" class="form-control" id="publicCategory">
-                        <option selected>Choose...</option>
                     </select>
                 </div>
             </form>
