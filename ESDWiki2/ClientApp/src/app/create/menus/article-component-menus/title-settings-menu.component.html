@@ -10,12 +10,12 @@
             <div class="form-group">
                 <label style="margin-bottom:5px;padding-left:3px;">Display Name</label>
                 <input class="form-control" rows="2"
-                    (input)="updateDisplayName($event)" value="{{newArticle.articleContents[0].displayName}}" />
+                    (input)="updateDisplayName($event)" value="{{newArticle.articleItems[0].displayName}}" />
             </div>
             <div class="form-group">
                 <label style="margin-bottom:5px;padding-left:3px;">Content</label>
                 <textarea class="form-control" rows="2"
-                    (input)="updateTitleContent($event)">{{newArticle.articleContents[0].contents}}</textarea>
+                    (input)="updateTitleContent($event)">{{newArticle.articleItems[0].contents}}</textarea>
             </div>
             <div class="form-group" style="margin-top:5px; padding-bottom: 20px;">
                 <label style="margin-bottom:5px;padding-left:3px;">Bottom Spacing (default: 0 pixels)</label>
