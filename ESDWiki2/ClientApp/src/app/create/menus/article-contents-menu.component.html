@@ -84,31 +84,20 @@
             <form class="setting-element" style="padding-top: 10px; padding-bottom: 20px;">
                 <div class="form-group">
                     <label for="mainCategory" style="margin-bottom:5px;padding-left:3px;">Team Category</label>
-                    <select class="form-control" id="mainCategory">
-                        <option selected>Choose...</option>
+                    <select class="form-control" id="mainCategory" name="mainCategory" [ngModel]="selectedTeamCategory" (ngModelChange)="onTeamCategoryChange($event)">
+                      <option>Choose...</option>
+                      <option *ngFor="let option of teamCategories">{{option.name}}</option>
                     </select>
                 </div>
                 <div class="form-group form-check" style="padding-top: 20px;">
-                    <input type="checkbox" class="form-check-input" (change)="checked($event)">
+                    <input type="checkbox" name="publicCheckbox" [ngModel]="isPublicChecked" class="form-check-input" (change)="checked($event)">
                     <label class="form-check-label" for="exampleCheck1">Publicly Available</label>
                 </div>
                 <div class="form-group">
                     <label for="publicCategory">Public Category</label>
-                    <select [disabled]="!isPublicChecked" class="form-control" id="publicCategory">
-                        <option selected>Choose...</option>
-                        <option>Email</option>
-                        <option>VPN</option>
-                        <option>Internet</option>
-                        <option>Skype</option>
-                        <option>Lockouts</option>
-                        <option>Microsoft Office</option>
-                        <option>Adobe</option>
-                        <option>Antivirus</option>
-                        <option>Mobile Devices</option>
-                        <option>Fiori</option>
-                        <option>Browser Issues</option>
-                        <option>Windows</option>
-                        <option>Mac</option>
+                    <select [disabled]="!isPublicChecked" class="form-control" id="publicCategory" name="publicCategory" [ngModel]="selectedWikiCategory" (ngModelChange)="onWikiCategoryChange($event)">
+                      <option>Choose...</option>
+                      <option *ngFor="let option of wikiCategories">{{option.name}}</option>
                     </select>
                 </div>
             </form>

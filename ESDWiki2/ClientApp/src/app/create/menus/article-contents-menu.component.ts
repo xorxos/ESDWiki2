@@ -1,7 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
-import { Article } from '../../shared/article.model'
+import { Article, TeamCategoryItem, WikiCategoryItem } from '../../shared/article.model'
 import { Router } from '@angular/router';
 import { ArticleService } from 'src/app/shared/article.service';
+import { TeamCategory, WikiCategory } from 'src/app/shared/category.model';
+import { CategoryService } from 'src/app/shared/category.service';
 
 @Component({
   selector: 'article-contents-menu',
@@ -29,12 +31,37 @@ export class ArticleContentsMenuComponent implements OnInit {
   showArticleSettings: boolean
   isPublicChecked: boolean = false
   isRequesting: boolean = false
+  teamCategories: TeamCategory[]
+  wikiCategories: WikiCategory[]
+  selectedTeamCategory: string = "Choose..."
+  selectedWikiCategory: string = "Choose..."
 
-  constructor(private router: Router, private ArticleService: ArticleService) { }
+  constructor(private router: Router, private ArticleService: ArticleService, private CategoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.showArticleSettings = false
     this.showSections = true
+    this.CategoryService.getAllTeamCategories().subscribe(success => {
+      if (success) {
+        this.teamCategories = this.CategoryService.teamCategories;
+      }
+    })
+    this.CategoryService.getAllWikiCategories().subscribe(success => {
+      if (success) {
+        this.wikiCategories = this.CategoryService.wikiCategories;
+      }
+    })
+  }
+
+  onWikiCategoryChange(value: string) {
+    this.newArticle.wikiCategories.push(new WikiCategoryItem({ categoryName: value }))
+    this.selectedWikiCategory = value
+    console.log(value)
+  }
+
+  onTeamCategoryChange(value: string) {
+    this.newArticle.teamCategories.push(new TeamCategoryItem({ categoryName: value }))
+    this.selectedTeamCategory = value
   }
 
   public saveArticle() {

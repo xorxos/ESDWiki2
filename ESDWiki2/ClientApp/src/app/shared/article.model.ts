@@ -5,8 +5,8 @@ export class Article {
   title: string
   description: string
   articleItems: ArticleItem[]
-  wikiCategories: WikiCategory[]
-  teamCategories: TeamCategory[]
+  wikiCategories: WikiCategoryItem[]
+  teamCategories: TeamCategoryItem[]
 }
 
 export class ArticleItem {
@@ -32,6 +32,26 @@ export class BulletItem {
   public constructor(
     fields?: {
       bulletContents?: string
+    }) {
+    if (fields) Object.assign(this, fields);
+  }
+}
+
+export class TeamCategoryItem {
+  categoryName: string
+  public constructor(
+    fields?: {
+      categoryName?: string
+    }) {
+    if (fields) Object.assign(this, fields);
+  }
+}
+
+export class WikiCategoryItem {
+  categoryName: string
+  public constructor(
+    fields?: {
+      categoryName?: string
     }) {
     if (fields) Object.assign(this, fields);
   }

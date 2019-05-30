@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Article, ArticleItem } from './article.model'
+import { Article, ArticleItem, WikiCategoryItem, TeamCategoryItem } from './article.model'
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { WikiCategory, TeamCategory } from './category.model';
@@ -17,8 +17,8 @@ export class ArticleService {
     let title: string = this.newArticle.title
     let description: string = this.newArticle.description
     let articleItems: ArticleItem[] = this.newArticle.articleItems
-    let wikiCategories: WikiCategory[] = this.newArticle.wikiCategories
-    let teamCategories: TeamCategory[] = this.newArticle.teamCategories
+    let wikiCategories: WikiCategoryItem[] = this.newArticle.wikiCategories
+    let teamCategories: TeamCategoryItem[] = this.newArticle.teamCategories
     let body = JSON.stringify({ article, title, description, articleItems, wikiCategories, teamCategories })
     let headers = new Headers({ 'Content-Type': 'application/json' })
     let options = new RequestOptions({ headers: headers })
@@ -42,7 +42,7 @@ export class ArticleService {
     this.articleList = []
     ARTICLES.forEach(item => {
       item.wikiCategories.forEach(wikiCategory => {
-        if (wikiCategory.name == category.name) {
+        if (wikiCategory.categoryName == category.name) {
           this.articleList.push(item)
         }
       })
@@ -55,7 +55,7 @@ export class ArticleService {
     this.articleList = []
     TEAMARTICLES.forEach(item => {
       item.teamCategories.forEach(teamCategory => {
-        if (teamCategory.name == category.name) {
+        if (teamCategory.categoryName == category.name) {
           this.articleList.push(item)
         }
       })
@@ -78,7 +78,7 @@ const ARTICLES: Article[] = [
     title: "Mac - How to Sign-in to Skype",
     description: "22Skype typically will log you in automatically, but when it for some reason doesn't, this guide will walk you through the process of manually signing in.",
     articleItems: [],
-    wikiCategories: [new WikiCategory({ name: "Skype" })],
+    wikiCategories: [new WikiCategoryItem({ categoryName: "Skype" })],
     teamCategories: []
   },
   {

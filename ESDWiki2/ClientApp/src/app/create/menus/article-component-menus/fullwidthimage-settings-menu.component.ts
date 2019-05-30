@@ -21,6 +21,10 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
   @Output() deleteComponentMessage = new EventEmitter<number>()
 
   fullWidthImage: ArticleItem
+  public response: { 'dbPath': '' };
+  public isCreate: boolean;
+  public imagePath;
+  public message: string;
 
   @ViewChild('labelImport')
   labelImport: ElementRef
@@ -36,37 +40,23 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
     })
   }
 
-
-  public imagePath;
-  public message: string;
-
   ngOnInit() {
     this.getFullWidthImage()
   }
 
-  onFileChange(files) {
+  public uploadFinished = (event) => {
+    this.response = event;
+    this.imgSrc = this.createImgPath(this.response.dbPath)
+    this.fullWidthImage.imageSrc = this.imgSrc
+    this.updateFullWidthImageSrc(this.imgSrc)
+  }
 
-    if (files.length === 0)
-      return;
+  public createImgPath = (serverPath: string) => {
+    return `http://localhost:5000/${serverPath}`;
+  }
 
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
-      return;
-    }
-
-    var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.imgSrc = reader.result;
-
-      this.updateFullWidthImageSrc(this.imgSrc)
-    }
-
-    this.labelImport.nativeElement.innerText = files.item(0).name
-    this.updateFullWidthImageName(files.item(0).name)
-    this.updateFullWidthImageContent(this.imagePath)
+  public returnToCreate = () => {
+    this.isCreate = true;
   }
 
   onRangeChange(event) {
