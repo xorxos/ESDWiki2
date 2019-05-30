@@ -29,7 +29,12 @@ namespace ESDWiki2.Data
 
         public IEnumerable<Article> GetAllArticles()
         {
-            return null;
+            return ctx.Articles
+                .Include(a => a.ArticleItems)
+                .ThenInclude(ai => ai.ListContents)
+                .Include(o => o.WikiCategories)
+                .Include(o => o.TeamCategories)
+                .ToList();
         }
         
         public IEnumerable<WikiCategory> GetAllWikiCategories()

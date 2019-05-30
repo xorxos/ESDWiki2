@@ -35,7 +35,7 @@
                         style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px;">
                         <div *ngFor="let article of articleList"
                             style="padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #d0d2d3;">
-                            <a href="" class="article-title">{{article.title}}</a>
+                            <a [routerLink]="[article.id]" class="article-title">{{article.title}}</a>
                             <div class="article-description">{{article.description}}</div>
                         </div>
                     </div>

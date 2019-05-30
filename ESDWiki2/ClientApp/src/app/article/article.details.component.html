@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="article-view">
+          <ng-container *ngFor="let component of article?.articleItems; let i = index;">
+            <ng-container *ngIf="isTitleComponent(component)">
+              <div [ngStyle]="{ 'border-left' : (component?.hovered ? '5px solid red' : '5px solid transparent')}">
+                <h3 style="margin-bottom:20px;" [style.paddingBottom.px]="component?.bottomSpacing">{{component?.titleContents}}</h3>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="isSubheaderComponent(component)">
+              <div style="font-size:20px; white-space: pre-wrap; margin-top: 18px; margin-bottom: 18px;"
+                   [style.paddingTop.px]="component?.topSpacing"
+                   [style.paddingBottom.px]="component?.bottomSpacing"
+                   [style.paddingLeft.px]="component?.leftSpacing"
+                   [ngStyle]="{ 'border-left' : (component?.hovered ? '5px solid red' : '5px solid transparent')}">{{component?.subheaderContents}}</div>
+            </ng-container>
+            <ng-container *ngIf="isTextComponent(component)">
+              <div style="white-space: pre-wrap; margin-top: 15px; margin-bottom: 15px;"
+                   [style.paddingTop.px]="component?.topSpacing"
+                   [style.paddingBottom.px]="component?.bottomSpacing"
+                   [style.paddingLeft.px]="component?.leftSpacing"
+                   [ngStyle]="{ 'border-left' : (component?.hovered ? '5px solid red' : '5px solid transparent')}">{{component?.textContents}}</div>
+            </ng-container>
+            <ng-container *ngIf="isBulletedListComponent(component)">
+              <ul [ngStyle]="{ 'border-left' : (component?.hovered ? '5px solid red' : '5px solid transparent')}"
+                  [style.paddingTop.px]="component?.topSpacing"
+                  [style.paddingBottom.px]="component?.bottomSpacing"
+                  [style.paddingLeft.px]="component?.leftSpacing">
+                <li [style.paddingBottom.px]="component?.itemSpacing"
+                    *ngFor="let item of component?.listContents">{{item?.bulletContents}}</li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="isNumberedListComponent(component)">
+              <ol [ngStyle]="{ 'border-left' : (component?.hovered ? '5px solid red' : '5px solid transparent')}"
+                  [style.paddingTop.px]="component?.topSpacing"
+                  [style.paddingBottom.px]="component?.bottomSpacing"
+                  [style.paddingLeft.px]="component?.leftSpacing">
+                <li [style.paddingBottom.px]="component?.itemSpacing"
+                    *ngFor="let item of component?.listContents">{{item?.bulletContents}}</li>
+              </ol>
+            </ng-container>
+            <ng-container *ngIf="isFullWidthImageComponent(component)">
+              <div class="image-container"
+                   [style.paddingBottom.px]="component?.bottomSpacing"
+                   [style.paddingTop.px]="component?.topSpacing"
+                   [ngStyle]="{ 'border-left' : (component?.hovered ? '5px solid red' : '5px solid transparent')}">
+                <img [src]="component?.imageSrc || component?.placeholder"
+                     [ngStyle]="{ 'border': '2px solid #ebeced' }"
+                     [style.width]="component?.width + '%'"
+                     style="max-width:100%; margin:10px; margin-left: 5px;" />
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        Random Stuff
+      </div>
+    </div>
+  </div>
+</div>

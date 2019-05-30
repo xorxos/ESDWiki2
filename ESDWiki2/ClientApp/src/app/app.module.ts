@@ -39,6 +39,7 @@ import { DataService } from './shared/services/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 import { UploadComponent } from './upload/upload.component';
+import { ArticleDetailsComponent } from './article/article.details.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { UploadComponent } from './upload/upload.component';
     EditAccountComponent,
     AdminDashboardComponent,
     SearchAccountComponent,
-    UploadComponent
+    UploadComponent,
+    ArticleDetailsComponent
   ],
   imports: [
     BrowserModule,
