@@ -20,7 +20,15 @@
       <div class="col-12">
         <div class="row category-section" style="padding-left: 25px; padding-right: 25px;">
           <div class="col-12 col-lg-4 col-md-3 col-sm-4">
-            <div class="team-header">ESD Team Wiki</div>
+            <div>
+              <div class="team-header">ESD Team Wiki</div>
+              <div class="dropdown-container" ngbDropdown>
+                <a ngbDropdownToggle role="button"></a>
+                <div ngbDropdownMenu>
+                  <button ngbDropdownItem routerLink="/team-wiki/create">Create Article</button>
+                </div>
+              </div>
+            </div>
             <div *ngFor="let category of categoryList" [ngClass]="{'category-header': !isSelectedCategory(category?.name), 'selected-category-header': isSelectedCategory(category?.name)}" (click)="selectCategory(category?.name)">
               <div>{{category?.name}}</div>
               <div class="article-header-container" *ngIf="isSelectedCategory(category?.name)">

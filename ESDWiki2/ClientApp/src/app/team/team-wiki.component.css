@@ -78,6 +78,8 @@
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 20px;
+  display: inline-block;
+  padding-right: 15px;
 }
 
 .article-header-container {
@@ -132,4 +134,24 @@
   color: #333E48;
   padding-top: 5px;
   font-size: 0.95rem;
+}
+
+.fa-ellipsis-v {
+  margin-bottom: 1px;
+  display: inline-block;
+  color: #434343;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+  .fa-ellipsis-v:hover {
+    color: rgb(47, 47, 47);
+  }
+
+.dropdown-container {
+  display: inline-block;
+}
+
+.dropdown-container a, button {
+  cursor: pointer;
 }
