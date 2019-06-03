@@ -15,12 +15,7 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ArticleService.getAllArticles().subscribe(success => {
-      if (success) {
-        this.article = this.ArticleService.getArticleById(+this.route.snapshot.params['id'])
-        console.log(this.article)
-      }
-    })
+    this.article = this.ArticleService.getArticleById(+this.route.snapshot.params['id'])
   }
 
   /** Functions to check which component is in newArticle.articleContents */

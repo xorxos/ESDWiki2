@@ -53,6 +53,16 @@ export class ArticleService {
       }));
   }
 
+  getTeamArticles() {
+    var teamArticleList: Article[] = []
+    for (let article of this.articleList) {
+      if (article.teamCategories.length > 0) {
+        teamArticleList.push(article)
+      }
+    }
+    return teamArticleList
+  }
+
   getArticleById(id: number) {
     return this.articleList.find(a => a.id === id)
   }

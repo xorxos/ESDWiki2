@@ -222,6 +222,11 @@
     cursor: pointer;
   }
 
+.nonclick-more-text {
+  padding-top: 4px;
+  font-size: 0.95rem;
+}
+
 .article-list-section {
 }
 
