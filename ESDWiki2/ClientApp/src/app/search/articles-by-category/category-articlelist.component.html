@@ -2,34 +2,58 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="input-group search-box center">
-          <input class="form-control border-secondary" type="search" placeholder="Search by keyword">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container-fluid soft-gray-section2">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
         <div class="row category-section" style="padding-left: 25px; padding-right: 25px;">
-          <div class="col-12 col-lg-3 col-md-3 col-sm-4"
-               style="background-color: #edeeee; text-align: center; display: flex; flex-direction: column;">
-            <div class="selected-filter">Windows</div>
-            <div class="filter-item">Mac</div>
-            <div class="filter-item">Mobile</div>
-            <div style="flex-grow:1; border-right: 1px solid #d0d2d3;"></div>
+          <div class="col-12 col-lg-4 col-md-3 col-sm-4">
+            <div class="category-header">{{category?.name}} Articles</div>
+            <div *ngFor="let article of categoryArticleList" [ngClass]="{'article-header': !isSelectedArticle(article?.title), 'selected-article-header': isSelectedArticle(article?.title)}" (click)="selectArticle(article?.id)">{{article?.title}}</div>
           </div>
-          <div class="col-lg-9" style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px;">
-            <div *ngFor="let article of articles" style="padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #d0d2d3;">
-              <a href="" class="article-title">{{article.title}}</a>
-              <div class="article-description">{{article.description}}</div>
+          <div class="col-lg-8" style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px;">
+            <div class="article-view">
+              <ng-container *ngFor="let component of selectedArticle?.articleItems; let i = index;">
+                <ng-container *ngIf="isTitleComponent(component)">
+                  <div>
+                    <h3 style="margin-bottom:20px;" [style.paddingBottom.px]="component?.bottomSpacing">{{component?.titleContents}}</h3>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="isSubheaderComponent(component)">
+                  <div style="font-size:20px; white-space: pre-wrap; margin-top: 18px; margin-bottom: 18px;"
+                       [style.paddingTop.px]="component?.topSpacing"
+                       [style.paddingBottom.px]="component?.bottomSpacing"
+                       [style.paddingLeft.px]="component?.leftSpacing">{{component?.subheaderContents}}</div>
+                </ng-container>
+                <ng-container *ngIf="isTextComponent(component)">
+                  <div style="white-space: pre-wrap; margin-top: 15px; margin-bottom: 15px;"
+                       [style.paddingTop.px]="component?.topSpacing"
+                       [style.paddingBottom.px]="component?.bottomSpacing"
+                       [style.paddingLeft.px]="component?.leftSpacing">{{component?.textContents}}</div>
+                </ng-container>
+                <ng-container *ngIf="isBulletedListComponent(component)">
+                  <ul [style.paddingTop.px]="component?.topSpacing"
+                      [style.paddingBottom.px]="component?.bottomSpacing"
+                      [style.paddingLeft.px]="component?.leftSpacing">
+                    <li [style.paddingBottom.px]="component?.itemSpacing"
+                        *ngFor="let item of component?.listContents">{{item?.bulletContents}}</li>
+                  </ul>
+                </ng-container>
+                <ng-container *ngIf="isNumberedListComponent(component)">
+                  <ol [style.paddingTop.px]="component?.topSpacing"
+                      [style.paddingBottom.px]="component?.bottomSpacing"
+                      [style.paddingLeft.px]="component?.leftSpacing">
+                    <li [style.paddingBottom.px]="component?.itemSpacing"
+                        *ngFor="let item of component?.listContents">{{item?.bulletContents}}</li>
+                  </ol>
+                </ng-container>
+                <ng-container *ngIf="isFullWidthImageComponent(component)">
+                  <div class="image-container"
+                       [style.paddingBottom.px]="component?.bottomSpacing"
+                       [style.paddingTop.px]="component?.topSpacing">
+                    <img [src]="component?.imageSrc || component?.placeholder"
+                         [ngStyle]="{ 'border': '2px solid #ebeced' }"
+                         [style.width]="component?.width + '%'"
+                         style="max-width:100%; margin:10px; margin-left: 5px;" />
+                  </div>
+                </ng-container>
+              </ng-container>
             </div>
           </div>
         </div>

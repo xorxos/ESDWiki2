@@ -1,6 +1,6 @@
 
 .container {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 
 .nav-link-border {
@@ -12,56 +12,56 @@
   border-bottom: 2px solid transparent;
 }
 
-.nav-link-border:hover {
+  .nav-link-border:hover {
     border-bottom: 2px solid white;
-    color: white;
-}
+  }
 
 .navbar-brand {
-    font-weight: 700;
-    color: white;
-}
-
-.navbar-brand:hover {
+  font-weight: 700;
   color: white;
 }
 
+  .navbar-brand:hover {
+    color: white;
+  }
+
 .navbar {
-    background-color: #42afff !important;
+  background-color: #42afff !important;
 }
 
-.container-fluid{
-    background-color: #42afff !important;
+.container-fluid {
+  background-color: #42afff !important;
 }
 
 .profile-container {
-    display: flex;
+  display: flex;
 }
 
-.navbar-profile-text span{
-    font-size: 12px;
-    text-align: right;
-    padding-right: 5px;
-    display:block;
+.navbar-profile-text span {
+  font-size: 12px;
+  text-align: right;
+  padding-right: 5px;
+  display: block;
 }
 
 .inline-block {
-    display:inline-block !important;
+  display: inline-block !important;
 }
 
 .clr {
-    clear:both;
-}
-.right{
-    float:right;
+  clear: both;
 }
 
-.left{
-    float:left;
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .login-out-button-link {
@@ -77,7 +77,7 @@
 }
 
   .login-out-button-link:hover {
-    color: #43AFFF !important;
+    color: #42afff !important;
   }
 
 .login-out-button {

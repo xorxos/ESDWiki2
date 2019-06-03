@@ -4,6 +4,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { WikiCategory, TeamCategory } from './category.model';
 import { HttpClient } from '@angular/common/http';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class ArticleService {
@@ -31,8 +32,16 @@ export class ArticleService {
         }));
   }
 
-  getWikiArticleByCategory(category: WikiCategory): Article[] {
-    return this.articleListByCategory(category)
+  getWikiArticleByCategory(categoryName: string): Article[] {
+    var WikiArticleList: Article[] = []
+    for (let article of this.articleList) {
+      for (let category of article.wikiCategories) {
+        if (category.categoryName === categoryName) {
+          WikiArticleList.push(article)
+        }
+      }
+    }
+    return WikiArticleList
   }
 
   getAllArticles() {
@@ -40,7 +49,6 @@ export class ArticleService {
       .pipe(
         map((data: any[]) => {
         this.articleList = data;
-        console.log(this.articleList)
         return true;
       }));
   }
@@ -48,12 +56,17 @@ export class ArticleService {
   getArticleById(id: number) {
     return this.articleList.find(a => a.id === id)
   }
+  
 
-  articleListByCategory(category: WikiCategory): Article[] {
-    return this.articleList
-  }
-
-  getTeamArticleByCategory(category: TeamCategory): Article[] {
-    return this.articleList
+  getTeamArticleByCategory(categoryName: string): Article[] {
+    var TeamArticleList: Article[] = []
+    for (let article of this.articleList) {
+      for (let category of article.teamCategories) {
+        if (category.categoryName === categoryName) {
+          TeamArticleList.push(article)
+        }
+      }
+    }
+    return TeamArticleList
   }
 }
