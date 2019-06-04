@@ -35,6 +35,9 @@
                 <div *ngFor="let article of selectedCategoryArticleList" [ngClass]="{'article-header': !isSelectedArticle(article?.id), 'selected-article-header': isSelectedArticle(article?.id)}" (click)="selectArticle(article?.id)">{{article?.title}}</div>
               </div>
             </div>
+            <div *ngIf="isRequesting" style="max-width:60%;">
+              <app-spinner [isRunning]="isRequesting"></app-spinner>
+            </div>
           </div>
           <div class="col-lg-8" style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px;">
             <div class="article-view">

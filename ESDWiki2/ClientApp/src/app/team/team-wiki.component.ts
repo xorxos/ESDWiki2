@@ -16,13 +16,16 @@ export class TeamWikiComponent implements OnInit {
   selectedCategoryArticleList: Article[]
   selectedArticle: Article
   selectedCategory: TeamCategory
+  isRequesting: boolean;
   
 
   constructor(private ArticleService: ArticleService, private CategoryService: CategoryService, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.isRequesting = true;
     this.CategoryService.getAllTeamCategories().subscribe(success => {
       if (success) {
+        this.isRequesting = false;
         this.categoryList = this.CategoryService.teamCategories
       }
     })
@@ -84,10 +87,12 @@ export class TeamWikiComponent implements OnInit {
   }
 
   public onSearchEnter(searchValue: string) {
+    this.isRequesting = true;
     this.selectCategory("");
     if (searchValue === "") {
       this.CategoryService.getAllTeamCategories().subscribe(success => {
         if (success) {
+          this.isRequesting = false;
           this.categoryList = this.CategoryService.teamCategories
         }
       })
@@ -142,6 +147,8 @@ export class TeamWikiComponent implements OnInit {
             if (a.name > b.name) { return 1; }
             return 0
           })
+
+          this.isRequesting = false;
         }
       })
     }
