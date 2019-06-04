@@ -31,6 +31,7 @@ export class ArticleContentsMenuComponent implements OnInit {
   showArticleSettings: boolean
   isPublicChecked: boolean = false
   isRequesting: boolean = false
+  missingFields: boolean = true
   teamCategories: TeamCategory[]
   wikiCategories: WikiCategory[]
   selectedTeamCategory: string = "Choose..."
@@ -41,6 +42,7 @@ export class ArticleContentsMenuComponent implements OnInit {
   ngOnInit(): void {
     this.showArticleSettings = false
     this.showSections = true
+    // Get current categories
     this.CategoryService.getAllTeamCategories().subscribe(success => {
       if (success) {
         this.teamCategories = this.CategoryService.teamCategories;
@@ -51,16 +53,66 @@ export class ArticleContentsMenuComponent implements OnInit {
         this.wikiCategories = this.CategoryService.wikiCategories;
       }
     })
+    // Check if team category or wiki category is set
+    if ((this.newArticle.teamCategories.length > 0) || (this.newArticle.wikiCategories.length > 0)) {
+      // If team category is set, update the selected team category in component
+      if (this.newArticle.teamCategories.length > 0) {
+        this.selectedTeamCategory = this.newArticle.teamCategories[0].categoryName
+        this.missingFields = false
+      }
+      // If wiki category is set, update the selected wiki category in component
+      if (this.newArticle.wikiCategories.length > 0) {
+        this.selectedWikiCategory = this.newArticle.wikiCategories[0].categoryName
+        this.isPublicChecked = true
+        this.missingFields = false
+      }
+    } else {
+      this.missingFields = true
+    }
   }
 
   onWikiCategoryChange(value: string) {
-    this.newArticle.wikiCategories.push(new WikiCategoryItem({ categoryName: value }))
+    if (value !== "Choose...") {
+      // Check if theres a currently set category
+      if (this.newArticle.wikiCategories.length > 0) {
+        // If so, replace it with the new category
+        this.newArticle.wikiCategories.splice(0, 1, new WikiCategoryItem({ categoryName: value }))
+      } else {
+        // Else, just add the category
+        this.newArticle.wikiCategories.push(new WikiCategoryItem({ categoryName: value }))
+      }
+      this.missingFields = false
+    } else {
+      this.newArticle.wikiCategories.splice(0, 1)
+      // Check whether a team or wiki category is set. If not, warn user
+      if (!(this.newArticle.teamCategories.length > 0)) {
+        this.missingFields = true
+      }
+    }
+    
     this.selectedWikiCategory = value
-    console.log(value)
   }
 
   onTeamCategoryChange(value: string) {
-    this.newArticle.teamCategories.push(new TeamCategoryItem({ categoryName: value }))
+    if (value !== "Choose...") {
+      // Check if theres a currently set category
+      if (this.newArticle.teamCategories.length > 0) {
+        // If so, replace it with the new category
+        this.newArticle.teamCategories.splice(0, 1, new TeamCategoryItem({ categoryName: value }))
+      } else {
+        // Else, just add the category
+        this.newArticle.teamCategories.push(new TeamCategoryItem({ categoryName: value }))
+      }
+      this.missingFields = false
+    } else {
+      // Choose... is selected. Remove the existing category and do not add a new one
+      this.newArticle.teamCategories.splice(0, 1)
+      // Check whether a wiki category is set. If not, warn user
+      if (!(this.newArticle.wikiCategories.length > 0)) {
+        this.missingFields = true
+      }
+    }
+    
     this.selectedTeamCategory = value
   }
 

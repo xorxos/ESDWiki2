@@ -130,10 +130,16 @@
 }
 
 .save-button {
-    width: calc(100% - 78px);
-    margin-right: 5px;
+    width: 100%;
 }
 
-.cancel-button {
-    width: 73px;
+.warning-star {
+  display: inline-block;
+  color: red;
+  padding-left: 3px;
+}
+
+.warning-star-text {
+  color: red;
+  padding-left: 3px;
 }

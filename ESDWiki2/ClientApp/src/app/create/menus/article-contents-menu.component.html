@@ -4,7 +4,7 @@
             <div [ngClass]="{'article-item-active': showSections, 'article-item': showArticleSettings}"
                 style="margin-right: 5px;" (click)="toggleShowSections()">Sections</div>
             <div [ngClass]="{'article-item-active': showArticleSettings, 'article-item': showSections}"
-                (click)="toggleShowArticleSettings()">Settings</div>
+                (click)="toggleShowArticleSettings()">Categories<div *ngIf="missingFields" class="warning-star">*</div></div>
         </div>
         <div *ngIf="showSections">
             <div *ngFor="let component of newArticle.articleItems;let i = index" (mouseenter)="highlightComponent(i)"
@@ -82,30 +82,31 @@
         <div *ngIf="showArticleSettings" style="border-top: 1px solid #dfe3e8; margin-top: 10px; border-right: 2px solid #dfe3e8;
     border-left: 2px solid #dfe3e8;">
             <form class="setting-element" style="padding-top: 10px; padding-bottom: 20px;">
-                <div class="form-group">
-                    <label for="mainCategory" style="margin-bottom:5px;padding-left:3px;">Team Category</label>
-                    <select class="form-control" id="mainCategory" name="mainCategory" [ngModel]="selectedTeamCategory" (ngModelChange)="onTeamCategoryChange($event)">
-                      <option>Choose...</option>
-                      <option *ngFor="let option of teamCategories">{{option.name}}</option>
-                    </select>
-                </div>
+              <div class="form-group">
+                <div *ngIf="missingFields" class="warning-star-text">* Team or public category required</div>
+                <label for="mainCategory" style="margin-bottom:5px;padding-left:3px;">Team Category</label>
+                <select class="form-control" id="mainCategory" name="mainCategory" [ngModel]="selectedTeamCategory" (ngModelChange)="onTeamCategoryChange($event)">
+                  <option>Choose...</option>
+                  <option *ngFor="let option of teamCategories">{{option.name}}</option>
+                </select>
+              </div>
                 <div class="form-group form-check" style="padding-top: 20px;">
                     <input type="checkbox" name="publicCheckbox" [ngModel]="isPublicChecked" class="form-check-input" (change)="checked($event)">
                     <label class="form-check-label" for="exampleCheck1">Publicly Available</label>
                 </div>
                 <div class="form-group">
-                    <label for="publicCategory">Public Category</label>
-                    <select [disabled]="!isPublicChecked" class="form-control" id="publicCategory" name="publicCategory" [ngModel]="selectedWikiCategory" (ngModelChange)="onWikiCategoryChange($event)">
-                      <option>Choose...</option>
-                      <option *ngFor="let option of wikiCategories">{{option.name}}</option>
-                    </select>
+                  <div *ngIf="missingFields" class="warning-star-text">* Team or public category required</div>
+                  <label for="publicCategory">Public Category</label>
+                  <select [disabled]="!isPublicChecked" class="form-control" id="publicCategory" name="publicCategory" [ngModel]="selectedWikiCategory" (ngModelChange)="onWikiCategoryChange($event)">
+                    <option>Choose...</option>
+                    <option *ngFor="let option of wikiCategories">{{option.name}}</option>
+                  </select>
                 </div>
             </form>
         </div>
         <div class="column-spacer"></div>
         <div class="section-button-container">
-            <button (click)="saveArticle()" type="button" class="btn btn-success save-button">Save</button>
-            <button (click)="cancelArticle()" type="button" class="btn btn-outline-danger cancel-button">Cancel</button>
+            <button (click)="saveArticle()" [disabled]="missingFields" type="button" class="btn btn-success save-button">Save</button>
         </div>
     </div>
 </div>
