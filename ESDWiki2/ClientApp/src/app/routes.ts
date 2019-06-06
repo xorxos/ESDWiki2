@@ -16,6 +16,7 @@ import { TeamCategoryAdminComponent } from './admin/team/categories/team-categor
 import { PublicCategoryAdminComponent } from './admin/wiki/wiki-category-admin.component';
 import { SearchAccountComponent } from './admin/users/search/search-account.component';
 import { ArticleDetailsComponent } from './article/article.details.component';
+import { EditArticleComponent } from './edit/edit.article.component';
 
 const appRoutes: Routes = [
   { path: 'browse', component: ArticleCategoriesComponent },
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'team-wiki/create', component: CreateArticleComponent, canActivate: [AuthGuard] },
   { path: 'team-wiki', component: TeamWikiComponent, canActivate: [AuthGuard] },
   { path: 'team-wiki/:id', component: ArticleDetailsComponent },
+  { path: 'edit', component: EditArticleComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/new', component: CreateAccountComponent, canActivate: [AuthGuard] },
   { path: 'admin/users', component: SearchAccountComponent, canActivate: [AuthGuard] },

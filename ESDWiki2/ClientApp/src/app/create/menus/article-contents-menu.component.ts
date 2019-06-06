@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
 import { Article, TeamCategoryItem, WikiCategoryItem } from '../../shared/article.model'
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { ArticleService } from 'src/app/shared/article.service';
 import { TeamCategory, WikiCategory } from 'src/app/shared/category.model';
 import { CategoryService } from 'src/app/shared/category.service';
@@ -36,10 +36,12 @@ export class ArticleContentsMenuComponent implements OnInit {
   wikiCategories: WikiCategory[]
   selectedTeamCategory: string = "Choose..."
   selectedWikiCategory: string = "Choose..."
+  url: string
 
   constructor(private router: Router, private ArticleService: ArticleService, private CategoryService: CategoryService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.url = this.router.url
     this.showArticleSettings = false
     this.showSections = true
     // Get current categories
@@ -117,14 +119,26 @@ export class ArticleContentsMenuComponent implements OnInit {
   }
 
   public saveArticle() {
-    this.isRequesting = true;
-    this.ArticleService.newArticle = this.newArticle
-    this.ArticleService.SaveNewArticle().subscribe(success => {
-      if (success) {
-        this.isRequesting = false;
-        this.router.navigate(['/team-wiki'])
-      }
-    })
+    if (this.url === '/team-wiki/create') {
+      this.isRequesting = true;
+      this.ArticleService.newArticle = this.newArticle
+      this.ArticleService.SaveNewArticle().subscribe(success => {
+        if (success) {
+          this.isRequesting = false;
+          this.router.navigate(['/team-wiki'])
+        }
+      })
+    }
+    if (this.url === '/edit') {
+      this.isRequesting = true;
+      this.ArticleService.newArticle = this.newArticle
+      this.ArticleService.editArticle().subscribe(success => {
+        if (success) {
+          this.isRequesting = false;
+          this.router.navigate(['/team-wiki'])
+        }
+      })
+    }
   }
 
   checked(event) {

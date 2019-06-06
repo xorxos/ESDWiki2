@@ -40,6 +40,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 import { UploadComponent } from './upload/upload.component';
 import { ArticleDetailsComponent } from './article/article.details.component';
+import { EditArticleComponent } from './edit/edit.article.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { ArticleDetailsComponent } from './article/article.details.component';
     AdminDashboardComponent,
     SearchAccountComponent,
     UploadComponent,
-    ArticleDetailsComponent
+    ArticleDetailsComponent,
+    EditArticleComponent
   ],
   imports: [
     BrowserModule,

@@ -70,7 +70,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpPost("{id:int}")]
-        public async Task<IActionResult> Edit([FromBody]Article model, int id)
+        public IActionResult Edit([FromBody]Article model, int id)
         {
             if (!ModelState.IsValid)
             {
@@ -81,14 +81,48 @@ namespace ESDWiki2.Controllers
             var article = repository.GetArticleById(id);
             if (article != null)
             {
-                article.Title = model.Title;
-                article.Description = model.Description;
-                article.ArticleItems = model.ArticleItems;
-                article.TeamCategories = model.TeamCategories;
-                article.WikiCategories = model.WikiCategories;
-                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-                article.User = currentUser;
-                article.LastUpdateUser = currentUser;
+                //Delete article children entities
+                foreach (var articleItem in article.ArticleItems.ToList())
+                {
+                    foreach(var listContent in articleItem.ListContents)
+                    {
+                        _appDbContext.Remove(listContent);
+                    }
+                    _appDbContext.ArticleItems.Remove(articleItem);
+                }
+                foreach (var wikiCategory in article.WikiCategories)
+                {
+                    _appDbContext.Remove(wikiCategory);
+                }
+                foreach (var teamCategory in article.TeamCategories)
+                {
+                    _appDbContext.Remove(teamCategory);
+                }
+                repository.SaveAll();
+                _appDbContext.Articles.Remove(article);
+                repository.SaveAll();
+
+                //Remove the ID's for article and children entities
+                model.Id = 0;
+                foreach (var articleItem in model.ArticleItems)
+                {
+                    articleItem.Id = 0;
+                    foreach(var list in articleItem.ListContents)
+                    {
+                        list.Id = 0;
+                    }
+                }
+                foreach (var category in model.WikiCategories)
+                {
+                    category.Id = 0;
+                }
+                foreach(var category in model.TeamCategories)
+                {
+                    category.Id = 0;
+                }
+
+                //Add new article
+                repository.AddEntity(model);
                 if (repository.SaveAll())
                 {
                     return new OkObjectResult("Successfully saved article");

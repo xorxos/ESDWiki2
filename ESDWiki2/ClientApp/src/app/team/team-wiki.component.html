@@ -43,8 +43,8 @@
             <div class="article-view">
               <ng-container *ngFor="let component of selectedArticle?.articleItems; let i = index;">
                 <ng-container *ngIf="isTitleComponent(component)">
-                  <div>
-                    <h3 style="margin-bottom:20px; margin-top:10px;" [style.paddingBottom.px]="component?.bottomSpacing">{{component?.titleContents}}</h3>
+                  <div class="title-container">
+                    <h3 style="margin-bottom: 20px; margin-top:10px;" [style.paddingBottom.px]="component?.bottomSpacing">{{component?.titleContents}}<span class="edit" (click)="editArticle()"><i class="fa fa-pen edit-icon"></i></span></h3>
                   </div>
                 </ng-container>
                 <ng-container *ngIf="isSubheaderComponent(component)">

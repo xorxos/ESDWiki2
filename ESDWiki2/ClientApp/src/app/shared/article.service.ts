@@ -11,6 +11,7 @@ export class ArticleService {
   articleList: Article[]
   newArticle: Article
   existingArticle: Article
+  selectedArticleToEdit: Article
 
   constructor(private http2: Http, private http: HttpClient) { }
 
@@ -29,6 +30,24 @@ export class ArticleService {
         map(response => {
           this.newArticle = new Article();
           return true;
+        }));
+  }
+
+  public editArticle() {
+    let article: Article = this.newArticle
+    let title: string = this.newArticle.title
+    let description: string = this.newArticle.description
+    let articleItems: ArticleItem[] = this.newArticle.articleItems
+    let wikiCategories: WikiCategoryItem[] = this.newArticle.wikiCategories
+    let teamCategories: TeamCategoryItem[] = this.newArticle.teamCategories
+    let body = JSON.stringify({ article, title, description, articleItems, wikiCategories, teamCategories })
+    let headers = new Headers({ 'Content-Type': 'application/json' })
+    let options = new RequestOptions({ headers: headers })
+    return this.http2.post("/api/article/" + article.id, body, options)
+      .pipe(
+      map(response => {
+        this.newArticle = new Article();
+        return true;
         }));
   }
 

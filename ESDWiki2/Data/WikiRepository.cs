@@ -69,6 +69,10 @@ namespace ESDWiki2.Data
         {
             return ctx.Articles
                 .Where(c => c.Id == id)
+                .Include(a => a.ArticleItems)
+                .ThenInclude(ai => ai.ListContents)
+                .Include(o => o.WikiCategories)
+                .Include(o => o.TeamCategories)
                 .FirstOrDefault();
         }
 

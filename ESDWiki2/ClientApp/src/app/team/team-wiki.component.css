@@ -155,3 +155,19 @@
 .dropdown-container a, button {
   cursor: pointer;
 }
+
+.edit-icon {
+  height: 1.28em;
+  font-size: 16px;
+}
+
+.title-container .edit {
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.title-container:hover .edit {
+  visibility: visible;
+}

@@ -4,6 +4,7 @@ import { Article } from '../shared/article.model';
 import { UserService } from '../shared/services/user.service';
 import { WikiCategory, TeamCategory } from '../shared/category.model';
 import { CategoryService } from '../shared/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'team-wiki',
@@ -19,7 +20,7 @@ export class TeamWikiComponent implements OnInit {
   isRequesting: boolean;
   
 
-  constructor(private ArticleService: ArticleService, private CategoryService: CategoryService, private userService: UserService) { }
+  constructor(private ArticleService: ArticleService, private CategoryService: CategoryService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.isRequesting = true;
@@ -84,6 +85,11 @@ export class TeamWikiComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  public editArticle() {
+    this.ArticleService.selectedArticleToEdit = this.selectedArticle
+    this.router.navigate(['edit'])
   }
 
   public onSearchEnter(searchValue: string) {
