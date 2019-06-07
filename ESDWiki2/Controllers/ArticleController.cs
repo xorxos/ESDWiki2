@@ -104,13 +104,23 @@ namespace ESDWiki2.Controllers
 
                 //Remove the ID's for article and children entities
                 model.Id = 0;
-                foreach (var articleItem in model.ArticleItems)
+                if(model.ArticleItems.Count() > 0)
                 {
-                    articleItem.Id = 0;
-                    foreach(var list in articleItem.ListContents)
+                    if( model.ArticleItems.Count() > 0)
                     {
-                        list.Id = 0;
+                        foreach (var articleItem in model.ArticleItems)
+                        {
+                            articleItem.Id = 0;
+                            if(articleItem.ListContents.Count() > 0)
+                            {
+                                foreach (var list in articleItem.ListContents)
+                                {
+                                    list.Id = 0;
+                                }
+                            }
+                        }
                     }
+                    
                 }
                 foreach (var category in model.WikiCategories)
                 {

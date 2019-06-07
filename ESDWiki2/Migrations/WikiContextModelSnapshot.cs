@@ -128,6 +128,8 @@ namespace ESDWiki2.Migrations
 
                     b.Property<string>("Placeholder");
 
+                    b.Property<int>("Position");
+
                     b.Property<string>("Selector");
 
                     b.Property<string>("SubheaderContents");

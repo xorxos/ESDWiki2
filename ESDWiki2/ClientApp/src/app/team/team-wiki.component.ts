@@ -43,7 +43,13 @@ export class TeamWikiComponent implements OnInit {
   }
 
   public selectArticle(id: number) {
-    this.selectedArticle = this.articleList.find(a => a.id === id)
+    var newSelectedArticle = this.articleList.find(a => a.id === id)
+    newSelectedArticle.articleItems = newSelectedArticle.articleItems.sort(function (a, b) {
+      if (a.position < b.position) { return -1; }
+      if (a.position > b.position) { return 1; }
+      return 0
+    });
+    this.selectedArticle = newSelectedArticle
   }
 
   public selectCategory(name: string) {

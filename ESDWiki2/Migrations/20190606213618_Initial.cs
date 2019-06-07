@@ -225,6 +225,7 @@ namespace ESDWiki2.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Selector = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
+                    Position = table.Column<int>(nullable: false),
                     Hovered = table.Column<bool>(nullable: false),
                     TopSpacing = table.Column<int>(nullable: false),
                     BottomSpacing = table.Column<int>(nullable: false),

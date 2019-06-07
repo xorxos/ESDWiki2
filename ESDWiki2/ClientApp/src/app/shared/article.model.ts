@@ -12,6 +12,7 @@ export class Article {
 export class ArticleItem {
   selector: string
   displayName: string
+  position: number
   hovered: boolean
   topSpacing: number
   bottomSpacing: number

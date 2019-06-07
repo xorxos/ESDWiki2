@@ -43,6 +43,7 @@ export class CreateArticleComponent implements OnInit {
     this.titleSection = {
       selector: "Title",
       displayName: "Title",
+      position: 0,
       titleContents: "This is a Title",
       bottomSpacing: 0,
       topSpacing: 0,
@@ -143,6 +144,10 @@ export class CreateArticleComponent implements OnInit {
     var newIndex = index - 1
     var item = this.newArticle.articleItems[oldIndex]
     if (newIndex > 0) {
+      // Move component to new position
+      item.position = newIndex;
+      // Move the replaced item to new position
+      this.newArticle.articleItems[newIndex].position = oldIndex;
       this.newArticle.articleItems.splice(oldIndex, 1)
       this.newArticle.articleItems.splice(newIndex, 0, item)
     }
@@ -153,6 +158,10 @@ export class CreateArticleComponent implements OnInit {
     var newIndex = index + 1
     var item = this.newArticle.articleItems[oldIndex]
     if (newIndex <= this.newArticle.articleItems.length) {
+      // Move component to new position
+      item.position = newIndex;
+      // Move the replaced item to new position
+      this.newArticle.articleItems[newIndex].position = oldIndex;
       this.newArticle.articleItems.splice(oldIndex, 1)
       this.newArticle.articleItems.splice(newIndex, 0, item)
     }
@@ -314,6 +323,7 @@ export class CreateArticleComponent implements OnInit {
     this.textSection = {
       selector: "Text",
       displayName: "Text",
+      position: this.newArticle.articleItems.length,
       textContents: "This is some text. Extra spaces and returns are shown exactly as entered.",
       leftSpacing: 2,
       topSpacing: 0,
@@ -328,6 +338,7 @@ export class CreateArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    console.log(this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.textSection)
   }
 
@@ -335,6 +346,7 @@ export class CreateArticleComponent implements OnInit {
     this.subheaderSection = {
       selector: "Subheader",
       displayName: "Subheader",
+      position: this.newArticle.articleItems.length,
       subheaderContents: "Step 1",
       leftSpacing: 0,
       topSpacing: 0,
@@ -349,6 +361,7 @@ export class CreateArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    console.log(this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.subheaderSection)
   }
 
@@ -356,6 +369,7 @@ export class CreateArticleComponent implements OnInit {
     this.bulletedListSection = {
       selector: "Bulleted List",
       displayName: "Bulleted List",
+      position: this.newArticle.articleItems.length,
       listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
       leftSpacing: 40,
       topSpacing: 0,
@@ -370,6 +384,7 @@ export class CreateArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    console.log(this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.bulletedListSection)
   }
 
@@ -377,6 +392,7 @@ export class CreateArticleComponent implements OnInit {
     this.numberedListSection = {
       selector: "Numbered List",
       displayName: "Numbered List",
+      position: this.newArticle.articleItems.length,
       listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" }) ],
       leftSpacing: 40,
       topSpacing: 0,
@@ -391,6 +407,7 @@ export class CreateArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    console.log(this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.numberedListSection)
   }
 
@@ -398,6 +415,7 @@ export class CreateArticleComponent implements OnInit {
     this.fullWidthImageSection = {
       selector: "Full-Width Image",
       displayName: "Full-Width Image",
+      position: this.newArticle.articleItems.length,
       imageSrc: null,
       name: null,
       placeholder: "images\\placeholder-image.jpg",
@@ -412,6 +430,7 @@ export class CreateArticleComponent implements OnInit {
       subheaderContents: null,
       titleContents: null
     }
+    console.log(this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.fullWidthImageSection)
   }
 

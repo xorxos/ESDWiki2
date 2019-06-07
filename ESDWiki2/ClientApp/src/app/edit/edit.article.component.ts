@@ -39,7 +39,11 @@ export class EditArticleComponent implements OnInit {
     this.setMenuBooleansFalse()
     this.showArticleContents = true
     this.newArticle = this.ArticleService.selectedArticleToEdit
-    console.log(this.ArticleService.selectedArticleToEdit)
+    this.newArticle.articleItems.sort(function (a, b) {
+      if (a.position < b.position) { return -1; }
+      if (a.position > b.position) { return 1; }
+      return 0
+    });
   }
 
   /** Functions to handle which menu or component is being shown */
@@ -118,9 +122,16 @@ export class EditArticleComponent implements OnInit {
     var newIndex = index - 1
     var item = this.newArticle.articleItems[oldIndex]
     if (newIndex > 0) {
-      this.newArticle.articleItems.splice(oldIndex, 1)
-      this.newArticle.articleItems.splice(newIndex, 0, item)
+      console.log(item.displayName + " is moving up. New index: " + newIndex)
+      console.log("Old position: " + item.position)
+      // Move item to it's new position
+      item.position = newIndex;
+      // Move the replaced item to it's new position
+      this.newArticle.articleItems[newIndex].position = oldIndex;
+      this.newArticle.articleItems.splice(oldIndex, 1);
+      this.newArticle.articleItems.splice(newIndex, 0, item);
     }
+
   }
 
   moveComponentDown(index) {
@@ -128,8 +139,12 @@ export class EditArticleComponent implements OnInit {
     var newIndex = index + 1
     var item = this.newArticle.articleItems[oldIndex]
     if (newIndex <= this.newArticle.articleItems.length) {
-      this.newArticle.articleItems.splice(oldIndex, 1)
-      this.newArticle.articleItems.splice(newIndex, 0, item)
+      console.log(item.displayName + " is moving down. New index: " + newIndex)
+      console.log("Old position: " + item.position)
+      item.position = newIndex;
+      this.newArticle.articleItems[newIndex].position = oldIndex;
+      this.newArticle.articleItems.splice(oldIndex, 1);
+      this.newArticle.articleItems.splice(newIndex, 0, item);
     }
   }
 
@@ -289,6 +304,7 @@ export class EditArticleComponent implements OnInit {
     this.textSection = {
       selector: "Text",
       displayName: "Text",
+      position: 0,
       textContents: "This is some text. Extra spaces and returns are shown exactly as entered.",
       leftSpacing: 2,
       topSpacing: 0,
@@ -303,6 +319,8 @@ export class EditArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    this.textSection.position = this.newArticle.articleItems.length
+    console.log("Creating component at position " + this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.textSection)
   }
 
@@ -310,6 +328,7 @@ export class EditArticleComponent implements OnInit {
     this.subheaderSection = {
       selector: "Subheader",
       displayName: "Subheader",
+      position: 0,
       subheaderContents: "Step 1",
       leftSpacing: 0,
       topSpacing: 0,
@@ -324,6 +343,8 @@ export class EditArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    this.subheaderSection.position = this.newArticle.articleItems.length
+    console.log("Creating component at position " + this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.subheaderSection)
   }
 
@@ -331,6 +352,7 @@ export class EditArticleComponent implements OnInit {
     this.bulletedListSection = {
       selector: "Bulleted List",
       displayName: "Bulleted List",
+      position: 0,
       listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
       leftSpacing: 40,
       topSpacing: 0,
@@ -345,6 +367,8 @@ export class EditArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    this.bulletedListSection.position = this.newArticle.articleItems.length
+    console.log("Creating component at position " + this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.bulletedListSection)
   }
 
@@ -352,6 +376,7 @@ export class EditArticleComponent implements OnInit {
     this.numberedListSection = {
       selector: "Numbered List",
       displayName: "Numbered List",
+      position: 0,
       listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
       leftSpacing: 40,
       topSpacing: 0,
@@ -366,6 +391,8 @@ export class EditArticleComponent implements OnInit {
       width: 0,
       placeholder: null
     }
+    this.numberedListSection.position = this.newArticle.articleItems.length
+    console.log("Creating component at position " + this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.numberedListSection)
   }
 
@@ -373,6 +400,7 @@ export class EditArticleComponent implements OnInit {
     this.fullWidthImageSection = {
       selector: "Full-Width Image",
       displayName: "Full-Width Image",
+      position: 0,
       imageSrc: null,
       name: null,
       placeholder: "images\\placeholder-image.jpg",
@@ -387,6 +415,8 @@ export class EditArticleComponent implements OnInit {
       subheaderContents: null,
       titleContents: null
     }
+    this.fullWidthImageSection.position = this.newArticle.articleItems.length
+    console.log("Creating component at position " + this.newArticle.articleItems.length)
     this.newArticle.articleItems.push(this.fullWidthImageSection)
   }
 

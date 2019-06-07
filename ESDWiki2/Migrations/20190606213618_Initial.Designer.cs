@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESDWiki2.Migrations
 {
     [DbContext(typeof(WikiContext))]
-    [Migration("20190530222958_Initial")]
+    [Migration("20190606213618_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,6 +129,8 @@ namespace ESDWiki2.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("Placeholder");
+
+                    b.Property<int>("Position");
 
                     b.Property<string>("Selector");
 
