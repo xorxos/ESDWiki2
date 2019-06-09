@@ -159,6 +159,8 @@ namespace ESDWiki2.Migrations
 
                     b.Property<string>("BulletContents");
 
+                    b.Property<int>("Position");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleItemId");

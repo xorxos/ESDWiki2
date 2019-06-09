@@ -275,12 +275,21 @@ export class CreateArticleComponent implements OnInit {
   deleteListItem(index) {
     if (index !== -1) {
       (this.newArticle.articleItems[this.sectionIndex]).listContents.splice(index, 1)
-      console.log("Deleting list item: " + index)
+      var tempIndex: number = 0
+      for (var listItem of this.newArticle.articleItems[this.sectionIndex].listContents) {
+        if (tempIndex === listItem.position) {
+          tempIndex = tempIndex + 1
+          continue
+        } else {
+          (this.newArticle.articleItems[this.sectionIndex]).listContents[tempIndex].position = tempIndex
+          tempIndex = tempIndex + 1
+        }
+      }
     }
   }
 
   createListItem() {
-    (this.newArticle.articleItems[this.sectionIndex]).listContents.push(new BulletItem({ bulletContents: "New Item" }))
+    (this.newArticle.articleItems[this.sectionIndex]).listContents.push(new BulletItem({ bulletContents: "New Item", position: this.newArticle.articleItems[this.sectionIndex].listContents.length }))
   }
 
   /** Functions to update and get images */
@@ -370,7 +379,7 @@ export class CreateArticleComponent implements OnInit {
       selector: "Bulleted List",
       displayName: "Bulleted List",
       position: this.newArticle.articleItems.length,
-      listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
+      listContents: [new BulletItem({ bulletContents: "Item 1", position: 0 }), new BulletItem({ bulletContents: "Item 2", position: 1 }), new BulletItem({ bulletContents: "Item 3", position: 2 })],
       leftSpacing: 40,
       topSpacing: 0,
       bottomSpacing: 0,
@@ -393,7 +402,7 @@ export class CreateArticleComponent implements OnInit {
       selector: "Numbered List",
       displayName: "Numbered List",
       position: this.newArticle.articleItems.length,
-      listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" }) ],
+      listContents: [new BulletItem({ bulletContents: "Item 1", position: 0 }), new BulletItem({ bulletContents: "Item 2", position: 1 }), new BulletItem({ bulletContents: "Item 3", position: 2 })],
       leftSpacing: 40,
       topSpacing: 0,
       bottomSpacing: 0,

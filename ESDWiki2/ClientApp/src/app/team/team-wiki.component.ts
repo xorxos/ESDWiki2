@@ -18,7 +18,7 @@ export class TeamWikiComponent implements OnInit {
   selectedArticle: Article
   selectedCategory: TeamCategory
   isRequesting: boolean;
-  
+
 
   constructor(private ArticleService: ArticleService, private CategoryService: CategoryService, private userService: UserService, private router: Router) { }
 
@@ -35,6 +35,7 @@ export class TeamWikiComponent implements OnInit {
         this.articleList = this.ArticleService.getTeamArticles()
       }
     })
+
     // Need to set our Role subscriptions in case of page reload without re-login
     this.userService.isWikiAdmin();
     this.userService.isWikiUser();
@@ -44,11 +45,17 @@ export class TeamWikiComponent implements OnInit {
 
   public selectArticle(id: number) {
     var newSelectedArticle = this.articleList.find(a => a.id === id)
-    newSelectedArticle.articleItems = newSelectedArticle.articleItems.sort(function (a, b) {
+    newSelectedArticle.articleItems.sort(function (a, b) {
       if (a.position < b.position) { return -1; }
       if (a.position > b.position) { return 1; }
       return 0
     });
+    for (var articleItem of newSelectedArticle.articleItems)
+      articleItem.listContents.sort(function (a, b) {
+        if (a.position < b.position) { return -1; }
+        if (a.position > b.position) { return 1; }
+        return 0
+      });
     this.selectedArticle = newSelectedArticle
   }
 

@@ -16,6 +16,17 @@ export class ArticleDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.article = this.ArticleService.getArticleById(+this.route.snapshot.params['id'])
+    this.article.articleItems.sort(function (a, b) {
+      if (a.position < b.position) { return -1; }
+      if (a.position > b.position) { return 1; }
+      return 0
+    });
+    for (var articleItem of this.article.articleItems)
+      articleItem.listContents.sort(function (a, b) {
+        if (a.position < b.position) { return -1; }
+        if (a.position > b.position) { return 1; }
+        return 0
+      });
   }
 
   /** Functions to check which component is in newArticle.articleContents */

@@ -30,7 +30,7 @@ export class CategoryListComponent implements OnInit {
           if (success) {
             //Pull list of articles by category
             this.categoryArticleList = this.ArticleService.getWikiArticleByCategory(this.category.name)
-            this.selectedArticle = this.categoryArticleList[0]
+            this.selectArticle(this.categoryArticleList[0].id)
           }
         })
       }
@@ -39,6 +39,17 @@ export class CategoryListComponent implements OnInit {
 
   public selectArticle(id: number) {
     this.selectedArticle = this.categoryArticleList.find(a => a.id === id)
+    this.selectedArticle.articleItems.sort(function (a, b) {
+      if (a.position < b.position) { return -1; }
+      if (a.position > b.position) { return 1; }
+      return 0
+    });
+    for (var articleItem of this.selectedArticle.articleItems)
+      articleItem.listContents.sort(function (a, b) {
+        if (a.position < b.position) { return -1; }
+        if (a.position > b.position) { return 1; }
+        return 0
+      });
   }
 
   public isSelectedArticle(title: string): boolean {

@@ -39,7 +39,15 @@ export class EditArticleComponent implements OnInit {
     this.setMenuBooleansFalse()
     this.showArticleContents = true
     this.newArticle = this.ArticleService.selectedArticleToEdit
+    // Sorting the list based on position
     this.newArticle.articleItems.sort(function (a, b) {
+      if (a.position < b.position) { return -1; }
+      if (a.position > b.position) { return 1; }
+      return 0
+    });
+    // Sorting list based on position
+    for (var articleItem of this.newArticle.articleItems)
+      articleItem.listContents.sort(function (a, b) {
       if (a.position < b.position) { return -1; }
       if (a.position > b.position) { return 1; }
       return 0
@@ -256,12 +264,21 @@ export class EditArticleComponent implements OnInit {
   deleteListItem(index) {
     if (index !== -1) {
       (this.newArticle.articleItems[this.sectionIndex]).listContents.splice(index, 1)
-      console.log("Deleting list item: " + index)
+      var tempIndex: number = 0
+      for (var listItem of this.newArticle.articleItems[this.sectionIndex].listContents) {
+        if (tempIndex === listItem.position) {
+          tempIndex = tempIndex + 1
+          continue
+        } else {
+          (this.newArticle.articleItems[this.sectionIndex]).listContents[tempIndex].position = tempIndex
+          tempIndex = tempIndex + 1
+        }
+      }
     }
   }
 
   createListItem() {
-    (this.newArticle.articleItems[this.sectionIndex]).listContents.push(new BulletItem({ bulletContents: "New Item" }))
+    (this.newArticle.articleItems[this.sectionIndex]).listContents.push(new BulletItem({ bulletContents: "New Item", position: this.newArticle.articleItems[this.sectionIndex].listContents.length }))
   }
 
   /** Functions to update and get images */
@@ -281,6 +298,16 @@ export class EditArticleComponent implements OnInit {
   deleteComponent(index: number) {
     if (index !== -1) {
       this.newArticle.articleItems.splice(index, 1)
+      var tempIndex: number = 0
+      for (var articleItem of this.newArticle.articleItems) {
+        if (tempIndex === articleItem.position) {
+          tempIndex = tempIndex + 1
+          continue
+        } else {
+          this.newArticle.articleItems[tempIndex].position = tempIndex
+          tempIndex = tempIndex + 1
+        }
+      }
     }
   }
 
@@ -353,7 +380,7 @@ export class EditArticleComponent implements OnInit {
       selector: "Bulleted List",
       displayName: "Bulleted List",
       position: 0,
-      listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
+      listContents: [new BulletItem({ bulletContents: "Item 1", position: 0 }), new BulletItem({ bulletContents: "Item 2", position: 1 }), new BulletItem({ bulletContents: "Item 3", position: 2 })],
       leftSpacing: 40,
       topSpacing: 0,
       bottomSpacing: 0,
@@ -377,7 +404,7 @@ export class EditArticleComponent implements OnInit {
       selector: "Numbered List",
       displayName: "Numbered List",
       position: 0,
-      listContents: [new BulletItem({ bulletContents: "Item 1" }), new BulletItem({ bulletContents: "Item 2" }), new BulletItem({ bulletContents: "Item 3" })],
+      listContents: [new BulletItem({ bulletContents: "Item 1", position: 0 }), new BulletItem({ bulletContents: "Item 2", position: 1 }), new BulletItem({ bulletContents: "Item 3", position: 2 })],
       leftSpacing: 40,
       topSpacing: 0,
       bottomSpacing: 0,

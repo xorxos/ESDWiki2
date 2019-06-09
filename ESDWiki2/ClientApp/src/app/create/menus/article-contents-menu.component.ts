@@ -122,6 +122,7 @@ export class ArticleContentsMenuComponent implements OnInit {
     if (this.url === '/team-wiki/create') {
       this.isRequesting = true;
       this.ArticleService.newArticle = this.newArticle
+      console.log(this.ArticleService.newArticle)
       this.ArticleService.SaveNewArticle().subscribe(success => {
         if (success) {
           this.isRequesting = false;
@@ -132,6 +133,7 @@ export class ArticleContentsMenuComponent implements OnInit {
     if (this.url === '/edit') {
       this.isRequesting = true;
       this.ArticleService.newArticle = this.newArticle
+      console.log(this.ArticleService.newArticle)
       this.ArticleService.editArticle().subscribe(success => {
         if (success) {
           this.isRequesting = false;

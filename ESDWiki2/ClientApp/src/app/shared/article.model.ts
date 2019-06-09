@@ -30,9 +30,11 @@ export class ArticleItem {
 
 export class BulletItem {
   bulletContents: string
+  position: number
   public constructor(
     fields?: {
-      bulletContents?: string
+      bulletContents?: string,
+      position?: number
     }) {
     if (fields) Object.assign(this, fields);
   }

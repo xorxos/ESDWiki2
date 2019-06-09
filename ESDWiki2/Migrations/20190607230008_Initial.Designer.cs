@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESDWiki2.Migrations
 {
     [DbContext(typeof(WikiContext))]
-    [Migration("20190606213618_Initial")]
+    [Migration("20190607230008_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,6 +160,8 @@ namespace ESDWiki2.Migrations
                     b.Property<int?>("ArticleItemId");
 
                     b.Property<string>("BulletContents");
+
+                    b.Property<int>("Position");
 
                     b.HasKey("Id");
 

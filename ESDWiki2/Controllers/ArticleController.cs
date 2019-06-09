@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace ESDWiki2.Controllers
 {
     [Route("/api/[controller]")]
-    public class ArticleController: Controller
+    public class ArticleController : Controller
     {
         private readonly WikiContext _appDbContext;
         private readonly IWikiRepository repository;
@@ -84,7 +84,7 @@ namespace ESDWiki2.Controllers
                 //Delete article children entities
                 foreach (var articleItem in article.ArticleItems.ToList())
                 {
-                    foreach(var listContent in articleItem.ListContents)
+                    foreach (var listContent in articleItem.ListContents)
                     {
                         _appDbContext.Remove(listContent);
                     }
@@ -104,29 +104,32 @@ namespace ESDWiki2.Controllers
 
                 //Remove the ID's for article and children entities
                 model.Id = 0;
-                if(model.ArticleItems.Count() > 0)
+
+                if (model.ArticleItems.ToList().Count > 0)
                 {
-                    if( model.ArticleItems.Count() > 0)
+                    for (var i = 0; i < model.ArticleItems.ToList().Count; i++)
                     {
-                        foreach (var articleItem in model.ArticleItems)
+                        var articleItems = model.ArticleItems.ToList();
+                        articleItems[i].Id = 0;
+                        if(articleItems[i].ListContents != null)
                         {
-                            articleItem.Id = 0;
-                            if(articleItem.ListContents.Count() > 0)
+                            for (var i2 = 0; i2 < articleItems[i].ListContents.ToList().Count; i2++)
                             {
-                                foreach (var list in articleItem.ListContents)
+                                var listContent = articleItems[i].ListContents.ToList();
+                                if (listContent[i2] != null)
                                 {
-                                    list.Id = 0;
+                                    listContent[i2].Id = 0;
                                 }
                             }
                         }
                     }
-                    
                 }
-                foreach (var category in model.WikiCategories)
+
+                foreach (var category in model.WikiCategories.ToList())
                 {
                     category.Id = 0;
                 }
-                foreach(var category in model.TeamCategories)
+                foreach (var category in model.TeamCategories.ToList())
                 {
                     category.Id = 0;
                 }
@@ -137,8 +140,14 @@ namespace ESDWiki2.Controllers
                 {
                     return new OkObjectResult("Successfully saved article");
                 }
+                else
+                {
+                    repository.AddEntity(article);
+                    repository.SaveAll();
+                    return BadRequest("Could not save new article.");
+                }
             }
-            
+
             return new OkObjectResult("Successfully saved article");
         }
 
