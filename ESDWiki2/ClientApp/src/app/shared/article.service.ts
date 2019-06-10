@@ -87,10 +87,14 @@ export class ArticleService {
           }
         }
 
-        // Include of description matches
+        // Include if description matches
         for (let article of wikiArticleList) {
           if (article.description.toLowerCase().includes(searchQuery.toLowerCase())) {
-            matchingArticleList.push(article)
+
+            // Only include if it's not already in the list
+            if (!matchingArticleList.includes(article)) {
+              matchingArticleList.push(article)
+            }
           }
         }
 
@@ -120,6 +124,19 @@ export class ArticleService {
                 if (!matchingArticleList.includes(article)) {
                   matchingArticleList.push(article)
                 }
+              }
+            }
+          }
+        }
+
+
+        // Include if category matches
+        for (let article of wikiArticleList) {
+          for (let category of article.wikiCategories) {
+            if (category !== null && category.categoryName.toLowerCase().includes(searchQuery.toLowerCase())) {
+              // Only include if it's not already in the list
+              if (!matchingArticleList.includes(article)) {
+                matchingArticleList.push(article)
               }
             }
           }

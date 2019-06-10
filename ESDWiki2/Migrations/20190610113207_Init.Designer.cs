@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESDWiki2.Migrations
 {
     [DbContext(typeof(WikiContext))]
-    [Migration("20190607230008_Initial")]
-    partial class Initial
+    [Migration("20190610113207_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
