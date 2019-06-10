@@ -12,7 +12,7 @@ export class TopNavBarComponent implements OnInit, OnDestroy {
   title = 'ESD Wiki';
 
   status: boolean
-
+  isNavbarCollapsed: boolean = true;
   email: string
 
   subscription: Subscription

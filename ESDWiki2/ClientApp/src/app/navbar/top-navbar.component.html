@@ -3,11 +3,18 @@
     <div class="col-lg-12">
       <nav class="navbar navbar-expand-sm navbar-dark bg-light">
         <a class="navbar-brand" routerLink="">ESDWiki</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler"
+                (click)="isNavbarCollapsed = !isNavbarCollapsed"
+                type="button"
+                data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div [ngbCollapse]="isNavbarCollapsed"
+             class="collapse navbar-collapse"
+             id="navbarNavAltMarkup">
           <ul class="navbar-nav mr-auto">
             <li *ngIf="userService.isESDTeamMemberObservable | async" class="nav-item active">
               <a class="nav-link nav-link-border mr-auto" routerLink="/team-wiki">Team Wiki</a>
@@ -15,7 +22,13 @@
           </ul>
           <div class="navbar-nav">
             <div ngbDropdown *ngIf="status" class="nav-item active">
-              <a ngbDropdownToggle class="nav-link nav-link-border dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight:500">
+              <a ngbDropdownToggle class="nav-link nav-link-border dropdown-toggle"
+                 id="navbarDropdown"
+                 role="button"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false"
+                 style="font-weight:500">
                 {{email}}
               </a>
               <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
