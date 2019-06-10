@@ -52,9 +52,9 @@ export class CategoryListComponent implements OnInit {
       });
   }
 
-  public isSelectedArticle(title: string): boolean {
-    if ((this.selectedArticle !== undefined) && (title !== undefined)) {
-      if (this.selectedArticle.title === title) {
+  public isSelectedArticle(id: number): boolean {
+    if ((this.selectedArticle !== undefined) && (id !== undefined)) {
+      if (this.selectedArticle.id === id) {
         return true;
       } else {
         return false;

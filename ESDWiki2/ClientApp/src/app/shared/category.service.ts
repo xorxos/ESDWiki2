@@ -19,6 +19,10 @@ export class CategoryService {
     return this.wikiCategories.find(category => category.categoryUrl === categoryUrl)
   }
 
+  getWikiCategoryByName(categoryName: string): WikiCategory {
+    return this.wikiCategories.find(category => category.name === categoryName)
+  }
+
   getTeamCategory(categoryName: string): TeamCategory {
     return this.teamCategories.find(category => category.name === categoryName)
   }

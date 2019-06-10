@@ -1,0 +1,110 @@
+@media (min-width: 320px) {
+  .container {
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 450px) {
+  .container {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+  }
+}
+
+@media (min-width: 600px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.white-section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.col-lg-2, .col-md-3, .col-sm-4 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.category-section {
+  margin-top: 17px;
+  padding: 21px 0;
+}
+
+.category-header {
+  font-weight: 500;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.article-header {
+  padding: 6px 0 18px 26px;
+  color: rgb(118, 118, 118);
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  border-left: solid 3px rgb(230, 230, 230);
+}
+
+  .article-header:hover {
+    color: #0067b8;
+    border-left: solid 3px #434343;
+  }
+
+.selected-article-header {
+  padding: 6px 0 18px 26px;
+  color: #434343;
+  border-left: solid 3px #434343;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.article-title {
+  color: rgb(47, 47, 47);
+  margin-top: 10px;
+}
+
+.article-description {
+  color: #333E48;
+  padding-top:5px;
+  font-size: 0.95rem;
+}

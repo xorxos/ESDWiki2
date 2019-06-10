@@ -227,6 +227,11 @@ export class CreateArticleComponent implements OnInit {
     }
   }
 
+  // Update article description
+  updateDescription(event) {
+    this.newArticle.description = event.target.value
+  }
+
   /** Update Subheader Component Functions */
   updateSubheaderContent(event) {
     try {

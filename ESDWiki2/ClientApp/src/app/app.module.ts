@@ -39,8 +39,9 @@ import { DataService } from './shared/services/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditAccountComponent } from './admin/users/edit/edit-account.component';
 import { UploadComponent } from './upload/upload.component';
-import { ArticleDetailsComponent } from './article/article.details.component';
 import { EditArticleComponent } from './edit/edit.article.component';
+import { ArticleQueryComponent } from './search/articles-by-query/article.query.component';
+import { ArticleComponent } from './article/article.component';
 
 
 @NgModule({
@@ -69,8 +70,9 @@ import { EditArticleComponent } from './edit/edit.article.component';
     AdminDashboardComponent,
     SearchAccountComponent,
     UploadComponent,
-    ArticleDetailsComponent,
-    EditArticleComponent
+    ArticleQueryComponent,
+    EditArticleComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,

@@ -118,6 +118,11 @@ export class ArticleContentsMenuComponent implements OnInit {
     this.selectedTeamCategory = value
   }
 
+
+  updateDescription(event) {
+    this.newArticle.description = event.target.value
+  }
+
   public saveArticle() {
     if (this.url === '/team-wiki/create') {
       this.isRequesting = true;

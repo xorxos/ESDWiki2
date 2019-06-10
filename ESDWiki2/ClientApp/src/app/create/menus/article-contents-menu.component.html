@@ -90,17 +90,23 @@
                   <option *ngFor="let option of teamCategories">{{option.name}}</option>
                 </select>
               </div>
-                <div class="form-group form-check" style="padding-top: 20px;">
-                    <input type="checkbox" name="publicCheckbox" [ngModel]="isPublicChecked" class="form-check-input" (change)="checked($event)">
-                    <label class="form-check-label" for="exampleCheck1">Publicly Available</label>
-                </div>
+              <div class="form-group" style="padding-top: 20px;">
+                <div *ngIf="missingFields" class="warning-star-text">* Team or public category required</div>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" name="publicCheckbox" [ngModel]="isPublicChecked" class="form-check-input" (change)="checked($event)">
+                <label class="form-check-label" for="exampleCheck1">Publicly Available</label>
+              </div>
                 <div class="form-group">
-                  <div *ngIf="missingFields" class="warning-star-text">* Team or public category required</div>
                   <label for="publicCategory">Public Category</label>
                   <select [disabled]="!isPublicChecked" class="form-control" id="publicCategory" name="publicCategory" [ngModel]="selectedWikiCategory" (ngModelChange)="onWikiCategoryChange($event)">
                     <option>Choose...</option>
                     <option *ngFor="let option of wikiCategories">{{option.name}}</option>
                   </select>
+                </div>
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea rows="3" class="form-control" [disabled]="!isPublicChecked" (input)="updateDescription($event)" value="{{newArticle.description}}"></textarea>
                 </div>
             </form>
         </div>

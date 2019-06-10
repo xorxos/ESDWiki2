@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { CategoryService } from '../shared/category.service';
 import { WikiCategory } from '../shared/category.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'articlecategories-component',
@@ -10,7 +11,7 @@ import { WikiCategory } from '../shared/category.model';
 export class ArticleCategoriesComponent implements OnInit {
   categories: WikiCategory[] = [];
   moreCategories: boolean = false;
-  constructor(private CategoryService: CategoryService) {
+  constructor(private CategoryService: CategoryService, private router: Router) {
 
   }
   ngOnInit() {
@@ -19,6 +20,14 @@ export class ArticleCategoriesComponent implements OnInit {
         this.categories = this.CategoryService.wikiCategories;
       }
     })
+  }
+
+  public onSearchEnter(searchQuery: string) {
+    this.router.navigate(['search', searchQuery])
+  }
+
+  public browseCategory(name) {
+    this.router.navigate(['browse', name])
   }
 
   public showMoreCategories() {

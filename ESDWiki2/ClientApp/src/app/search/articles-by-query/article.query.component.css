@@ -1,0 +1,60 @@
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+.container-fluid {
+  padding: 0px;
+  background-color: white;
+}
+
+.container {
+  font-family: "Segoe UI";
+}
+
+.col-lg-3 {
+  background-color: white;
+  padding: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.col-lg-7 {
+  min-height: calc(100vh - 63px);
+  background-color: white;
+  overflow-y: auto;
+}
+
+.article-view {
+  margin: 30px;
+  margin-bottom: 60px;
+}
+
+.article-title {
+  font-size: 18px;
+  line-height: 27px;
+  color: rgb(0, 103, 184);
+  text-decoration-color: rgb(0, 103, 184);
+  text-decoration-style: solid;
+}
+
+.article-description {
+  color: rgb(54, 54, 54);
+  font-size: 16px;
+  line-height: 22px;
+  margin-top: 1px;
+}
+
+.article-category {
+  margin-top:5px;
+  color: rgb(110, 110, 110);
+  cursor: pointer;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 20px;
+}
+
+.article-category:hover {
+  text-decoration: underline;
+}

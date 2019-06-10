@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 offset-2" style="margin-top:32px; margin-bottom: 14px; padding: 0 12.5px">
+        <div style="font-size: 30px;">Results for "{{query}}"</div>
+        <div style="padding: 15px 0;" *ngFor="let article of articleList">
+          <a [routerLink]="['/browse/articles/', article.id]" class="article-title">{{article?.title}}</a>
+          <div class="article-description">{{article.description || "No description found."}}</div>
+          <div class="article-category-container" *ngFor="let category of article.wikiCategories">
+            <div class="article-category" (click)="clickCategory(category?.categoryName)">Category: {{category?.categoryName}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

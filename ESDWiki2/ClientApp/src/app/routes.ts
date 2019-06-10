@@ -15,16 +15,18 @@ import { AccountPermissionsComponent } from './admin/users/permissions/permissio
 import { TeamCategoryAdminComponent } from './admin/team/categories/team-category-admin.component';
 import { PublicCategoryAdminComponent } from './admin/wiki/wiki-category-admin.component';
 import { SearchAccountComponent } from './admin/users/search/search-account.component';
-import { ArticleDetailsComponent } from './article/article.details.component';
 import { EditArticleComponent } from './edit/edit.article.component';
+import { ArticleQueryComponent } from './search/articles-by-query/article.query.component';
+import { ArticleComponent } from './article/article.component';
 
 const appRoutes: Routes = [
   { path: 'browse', component: ArticleCategoriesComponent },
   { path: 'browse/:name', component: CategoryListComponent },
+  { path: 'browse/articles/:id', component: ArticleComponent },
   { path: 'error/unauthorized', component: UnauthorizedComponent },
+  { path: 'search/:searchQuery', component: ArticleQueryComponent },
   { path: 'team-wiki/create', component: CreateArticleComponent, canActivate: [AuthGuard] },
   { path: 'team-wiki', component: TeamWikiComponent, canActivate: [AuthGuard] },
-  { path: 'team-wiki/:id', component: ArticleDetailsComponent },
   { path: 'edit', component: EditArticleComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
   { path: 'admin/users/new', component: CreateAccountComponent, canActivate: [AuthGuard] },

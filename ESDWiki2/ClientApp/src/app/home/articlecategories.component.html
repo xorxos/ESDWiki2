@@ -9,9 +9,9 @@
           <div class="text-center">Use the search box to find articles or select a category below</div>
         </div>
         <div class="input-group search-box center">
-          <input class="form-control" type="search" placeholder="Search by keyword">
+          <input #search class="form-control" type="search" placeholder="Search by keyword" (keyup.enter)="onSearchEnter(search.value)">
           <div class="input-group-append">
-            <button class="btn btn-link" type="button">
+            <button class="btn btn-link" type="button" (click)="onSearchEnter(search.value)">
               <i class="fa fa-search"></i>
             </button>
           </div>
@@ -48,7 +48,7 @@
             <div class="article-item">How to setup the Microsoft MFA</div>
             <div class="article-item">How to setup your security questions</div>
             <div class="article-item">How to setup email on a mobile</div>
-            <div class="article-item more-text">More New Hire Articles</div>
+            <div class="article-item more-text" (click)="browseCategory('new_hires')">More New Hire Articles</div>
           </div>
         </div>
         <div class="article-list-container2-3">
@@ -57,7 +57,7 @@
             <div class="article-item">How to clear the credential manager</div>
             <div class="article-item">How to change your password in Windows</div>
             <div class="article-item">How to map a network drive</div>
-            <div class="article-item more-text">More Windows Articles</div>
+            <div class="article-item more-text" (click)="browseCategory('windows')">More Windows Articles</div>
           </div>
         </div>
         <div class="article-list-container2-3">
@@ -66,7 +66,7 @@
             <div class="article-item">How to clear the keychain</div>
             <div class="article-item">How to change your password on a mac</div>
             <div class="article-item">How to add a shared inbox to outlook</div>
-            <div class="article-item more-text">More Mac Articles</div>
+            <div class="article-item more-text" (click)="browseCategory('mac')">More Mac Articles</div>
           </div>
         </div>
         <div class="article-list-container4">
