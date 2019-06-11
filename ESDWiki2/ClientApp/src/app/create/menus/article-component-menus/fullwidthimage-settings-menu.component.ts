@@ -46,13 +46,9 @@ export class FullWidthImageSettingsMenuComponent implements OnInit {
 
   public uploadFinished = (event) => {
     this.response = event;
-    this.imgSrc = this.createImgPath(this.response.dbPath)
+    this.imgSrc = this.response.dbPath
     this.fullWidthImage.imageSrc = this.imgSrc
     this.updateFullWidthImageSrc(this.imgSrc)
-  }
-
-  public createImgPath = (serverPath: string) => {
-    return `http://localhost:5000/${serverPath}`;
   }
 
   public returnToCreate = () => {

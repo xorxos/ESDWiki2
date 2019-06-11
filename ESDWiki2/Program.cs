@@ -28,6 +28,7 @@ namespace ESDWiki2
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(SetupConfiguration)
+                .UseSetting("https_port", "8080")
                 .UseStartup<Startup>();
 
         private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)

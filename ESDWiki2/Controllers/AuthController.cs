@@ -26,8 +26,7 @@ namespace ESDWiki2.Controllers
             _jwtOptions = jwtOptions.Value;
         }
 
-        // POST api/auth/login
-        [HttpPost("login")]
+        // POST api/auth/
         public async Task<IActionResult> Post([FromBody]CredentialsViewModel credentials)
         {
             if (!ModelState.IsValid)

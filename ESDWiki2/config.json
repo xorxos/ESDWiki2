@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
-    "WikiConnectionString": "server=(localdb)\\ProjectsV13;Database=ESDWikiDB;Integrated Security=true;MultipleActiveResultSets=true;"
+    "WikiConnectionString": "Data Source=esdwiki2.database.windows.net;Initial Catalog=ESDWikiDB;User ID=parkertleavitt;Password=a8279941#;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
   },
   "Logging": {
     "LogLevel": {
@@ -10,6 +10,6 @@
   "Tokens": {
     "Key": "asdfupoqwj;asdfjklcopqiuwer",
     "Issuer": "localhost",
-    "Audience":  "users"
+    "Audience": "users"
   }
 }

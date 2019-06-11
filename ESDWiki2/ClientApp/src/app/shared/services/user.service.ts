@@ -53,7 +53,6 @@ export class UserService extends BaseService {
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
     this._currentUserEmail.next(this.username);
-    this.baseUrl = configService.getApiURI();
     
   }
 
@@ -76,17 +75,14 @@ export class UserService extends BaseService {
 
   }
 
-   login(userName, password) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    return this.http
-      .post(
-      this.baseUrl + '/auth/login',
-      JSON.stringify({ userName, password }),{ headers }
-      )
+  login(userName, password) {
+    let body = JSON.stringify({ userName, password })
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    console.log("This bitch is breaking here")
+    return this.http.post("/api/auth/", body, options)
       .pipe(map(res => res.json()),
-      map(res => {
+        map(res => {
         localStorage.setItem('auth_token', res.auth_token);
         localStorage.setItem('user_name', JSON.stringify(userName));
 

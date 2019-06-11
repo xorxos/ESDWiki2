@@ -152,14 +152,10 @@ export class PublicCategoryAdminComponent {
 
   public uploadFinished = (event) => {
     this.response = event;
-    this.imgSrc = this.createImgPath(this.response.dbPath)
+    this.imgSrc = this.response.dbPath
     this.newExistingWikiCategory.imagePath = this.imgSrc
     this.newExistingWikiCategory.imageUrl = this.imgSrc
     this.newCategory.imagePath = this.imgSrc
     this.newCategory.imageUrl = this.imgSrc
-  }
-
-  public createImgPath = (serverPath: string) => {
-    return `http://localhost:5000/${serverPath}`;
   }
 }

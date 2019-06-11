@@ -61,6 +61,7 @@ namespace ESDWiki2.Controllers
 
                         dbPath = Path.Combine(folderName, fileName);
                         Console.WriteLine("New filename: " + fileName);
+                        Console.WriteLine("DBPath: " + dbPath);
 
                         return Ok(new { dbPath });
                     }

@@ -44,17 +44,20 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.submitted = true;
     this.isRequesting = true;
     this.errors = '';
+    console.log("This bitch is...")
     if (valid) {
-      this.userService.login(value.email, value.password)
-        .pipe(finalize(() => this.isRequesting = false)).subscribe(
-          result => {
-            if (result) {
+      console.log("This bitch broke 1")
+      this.userService.login(value.email, value.password).subscribe(
+          success => {
+            if (success) {
+              this.isRequesting = false;
               this.router.navigate(['/browse']);
             }
           },
-        error => {
-          this.errors = JSON.parse(error._body).login_failure
-        });
+          error => {
+            console.log(error)
+            this.errors = JSON.parse(error._body).login_failure
+          });
     }
   }
 }
