@@ -2,6 +2,10 @@
   .container {
     max-width: 300px;
   }
+  .vitalyst-section {
+    padding: 30px 0;
+  }
+
   .vitalyst-container {
     width: 100%;
     padding-top: 25px;
@@ -44,11 +48,15 @@
   .container {
     max-width: 450px;
   }
+  .vitalyst-section {
+    padding: 70px 0;
+  }
 }
 
 @media (min-width: 576px) {
   .container {
   }
+
   .vitalyst-container {
     width: 50%;
     padding-top: 0;
@@ -264,7 +272,6 @@
 
 .vitalyst-section {
   width: 100%;
-  padding: 70px 0;
 }
 
 .vitalyst-container {
