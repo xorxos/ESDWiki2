@@ -1,6 +1,7 @@
 {
   "ConnectionStrings": {
-    "WikiConnectionString": "Data Source=esdwiki2.database.windows.net;Initial Catalog=ESDWikiDB;User ID=parkertleavitt;Password=a8279941#;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+    "WikiConnectionString": "Data Source=esdwiki2.database.windows.net;Initial Catalog=ESDWikiDB;User ID=parkertleavitt;Password=a8279941#;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False",
+    "ProdConnectionString": "Data Source=(localdb)\\ProjectsV13;Initial Catalog=ESDWikiDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
   },
   "Logging": {
     "LogLevel": {

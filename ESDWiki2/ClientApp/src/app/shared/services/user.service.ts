@@ -79,7 +79,6 @@ export class UserService extends BaseService {
     let body = JSON.stringify({ userName, password })
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    console.log("This bitch is breaking here")
     return this.http.post("/api/auth/", body, options)
       .pipe(map(res => res.json()),
         map(res => {
@@ -177,7 +176,7 @@ export class UserService extends BaseService {
     params = params.append('searchTerm', lastName);
     params = params.append('filter', filter);
     
-    return this.httpClient.get(this.baseUrl + "/accounts", { params: params }).pipe(map((data: any[]) => {
+    return this.httpClient.get("/api/accounts", { params: params }).pipe(map((data: any[]) => {
       this.users = data;
       return true;
     }));
