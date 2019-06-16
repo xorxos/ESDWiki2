@@ -1,67 +1,96 @@
-﻿using ESDWiki2.Auth;
-using ESDWiki2.Data;
+﻿using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
 using ESDWiki2.Helpers;
 using ESDWiki2.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ESDWiki2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IJwtFactory _jwtFactory;
-        private readonly JwtIssuerOptions _jwtOptions;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IConfiguration config;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public AuthController(UserManager<ApplicationUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+        public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, SignInManager<ApplicationUser> signInManager)
         {
-            _userManager = userManager;
-            _jwtFactory = jwtFactory;
-            _jwtOptions = jwtOptions.Value;
+            this.userManager = userManager;
+            this.config = config;
+            this.signInManager = signInManager;
         }
 
-        // POST api/auth/
-        public async Task<IActionResult> Post([FromBody]CredentialsViewModel credentials)
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
-            if (identity == null)
-            {
-                return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
-            }
-
-            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
-            return new OkObjectResult(jwt);
+            await signInManager.SignOutAsync();
+            return Ok();
         }
 
-        private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
+        [HttpPost, Route("createtoken")]
+        public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
         {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-                return await Task.FromResult<ClaimsIdentity>(null);
-
-            // get the user to verify
-            var userToVerify = await _userManager.FindByNameAsync(userName);
-
-            if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
-
-            // check the credentials
-            if (await _userManager.CheckPasswordAsync(userToVerify, password))
+            if (ModelState.IsValid)
             {
-                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userName, userToVerify.Id));
-            }
+                var user = await userManager.FindByNameAsync(model.Username);
 
-            // Credentials are invalid, or account doesn't exist
-            return await Task.FromResult<ClaimsIdentity>(null);
+                if (user != null)
+                {
+                    var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+                    if (result.Succeeded)
+                    {
+                        var newClaim1 = new Claim(ClaimTypes.Role, "DefaultUser");
+                        var newClaim2 = new Claim("role", "Default User");
+                        if (user.Permissions == "Wiki Admin")
+                        {
+                            newClaim1 = new Claim(ClaimTypes.Role, "WikiAdmin");
+                            newClaim2 = new Claim("role", "Wiki Admin");
+                        } else if (user.Permissions == "ESD Member")
+                        {
+                            newClaim1 = new Claim(ClaimTypes.Role, "ESDMember");
+                            newClaim2 = new Claim("role", "ESD Member");
+                        }
+                        else if (user.Permissions == "ESD Admin")
+                        {
+                            newClaim1 = new Claim(ClaimTypes.Role, "ESDAdmin");
+                            newClaim2 = new Claim("role", "ESD Admin");
+                        }
+                        var claims = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                            newClaim1,
+                            newClaim2
+                        };
+
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]));
+                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                        var token = new JwtSecurityToken(
+                            config["Tokens:Issuer"],
+                            config["Tokens:Audience"],
+                            claims,
+                            expires: DateTime.UtcNow.AddHours(8),
+                            signingCredentials: creds
+                            );
+                        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+                        return Ok(new { Token = tokenString });
+                    }
+                }
+            }
+            return BadRequest();
         }
     } 
 }

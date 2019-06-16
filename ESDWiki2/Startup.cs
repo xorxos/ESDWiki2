@@ -1,5 +1,4 @@
 using AutoMapper;
-using ESDWiki2.Auth;
 using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
 using ESDWiki2.Helpers;
@@ -45,90 +44,70 @@ namespace ESDWiki2
                 options.UseSqlServer(_config.GetConnectionString("WikiConnectionString"),
                     b => b.MigrationsAssembly("ESDWiki2")));
 
-            services.AddSingleton<IJwtFactory, JwtFactory>();
-
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            // jwt wire up
-            // Get options from app settings
-            var jwtAppSettingOptions = _config.GetSection(nameof(JwtIssuerOptions));
+            services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
+           {
+               cfg.User.RequireUniqueEmail = true;
+           })
+            .AddEntityFrameworkStores<WikiContext>();
 
-            // Configure JwtIssuerOptions
-            services.Configure<JwtIssuerOptions>(options =>
-            {
-                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
-            });
+            services.AddAuthentication()
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/login";
+                })
+                .AddJwtBearer(cfg =>
+               {
+                   cfg.TokenValidationParameters = new TokenValidationParameters()
+                   {
+                       ValidateIssuer = true,
+                       ValidateAudience = true,
+                       ValidateLifetime = true,
+                       ValidateIssuerSigningKey = true,
 
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+                       ValidIssuer = _config["Tokens:Issuer"],
+                       ValidAudience = _config["Tokens:Audience"],
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+                   };
+               });
 
-                ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
-                
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(configureOptions =>
-            {
-                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                configureOptions.TokenValidationParameters = tokenValidationParameters;
-                configureOptions.SaveToken = true;
-            });
-
-            // api user claim policy
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(
-                    "WikiUser",
+                    "DefaultUser",
                     policy =>
-                    {
                         policy.RequireAssertion(context =>
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiUser) ||
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin) ||
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamMember) ||
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamAdmin)
-                        );
-                    });
+                        (context.User.HasClaim(ClaimTypes.Role, "WikiAdmin")) || context.User.HasClaim(ClaimTypes.Role, "ESDAdmin") ||
+                        (context.User.HasClaim(ClaimTypes.Role, "DefaultUser")) || (context.User.HasClaim(ClaimTypes.Role, "ESDMember")))
+                    );
                 options.AddPolicy(
-                    "WikiAdmin",
+                    "ESDMember",
                     policy =>
-                    {
                         policy.RequireAssertion(context =>
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin)
-                        );
-                    });
-                options.AddPolicy(
-                    "ESDUser",
-                    policy =>
-                    {
-                        policy.RequireAssertion(context =>
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamMember) ||
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamAdmin) ||
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin)
-                        );
-                    });
+                        (context.User.HasClaim(ClaimTypes.Role, "WikiAdmin")) || context.User.HasClaim(ClaimTypes.Role, "ESDAdmin")
+                        || (context.User.HasClaim(ClaimTypes.Role, "ESDMember")))
+                    );
                 options.AddPolicy(
                     "ESDAdmin",
                     policy =>
-                    {
                         policy.RequireAssertion(context =>
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.ESDTeamAdmin) ||
-                            context.User.HasClaim(ClaimTypes.Role, Constants.Strings.JwtClaims.WikiAdmin)
-                        );
-                    });
+                        (context.User.HasClaim(ClaimTypes.Role, "WikiAdmin")) || context.User.HasClaim(ClaimTypes.Role, "ESDAdmin"))
+                    );
+                options.AddPolicy(
+                    "WikiAdmin",
+                    policy =>
+                        policy.RequireAssertion(context =>
+                        (context.User.HasClaim(ClaimTypes.Role, "WikiAdmin")))
+                    );
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
+                });
             });
 
             // In production, the Angular files will be served from this directory
@@ -137,30 +116,14 @@ namespace ESDWiki2
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            // add identity
-            var builder = services.AddIdentityCore<ApplicationUser>(o =>
-            {
-                // configure identity options
-                o.Password.RequireDigit = false;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 6;
-            });
-            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
-            builder.AddEntityFrameworkStores<WikiContext>().AddDefaultTokenProviders();
-
             services.AddAutoMapper();
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddTransient<WikiSeeder>();
 
             services.AddScoped<IWikiRepository, WikiRepository>();
-            services.AddScoped<IJwtFactory, JwtFactory>();
-
 
             services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
         }
 
@@ -188,6 +151,7 @@ namespace ESDWiki2
 
             app.UseSpaStaticFiles();
             app.UseAuthentication();
+            app.UseCors("EnableCORS");
 
             app.UseMvc(cfg =>
             {

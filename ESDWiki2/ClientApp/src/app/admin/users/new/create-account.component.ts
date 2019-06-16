@@ -40,7 +40,7 @@ export class CreateAccountComponent implements OnInit {
     this.isRequesting = true;
     this.errors = '';
     if (valid) {
-      this.userService.register(value.email, value.password, value.firstName, value.lastName, value.team, value.permissions)
+      this.userService.register(value)
         .pipe( finalize(() => this.isRequesting = false) )
         .subscribe((result) => { if (result) { this.router.navigate(['/admin/dashboard']) } },
                     err => this.errors = JSON.parse(err._body).DuplicateUserName

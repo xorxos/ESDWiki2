@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { HttpClientModule, HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClientModule, HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRegistration } from '../interfaces/user.registration.interface';
 import { ConfigService } from '../utils/config.service';
 
@@ -10,10 +11,11 @@ import { BaseService } from "./base.service";
 import { Observable, BehaviorSubject } from 'rxjs';
 
 // Add the RxJS Observable operators we need in this app.
-import { map, catchError, tap } from "rxjs/operators";
+import { map, catchError, tap, retry } from "rxjs/operators";
 import { Local } from 'protractor/built/driverProviders';
 import { User } from '../user';
 import { EditUser } from '../interfaces/edit.user.interface';
+import { Router } from '@angular/router';
 
 @Injectable()
 
@@ -24,8 +26,8 @@ export class UserService extends BaseService {
   public users: User[] = [];
 
   // Observable items, mainly for navigation bar
-  private _currentUserEmail = new BehaviorSubject<string>("");
-  currentUserEmail$ = this._currentUserEmail.asObservable();
+  private _currentUserEmail: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  public currentUserEmailObservable: Observable<string> = this._currentUserEmail.asObservable();
 
   private _isWikiAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   public isWikiAdminObservable: Observable<boolean> = this._isWikiAdminSubject.asObservable()
@@ -45,10 +47,14 @@ export class UserService extends BaseService {
   private loggedIn = false;
   private username = "";
 
-  constructor(private http: Http, private configService: ConfigService, private httpClient: HttpClient) {
+  constructor(private http: Http, private configService: ConfigService, private httpClient: HttpClient, private router: Router) {
     super();
-    this.loggedIn = !!localStorage.getItem('auth_token');
-    this.username = JSON.parse(localStorage.getItem('user_name'));
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(localStorage.getItem("jwt"));
+    this.loggedIn = !!localStorage.getItem('jwt');
+    if (decodedToken != null) {
+      this.username = decodedToken.sub;
+    }
     // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
@@ -56,13 +62,20 @@ export class UserService extends BaseService {
     
   }
 
-  register(email: string, password: string, firstName: string, lastName: string, team: string, permissions: string): Observable<UserRegistration> {
-    let body = JSON.stringify({ email, password, firstName, lastName, team, permissions });
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+  register(value: UserRegistration) {
+    let token = localStorage.getItem('jwt')
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer " + token.toString()
+      })
+    };
 
-    return this.http.post("api/accounts", body, options)
-      .pipe(map(res => res.json()));
+    return this.httpClient.post("api/accounts/register", value, httpOptions)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
   }
 
   edit(originalEmail: string, email: string, firstName: string, lastName: string, team: string, permissions: string): Observable<EditUser> {
@@ -75,32 +88,25 @@ export class UserService extends BaseService {
 
   }
 
-  login(userName, password) {
-    let body = JSON.stringify({ userName, password })
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post("/api/auth/", body, options)
-      .pipe(map(res => res.json()),
-        map(res => {
-        localStorage.setItem('auth_token', res.auth_token);
-        localStorage.setItem('user_name', JSON.stringify(userName));
-
-        this.loggedIn = true;
-        this._authNavStatusSource.next(true);
-        this._currentUserEmail.next(userName);
-
-        this.isESDTeamAdmin();
-        this.isESDTeamMember();
-        this.isWikiAdmin();
-        this.isWikiUser();
-
-        return true;
-      }));
+  public setAuthorizations() {
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(localStorage.getItem("jwt"));
+    console.log(decodedToken)
+    if (!helper.isTokenExpired(localStorage.getItem("jwt"))) {
+      this.loggedIn = true;
+      this._authNavStatusSource.next(true);
+      this._currentUserEmail.next(decodedToken.sub);
+      this.isESDTeamAdmin();
+      this.isESDTeamMember();
+      this.isWikiAdmin();
+      this.isWikiUser();
+    } else {
+      this.logout()
+    }
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_name');
+    localStorage.removeItem('jwt');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
     this._isWikiAdminSubject.next(false);
@@ -115,12 +121,11 @@ export class UserService extends BaseService {
   }
 
   public isWikiAdmin(): boolean {
-    let jwt = localStorage.getItem('auth_token')
+    let jwt = localStorage.getItem('jwt')
     if (jwt != null) {
-      let jwtData = jwt.split('.')[1]
-      let decodedJwtJsonData = window.atob(jwtData)
-      let decodedJwtData = JSON.parse(decodedJwtJsonData)
-      let role = decodedJwtData.role
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(localStorage.getItem("jwt"));
+      let role = decodedToken.role
       if (role === 'Wiki Admin') {
         this._isWikiAdminSubject.next(true);
         return true
@@ -129,12 +134,11 @@ export class UserService extends BaseService {
   }
 
   public isWikiUser(): boolean {
-    let jwt = localStorage.getItem('auth_token')
+    let jwt = localStorage.getItem('jwt')
     if (jwt != null) {
-      let jwtData = jwt.split('.')[1]
-      let decodedJwtJsonData = window.atob(jwtData)
-      let decodedJwtData = JSON.parse(decodedJwtJsonData)
-      let role = decodedJwtData.role
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(localStorage.getItem("jwt"));
+      let role = decodedToken.role
       if (role === 'Default User' || role === 'Wiki Admin' || role === 'ESD Member' || role === 'ESD Admin') {
         this._isWikiUserSubject.next(true);
         return true
@@ -143,13 +147,11 @@ export class UserService extends BaseService {
   }
 
   public isESDTeamMember(): boolean {
-    let jwt = localStorage.getItem('auth_token')
-
+    let jwt = localStorage.getItem('jwt')
     if (jwt != null) {
-      let jwtData = jwt.split('.')[1]
-      let decodedJwtJsonData = window.atob(jwtData)
-      let decodedJwtData = JSON.parse(decodedJwtJsonData)
-      let role = decodedJwtData.role
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(localStorage.getItem("jwt"));
+      let role = decodedToken.role
       if (role === 'ESD Member' || role === 'ESD Admin' || role === 'Wiki Admin') {
         this._isESDTeamMemberSubject.next(true);
         return true
@@ -158,12 +160,11 @@ export class UserService extends BaseService {
   }
 
   public isESDTeamAdmin(): boolean {
-    let jwt = localStorage.getItem('auth_token')
+    let jwt = localStorage.getItem('jwt')
     if (jwt != null) {
-      let jwtData = jwt.split('.')[1]
-      let decodedJwtJsonData = window.atob(jwtData)
-      let decodedJwtData = JSON.parse(decodedJwtJsonData)
-      let role = decodedJwtData.role
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(localStorage.getItem("jwt"));
+      let role = decodedToken.role
       if (role === 'ESD Admin' || role === 'Wiki Admin') {
         this._isESDTeamAdminSubject.next(true);
         return true

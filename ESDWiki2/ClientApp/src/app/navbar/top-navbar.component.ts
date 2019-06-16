@@ -29,13 +29,11 @@ export class TopNavBarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Getting and storing subscription values
     this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
-    this.userName = this.userService.currentUserEmail$.subscribe(userName => this.email = userName);
+    this.userName = this.userService.currentUserEmailObservable.subscribe(userName => this.email = userName);
 
     // Need to set our Role subscriptions in case of page reload without re-login
-    this.userService.isWikiAdmin();
-    this.userService.isWikiUser();
-    this.userService.isESDTeamAdmin();
-    this.userService.isESDTeamMember();
+    this.userService.setAuthorizations();
+    console.log(this.email)
   }
 
   ngOnDestroy() {

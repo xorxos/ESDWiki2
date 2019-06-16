@@ -6,6 +6,7 @@ import { Credentials } from '../../shared/interfaces/credentials.interface';
 import { UserService } from '../../shared/services/user.service';
 
 import { finalize } from 'rxjs/operators'
+import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-login-form',
@@ -23,7 +24,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   credentials: Credentials = { email: '', password: '' };
 
-  constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute, private data: DataService) { }
 
   ngOnInit() {
 
@@ -44,19 +45,21 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.submitted = true;
     this.isRequesting = true;
     this.errors = '';
-    console.log("This bitch is...")
+    let creds = {
+      username: value.email,
+      password: value.password
+  };
     if (valid) {
-      console.log("This bitch broke 1")
-      this.userService.login(value.email, value.password).subscribe(
+      this.data.login(creds).subscribe(
           success => {
             if (success) {
               this.isRequesting = false;
+              console.log(localStorage.getItem('jwt'))
               this.router.navigate(['/browse']);
             }
           },
           error => {
-            console.log(error)
-            this.errors = JSON.parse(error._body).login_failure
+            this.errors = "Incorrect username or password"
           });
     }
   }

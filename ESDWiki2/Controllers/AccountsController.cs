@@ -9,25 +9,31 @@ using ESDWiki2.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ESDWiki2.Controllers
 {
-    [Route("/api/[controller]")]
+    [Route("/api/accounts")]
+    [ApiController]
     public class AccountsController : Controller
     {
         private readonly WikiContext _appDbContext;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, WikiContext appDbContext)
+        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, WikiContext appDbContext, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _appDbContext = appDbContext;
+            this.signInManager = signInManager;
         }
 
         // POST api/accounts
-        [HttpPost]
+        [HttpPost, Route("register")]
+        [Authorize(Policy = "WikiAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -45,8 +51,9 @@ namespace ESDWiki2.Controllers
             return new OkObjectResult(true);
         }
 
-        // POST api/accounts/emailAddress
+        // POST api/accounts/:emailAddress
         [HttpPost("{email}")]
+        [Authorize(Policy = "WikiAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Edit([FromBody]EditViewModel model, string email)
         {
             try
@@ -81,6 +88,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "WikiAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<IEnumerable<ApplicationUser>> Get([FromQuery]string searchTerm, [FromQuery]string filter)
         {
             try
