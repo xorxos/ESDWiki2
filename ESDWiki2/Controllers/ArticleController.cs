@@ -3,6 +3,8 @@ using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
 using ESDWiki2.Helpers;
 using ESDWiki2.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -44,6 +46,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "ESDMember", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Post([FromBody]Article model)
         {
             try
@@ -70,6 +73,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpPost("{id:int}")]
+        [Authorize(Policy = "ESDMember", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Edit([FromBody]Article model, int id)
         {
             if (!ModelState.IsValid)
@@ -152,6 +156,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = "ESDMember", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Delete(int id)
         {
             if (id <= 0)

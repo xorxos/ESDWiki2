@@ -92,7 +92,6 @@ export class UserService extends BaseService {
   }
 
   public getUserBySearchTerm(lastName: string, filter: string): Observable<boolean> {
-    console.log("Getting..")
     let token = localStorage.getItem('jwt')
     let params = new HttpParams();
     params = params.append('searchTerm', lastName);

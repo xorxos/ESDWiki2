@@ -3,7 +3,7 @@ import { Article, ArticleItem, WikiCategoryItem, TeamCategoryItem } from './arti
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { WikiCategory, TeamCategory } from './category.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class ArticleService {
   constructor(private http2: Http, private http: HttpClient) { }
 
   public SaveNewArticle() {
+    let token = localStorage.getItem('jwt')
     let article: Article = this.newArticle
     let title: string = this.newArticle.title
     let description: string = this.newArticle.description
@@ -23,7 +24,10 @@ export class ArticleService {
     let wikiCategories: WikiCategoryItem[] = this.newArticle.wikiCategories
     let teamCategories: TeamCategoryItem[] = this.newArticle.teamCategories
     let body = JSON.stringify({ article, title, description, articleItems, wikiCategories, teamCategories })
-    let headers = new Headers({ 'Content-Type': 'application/json' })
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + token.toString()
+    })
     let options = new RequestOptions({ headers: headers })
     return this.http2.post("/api/article", body, options)
       .pipe(
@@ -34,6 +38,7 @@ export class ArticleService {
   }
 
   public editArticle() {
+    let token = localStorage.getItem('jwt')
     let article: Article = this.newArticle
     let title: string = this.newArticle.title
     let description: string = this.newArticle.description
@@ -41,7 +46,10 @@ export class ArticleService {
     let wikiCategories: WikiCategoryItem[] = this.newArticle.wikiCategories
     let teamCategories: TeamCategoryItem[] = this.newArticle.teamCategories
     let body = JSON.stringify({ article, title, description, articleItems, wikiCategories, teamCategories })
-    let headers = new Headers({ 'Content-Type': 'application/json' })
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + token.toString()
+    })
     let options = new RequestOptions({ headers: headers })
     return this.http2.post("/api/article/" + article.id, body, options)
       .pipe(
@@ -189,7 +197,13 @@ export class ArticleService {
   }
 
   getAllArticles() {
-    return this.http.get("/api/article")
+    let token = localStorage.getItem('jwt')
+    return this.http.get("/api/article", {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      })
+    })
       .pipe(
         map((data: any[]) => {
           this.articleList = data;
