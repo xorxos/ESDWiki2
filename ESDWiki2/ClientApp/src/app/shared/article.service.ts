@@ -37,6 +37,21 @@ export class ArticleService {
         }));
   }
 
+  public deleteArticle() {
+    let token = localStorage.getItem('jwt')
+    let articleId: number = this.newArticle.id
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + token.toString()
+    })
+    let options = new RequestOptions({ headers: headers })
+    return this.http2.delete("/api/article/" + articleId, options)
+      .pipe(
+      map(response => {
+        return true
+      }))
+  }
+
   public editArticle() {
     let token = localStorage.getItem('jwt')
     let article: Article = this.newArticle

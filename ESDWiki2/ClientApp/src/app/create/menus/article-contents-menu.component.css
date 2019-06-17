@@ -130,7 +130,13 @@
 }
 
 .save-button {
-    width: 100%;
+    width: 80%;
+    margin-right:5px;
+}
+
+.delete-button {
+  width: calc(20% - 5px);
+  color: white;
 }
 
 .warning-star {

@@ -1,8 +1,6 @@
 export interface UserRegistration {
     email: string;  
     password: string;
-    firstName: string;
-    lastName:  string;
     team: string;
     permissions: string;
 }

@@ -51,11 +51,21 @@ export class EditAccountComponent implements OnInit {
     this.errors = '';
     let originalEmail = this.user.email;
     if (valid) {
-      this.userService.edit(originalEmail, value.email, value.firstName, value.lastName, value.team, value.permissions)
+      this.userService.edit(originalEmail, value.email, value.team, value.permissions)
         .pipe(finalize(() => this.isRequesting = false))
         .subscribe((result) => { if (result) { this.router.navigate(['/admin/dashboard']) } },
         err => this.errors = JSON.parse(err._body).DuplicateUserName
         );
     }
-  } 
+  }
+
+  deleteUser() {
+    this.isRequesting = true;
+    this.userService.delete(this.user.email).subscribe(success => {
+      if (success) {
+        this.isRequesting = false;
+        this.router.navigate(['/admin/dashboard'])
+      }
+    })
+  }
 }

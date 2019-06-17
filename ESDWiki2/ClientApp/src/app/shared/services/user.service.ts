@@ -62,7 +62,7 @@ export class UserService extends BaseService {
     
   }
 
-  register(value: UserRegistration) {
+  public register(value: UserRegistration) {
     let token = localStorage.getItem('jwt')
     const httpOptions = {
       headers: new HttpHeaders({
@@ -78,9 +78,9 @@ export class UserService extends BaseService {
       );
   }
 
-  edit(originalEmail: string, email: string, firstName: string, lastName: string, team: string, permissions: string): Observable<EditUser> {
+  public edit(originalEmail: string, email: string, team: string, permissions: string): Observable<EditUser> {
     let token = localStorage.getItem('jwt')
-    let body = JSON.stringify({ originalEmail, email, firstName, lastName, team, permissions });
+    let body = JSON.stringify({ originalEmail, email, team, permissions });
     let headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': "Bearer " + token.toString()
@@ -91,10 +91,23 @@ export class UserService extends BaseService {
       .pipe(map(res => res.json()));
   }
 
-  public getUserBySearchTerm(lastName: string, filter: string): Observable<boolean> {
+  public delete(email: string) {
+    let token = localStorage.getItem('jwt')
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + token.toString()
+    });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.delete("api/accounts/" + email, options)
+      .pipe(map(res => {
+        return true
+      }));
+  }
+
+  public getUserBySearchTerm(searchTerm: string, filter: string): Observable<boolean> {
     let token = localStorage.getItem('jwt')
     let params = new HttpParams();
-    params = params.append('searchTerm', lastName);
+    params = params.append('searchTerm', searchTerm);
     params = params.append('filter', filter);
     return this.httpClient.get("/api/accounts", {
       params: params, headers: new HttpHeaders({

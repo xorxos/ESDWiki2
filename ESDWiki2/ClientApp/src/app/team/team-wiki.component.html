@@ -18,7 +18,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="row category-section" style="padding-left: 25px; padding-right: 25px;">
+        <div class="row category-section">
           <div class="col-12 col-lg-4 col-md-3 col-sm-4" style="margin-bottom: 80px;">
             <div>
               <div class="team-header">ESD Team Wiki</div>
@@ -39,7 +39,7 @@
               <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
           </div>
-          <div class="col-lg-8" style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px;">
+          <div class="col-lg-8" style="background-color: white;">
             <div class="article-view">
               <ng-container *ngFor="let component of selectedArticle?.articleItems; let i = index;">
                 <ng-container *ngIf="isTitleComponent(component)">

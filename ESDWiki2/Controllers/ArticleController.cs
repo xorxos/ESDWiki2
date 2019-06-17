@@ -165,6 +165,23 @@ namespace ESDWiki2.Controllers
             }
             var article = repository.GetArticleById(id);
             _appDbContext.Remove(article);
+            //Delete article children entities
+            foreach (var articleItem in article.ArticleItems.ToList())
+            {
+                foreach (var listContent in articleItem.ListContents)
+                {
+                    _appDbContext.Remove(listContent);
+                }
+                _appDbContext.ArticleItems.Remove(articleItem);
+            }
+            foreach (var wikiCategory in article.WikiCategories)
+            {
+                _appDbContext.Remove(wikiCategory);
+            }
+            foreach (var teamCategory in article.TeamCategories)
+            {
+                _appDbContext.Remove(teamCategory);
+            }
             if (article != null)
             {
                 if (repository.SaveAll())

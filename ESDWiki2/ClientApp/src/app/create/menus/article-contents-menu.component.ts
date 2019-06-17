@@ -148,6 +148,17 @@ export class ArticleContentsMenuComponent implements OnInit {
     }
   }
 
+  public deleteArticle() {
+    this.isRequesting = true;
+    this.ArticleService.newArticle = this.newArticle
+    this.ArticleService.deleteArticle().subscribe(success => {
+      if (success) {
+        this.isRequesting = false;
+        this.router.navigate(['/team-wiki'])
+      }
+    })
+  }
+
   checked(event) {
     this.isPublicChecked = event.target.checked;
   }

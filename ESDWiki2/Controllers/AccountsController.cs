@@ -68,8 +68,6 @@ namespace ESDWiki2.Controllers
                 {
                     user.Email = model.Email;
                     user.UserName = model.Email;
-                    user.FirstName = model.FirstName;
-                    user.LastName = model.LastName;
                     user.Team = model.Team;
                     user.Permissions = model.Permissions;
 
@@ -96,14 +94,6 @@ namespace ESDWiki2.Controllers
                 {
                     return Ok(_appDbContext.Users.Where(u => u.UserName.Contains(searchTerm)).ToList());
                 }
-                else if (filter == "Firstname")
-                {
-                    return Ok(_appDbContext.Users.Where(u => u.FirstName.Contains(searchTerm)).ToList());
-                }
-                else if (filter == "Lastname")
-                {
-                    return Ok(_appDbContext.Users.Where(u => u.LastName.Contains(searchTerm)).ToList());
-                }
                 else if (filter == "Team")
                 {
                     return Ok(_appDbContext.Users.Where(u => u.Team.Contains(searchTerm)).ToList());
@@ -115,6 +105,20 @@ namespace ESDWiki2.Controllers
                 Console.WriteLine(exception);
                 return BadRequest($"Failed to get users: {exception}");
             }
+        }
+
+        [HttpDelete("{email}")]
+        [Authorize(Policy = "ESDAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Delete(string email)
+        {
+            if ( email == null || email == "" )
+            {
+                return BadRequest("Not a valid email address");
+            }
+            var user = await _userManager.FindByEmailAsync(email);
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded) return new BadRequestResult();
+            return new OkObjectResult(true);
         }
     }
 }
