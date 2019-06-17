@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +16,7 @@ namespace ESDWiki2.Controllers
     public class UploadController : ControllerBase
     {
         [HttpPost, DisableRequestSizeLimit]
+        [Authorize(Policy = "ESDMember", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Upload()
         {
             try

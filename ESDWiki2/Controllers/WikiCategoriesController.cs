@@ -1,6 +1,8 @@
 ﻿using ESDWiki2.Data;
 using ESDWiki2.Data.Entities;
 using ESDWiki2.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,6 +43,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "ESDAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Post([FromBody]WikiCategoryViewModel model)
         {
             try
@@ -76,6 +79,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpPost("{id:int}")]
+        [Authorize(Policy = "ESDAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Edit([FromBody]WikiCategoryViewModel model, int id)
         {
             Console.WriteLine("Trying to update wiki category");
@@ -105,6 +109,7 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = "ESDAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Delete(int id)
         {
             if (id <= 0)

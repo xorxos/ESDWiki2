@@ -16,6 +16,7 @@ namespace ESDWiki2.Controllers
 {
     [Route("/api/accounts")]
     [ApiController]
+    [Authorize(Policy = "ESDAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AccountsController : Controller
     {
         private readonly WikiContext _appDbContext;
@@ -33,7 +34,6 @@ namespace ESDWiki2.Controllers
 
         // POST api/accounts
         [HttpPost, Route("register")]
-        [Authorize(Policy = "WikiAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -53,7 +53,6 @@ namespace ESDWiki2.Controllers
 
         // POST api/accounts/:emailAddress
         [HttpPost("{email}")]
-        [Authorize(Policy = "WikiAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Edit([FromBody]EditViewModel model, string email)
         {
             try
@@ -88,7 +87,6 @@ namespace ESDWiki2.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "WikiAdmin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<IEnumerable<ApplicationUser>> Get([FromQuery]string searchTerm, [FromQuery]string filter)
         {
             try

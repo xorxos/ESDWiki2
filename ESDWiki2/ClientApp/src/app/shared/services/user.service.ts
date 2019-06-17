@@ -79,13 +79,32 @@ export class UserService extends BaseService {
   }
 
   edit(originalEmail: string, email: string, firstName: string, lastName: string, team: string, permissions: string): Observable<EditUser> {
+    let token = localStorage.getItem('jwt')
     let body = JSON.stringify({ originalEmail, email, firstName, lastName, team, permissions });
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + token.toString()
+    });
     let options = new RequestOptions({ headers: headers });
     console.log(originalEmail)
     return this.http.post("api/accounts/" + originalEmail, body, options)
       .pipe(map(res => res.json()));
+  }
 
+  public getUserBySearchTerm(lastName: string, filter: string): Observable<boolean> {
+    console.log("Getting..")
+    let token = localStorage.getItem('jwt')
+    let params = new HttpParams();
+    params = params.append('searchTerm', lastName);
+    params = params.append('filter', filter);
+    return this.httpClient.get("/api/accounts", {
+      params: params, headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      }) }).pipe(map((data: any[]) => {
+      this.users = data;
+      return true;
+    }));
   }
 
   public setAuthorizations() {
@@ -170,17 +189,6 @@ export class UserService extends BaseService {
         return true
       } else return false
     } else return false
-  }
-
-  public getUserBySearchTerm(lastName: string, filter: string): Observable<boolean> {
-    let params = new HttpParams();
-    params = params.append('searchTerm', lastName);
-    params = params.append('filter', filter);
-    
-    return this.httpClient.get("/api/accounts", { params: params }).pipe(map((data: any[]) => {
-      this.users = data;
-      return true;
-    }));
   }
 }
 
