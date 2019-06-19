@@ -1,6 +1,35 @@
-@media (min-width: 1200px) {
+@media (min-width: 320px) {
   .container {
-    max-width: 1200px;
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 450px) {
+  .container {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+  }
+}
+
+@media (min-width: 600px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 900px;
   }
 }
 
@@ -13,22 +42,24 @@
   font-family: "Segoe UI";
 }
 
-.col-lg-3 {
-  background-color: white;
-  padding: 0px;
-  overflow-y: auto;
-  overflow-x: hidden;
+.col-lg-9, .col-sm-8, .col-12 {
+  margin-top: 32px;
+  margin-bottom: 14px;
+  padding: 0 12.5px
 }
 
-.col-lg-7 {
-  min-height: calc(100vh - 63px);
-  background-color: white;
-  overflow-y: auto;
+.col-lg-3, .col-sm-4 {
+  margin-top: 50px;
+  margin-bottom: 14px;
+  padding: 0 12.5px
 }
 
-.article-view {
-  margin: 30px;
-  margin-bottom: 60px;
+.result-header {
+  font-size: 30px;
+}
+
+.article-container {
+  padding: 15px 0;
 }
 
 .article-title {
@@ -58,3 +89,26 @@
 .article-category:hover {
   text-decoration: underline;
 }
+
+.help-header {
+  text-align: left;
+  text-decoration: underline;
+}
+
+.help-body {
+  font-size: 15px;
+  text-align: left;
+  line-height: 20px;
+  font-weight: normal;
+}
+
+.help-link {
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  color: #4f67b8;
+}
+
+  .help-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }

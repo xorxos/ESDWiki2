@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { WikiCategory, TeamCategory } from './category.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ArticleService {
@@ -12,6 +13,7 @@ export class ArticleService {
   newArticle: Article
   existingArticle: Article
   selectedArticleToEdit: Article
+  
 
   constructor(private http2: Http, private http: HttpClient) { }
 
@@ -84,131 +86,6 @@ export class ArticleService {
       }
     }
     return WikiArticleList
-  }
-
-  public getWikiArticleBySearch(searchQuery: string): Article[] {
-    var wikiArticleList: Article[] = []
-    var matchingArticleList: Article[] = []
-    this.getAllArticles().subscribe(success => {
-      if (success) {
-
-        // Get articles with wikicategory only
-        for (let article of this.articleList) {
-          if (article.wikiCategories !== null) {
-            for (let category of article.wikiCategories) {
-              if (category !== null) {
-                wikiArticleList.push(article)
-              }
-            }
-          }
-        }
-        
-        // Include if title matches
-        for (let article of wikiArticleList) {
-          if (article.title.toLowerCase().includes(searchQuery.toLowerCase())) {
-            matchingArticleList.push(article)
-          }
-        }
-
-        // Include if description matches
-        for (let article of wikiArticleList) {
-          if (article.description.toLowerCase().includes(searchQuery.toLowerCase())) {
-
-            // Only include if it's not already in the list
-            if (!matchingArticleList.includes(article)) {
-              matchingArticleList.push(article)
-            }
-          }
-        }
-
-        // Split searchQuery so we can search for each word separately
-        var searchQueryList: string[] = searchQuery.split(" ")
-
-        // Include articles that have items that contain a full match
-        for (let article of wikiArticleList) {
-          for (let item of article.articleItems) {
-
-            // Include if text component matches
-            if (item.textContents !== null) {
-              if (item.textContents.toLowerCase().includes(searchQuery.toLowerCase())) {
-
-                // Only include if it's not already in the list
-                if (!matchingArticleList.includes(article)) {
-                  matchingArticleList.push(article)
-                }
-              }
-            }
-
-            // Include if subheader component matches
-            if (item.subheaderContents !== null) {
-              if (item.subheaderContents.toLowerCase().includes(searchQuery.toLowerCase())) {
-
-                // Only include if it's not already in the list
-                if (!matchingArticleList.includes(article)) {
-                  matchingArticleList.push(article)
-                }
-              }
-            }
-          }
-        }
-
-
-        // Include if category matches
-        for (let article of wikiArticleList) {
-          for (let category of article.wikiCategories) {
-            if (category !== null && category.categoryName.toLowerCase().includes(searchQuery.toLowerCase())) {
-              // Only include if it's not already in the list
-              if (!matchingArticleList.includes(article)) {
-                matchingArticleList.push(article)
-              }
-            }
-          }
-        }
-
-        // Include articles that have a partial title match
-        for (let article of wikiArticleList) {
-          for (let search of searchQueryList) {
-            if (article.title.toLowerCase().includes(search.toLowerCase())) {
-              // Only include if it's not already in the list
-              if (!matchingArticleList.includes(article)) {
-                matchingArticleList.push(article)
-              }
-            }
-          }
-        }
-
-        // Include article items that have a partial match
-        for (let article of wikiArticleList) {
-          for (let search of searchQueryList) {
-            for (let item of article.articleItems) {
-
-              // Include if text component matches
-              if (item.textContents !== null) {
-                if (item.textContents.toLowerCase().includes(search.toLowerCase())) {
-
-                  // Only include if it's not already in the list
-                  if (!matchingArticleList.includes(article)) {
-                    matchingArticleList.push(article)
-                  }
-                }
-              }
-
-              // Include if subheader component matches
-              if (item.subheaderContents !== null) {
-                if (item.subheaderContents.toLowerCase().includes(search.toLowerCase())) {
-
-                  // Only include if it's not already in the list
-                  if (!matchingArticleList.includes(article)) {
-                    matchingArticleList.push(article)
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    })
-    return matchingArticleList
   }
 
   getAllArticles() {

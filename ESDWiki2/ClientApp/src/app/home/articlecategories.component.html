@@ -45,37 +45,37 @@
         <div class="article-list-container1">
           <div>New Hires</div>
           <div class="article-list">
-            <div class="article-item">How to setup the Microsoft MFA</div>
-            <div class="article-item">How to setup your security questions</div>
-            <div class="article-item">How to setup email on a mobile</div>
+            <div class="article-item" [routerLink]="['/browse/articles/15']">How to setup the Microsoft MFA</div>
+            <div class="article-item" [routerLink]="['/browse/articles/17']">How to setup your security questions</div>
+            <div class="article-item" [routerLink]="['/browse/articles/16']">How to setup email on a mobile</div>
             <div class="article-item more-text" (click)="browseCategory('new_hires')">More New Hire Articles</div>
           </div>
         </div>
         <div class="article-list-container2-3">
           <div>Windows 10 Basics</div>
           <div class="article-list">
-            <div class="article-item">How to clear the credential manager</div>
-            <div class="article-item">How to change your password in Windows</div>
-            <div class="article-item">How to map a network drive</div>
+            <div class="article-item" [routerLink]="['/browse/articles/18']">How to clear the credential manager</div>
+            <div class="article-item" [routerLink]="['/browse/articles/19']">How to change your password in Windows</div>
+            <div class="article-item" [routerLink]="['/browse/articles/20']">How to map a network drive</div>
             <div class="article-item more-text" (click)="browseCategory('windows')">More Windows Articles</div>
           </div>
         </div>
         <div class="article-list-container2-3">
           <div>Mac Basics</div>
           <div class="article-list">
-            <div class="article-item">How to clear the keychain</div>
-            <div class="article-item">How to change your password on a mac</div>
-            <div class="article-item">How to add a shared inbox to outlook</div>
+            <div class="article-item" [routerLink]="['/browse/articles/21']">How to clear the keychain</div>
+            <div class="article-item" [routerLink]="['/browse/articles/22']">How to change your password on a mac</div>
+            <div class="article-item" [routerLink]="['/browse/articles/23']">How to add a shared inbox to outlook</div>
             <div class="article-item more-text" (click)="browseCategory('mac')">More Mac Articles</div>
           </div>
         </div>
         <div class="article-list-container4">
-          <div>Troubleshooting</div>
+          <div>Browser Issues</div>
           <div class="article-list">
-            <div class="article-item">How to troubleshoot Pulse Secure</div>
-            <div class="article-item">How to troubleshoot an outlook issue</div>
-            <div class="article-item">How to troubleshoot a browser issue</div>
-            <div class="article-item more-text">More Troubleshooting Articles</div>
+            <div class="article-item" [routerLink]="['/browse/articles/24']">How to clear the cache in Chrome</div>
+            <div class="article-item" [routerLink]="['/browse/articles/25']">How to clear the cache in Firefox</div>
+            <div class="article-item" [routerLink]="['/browse/articles/26']">How to clear the cache in Safari</div>
+            <div class="article-item more-text" (click)="browseCategory('browser_issues')">More Browser Articles</div>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
           <div class="training-item article-list-container1">
             <div class="training-item-header">Submit A Ticket</div>
             <div class="training-item-body">Click the link below to submit an iform ticket.</div>
-            <div class="more-text" style="text-align:left;">Submit an iform</div>
+            <div class="more-text" style="text-align:left;" (click)="clickTicket()">Submit an iform</div>
           </div>
           <div class="training-item article-list-container2-3">
             <div class="training-item-header">Computer Support</div>

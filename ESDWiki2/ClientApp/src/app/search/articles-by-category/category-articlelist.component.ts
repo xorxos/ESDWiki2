@@ -11,6 +11,7 @@ import { Article } from 'src/app/shared/article.model';
   styleUrls: ['./category-articlelist.component.css']
 })
 export class CategoryListComponent implements OnInit {
+  isRequesting: boolean = false
   category: WikiCategory
   categoryArticleList: Article[]
   selectedArticle: Article

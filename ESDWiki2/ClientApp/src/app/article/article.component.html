@@ -1,9 +1,9 @@
 <div class="container-fluid white-section">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <div class="row category-section" style="padding-left: 25px; padding-right: 25px;">
-          <div class="col-lg-8 offset-2" style="background-color: white; padding-left: 30px; padding-right: 50px; padding-bottom: 50px; margin-top: 10px;">
+      <div class="col-lg-9 col-sm-8 col-12">
+        <div class="row category-section">
+          <div class="col-12" style="background-color: white; margin-top: 10px;">
             <div class="article-view">
               <ng-container *ngFor="let component of article?.articleItems; let i = index;">
                 <ng-container *ngIf="isTitleComponent(component)">
@@ -53,6 +53,11 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-lg-3 col-sm-4 col-12">
+        <div class="help-header">Still need help?</div>
+        <div class="help-body">Click below to submit an iForm ticket.</div>
+        <div class="help-link" (click)="clickTicket()">Submit an iForm</div>
       </div>
     </div>
   </div>

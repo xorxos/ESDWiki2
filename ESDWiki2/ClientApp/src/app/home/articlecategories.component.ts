@@ -26,6 +26,10 @@ export class ArticleCategoriesComponent implements OnInit {
     this.router.navigate(['search', searchQuery])
   }
 
+  public clickTicket() {
+    window.location.href = 'https://iform.interpublic.com/';
+  }
+
   public browseCategory(name) {
     this.router.navigate(['browse', name])
   }

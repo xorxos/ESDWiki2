@@ -37,6 +37,10 @@ export class ArticleComponent implements OnInit {
     })
   }
 
+  public clickTicket() {
+    window.location.href = 'https://iform.interpublic.com/';
+  }
+
   /** Functions to check which component is in newArticle.articleContents */
   isTitleComponent(component): boolean {
     if (component.selector === "Title") {

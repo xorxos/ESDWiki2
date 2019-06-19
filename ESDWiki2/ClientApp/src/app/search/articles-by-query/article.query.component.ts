@@ -10,7 +10,9 @@ import { CategoryService } from 'src/app/shared/category.service';
   styleUrls: ['./article.query.component.css']
 })
 export class ArticleQueryComponent implements OnInit {
+  isRequesting: boolean
   articleList: Article[]
+  tempList: Article[]
   query: string
   params: any;
   constructor(private ArticleService: ArticleService, private CategoryService: CategoryService, private route: ActivatedRoute, private router: Router) {
@@ -20,13 +22,147 @@ export class ArticleQueryComponent implements OnInit {
   ngOnInit() {
     this.params = this.route.params.subscribe(params => {
       this.query = params['searchQuery']
-      this.articleList = this.ArticleService.getWikiArticleBySearch(this.query)
+      console.log("starting search...")
+      this.articleList = this.getWikiArticleBySearch(this.query)
     })
+  }
+
+  public getWikiArticleBySearch(searchQuery: string): Article[] {
+    this.isRequesting = true
+    var wikiArticleList: Article[] = []
+    var matchingArticleList: Article[] = []
+    this.ArticleService.getAllArticles().subscribe(success => {
+      if (success) {
+        this.tempList = this.ArticleService.articleList
+        // Get articles with wikicategory only
+        for (let article of this.tempList) {
+          if (article.wikiCategories !== null) {
+            for (let category of article.wikiCategories) {
+              if (category !== null) {
+                wikiArticleList.push(article)
+              }
+            }
+          }
+        }
+
+        // Include if title matches
+        for (let article of wikiArticleList) {
+          if (article.title.toLowerCase().includes(searchQuery.toLowerCase())) {
+            matchingArticleList.push(article)
+          }
+        }
+
+        // Include if description matches
+        for (let article of wikiArticleList) {
+          if (article.description.toLowerCase().includes(searchQuery.toLowerCase())) {
+
+            // Only include if it's not already in the list
+            if (!matchingArticleList.includes(article)) {
+              matchingArticleList.push(article)
+            }
+          }
+        }
+
+        // Split searchQuery so we can search for each word separately
+        var searchQueryList: string[] = searchQuery.split(" ")
+
+        // Include articles that have items that contain a full match
+        for (let article of wikiArticleList) {
+          for (let item of article.articleItems) {
+
+            // Include if text component matches
+            if (item.textContents !== null) {
+              if (item.textContents.toLowerCase().includes(searchQuery.toLowerCase())) {
+
+                // Only include if it's not already in the list
+                if (!matchingArticleList.includes(article)) {
+                  matchingArticleList.push(article)
+                }
+              }
+            }
+
+            // Include if subheader component matches
+            if (item.subheaderContents !== null) {
+              if (item.subheaderContents.toLowerCase().includes(searchQuery.toLowerCase())) {
+
+                // Only include if it's not already in the list
+                if (!matchingArticleList.includes(article)) {
+                  matchingArticleList.push(article)
+                }
+              }
+            }
+          }
+        }
+
+
+        // Include if category matches
+        for (let article of wikiArticleList) {
+          for (let category of article.wikiCategories) {
+            if (category !== null && category.categoryName.toLowerCase().includes(searchQuery.toLowerCase())) {
+              // Only include if it's not already in the list
+              if (!matchingArticleList.includes(article)) {
+                matchingArticleList.push(article)
+              }
+            }
+          }
+        }
+
+        // Include articles that have a partial title match
+        for (let article of wikiArticleList) {
+          for (let search of searchQueryList) {
+            if (article.title.toLowerCase().includes(search.toLowerCase())) {
+              // Only include if it's not already in the list
+              if (!matchingArticleList.includes(article)) {
+                matchingArticleList.push(article)
+              }
+            }
+          }
+        }
+
+        // Include article items that have a partial match
+        for (let article of wikiArticleList) {
+          for (let search of searchQueryList) {
+            for (let item of article.articleItems) {
+
+              // Include if text component matches
+              if (item.textContents !== null) {
+                if (item.textContents.toLowerCase().includes(search.toLowerCase())) {
+
+                  // Only include if it's not already in the list
+                  if (!matchingArticleList.includes(article)) {
+                    matchingArticleList.push(article)
+                  }
+                }
+              }
+
+              // Include if subheader component matches
+              if (item.subheaderContents !== null) {
+                if (item.subheaderContents.toLowerCase().includes(search.toLowerCase())) {
+
+                  // Only include if it's not already in the list
+                  if (!matchingArticleList.includes(article)) {
+                    matchingArticleList.push(article)
+                  }
+                }
+              }
+            }
+          }
+        }
+        this.isRequesting = false;
+      }
+    })
+    console.log("the search has ended: ")
+    console.log(matchingArticleList)
+    return matchingArticleList;
   }
 
   public clickCategory(categoryName: string) {
     let category = this.CategoryService.getWikiCategoryByName(categoryName)
     this.router.navigate(['/browse/', category.categoryUrl])
+  }
+
+  public clickTicket() {
+    window.location.href = 'https://iform.interpublic.com/';
   }
 
   /** Functions to check which component is in newArticle.articleContents */
