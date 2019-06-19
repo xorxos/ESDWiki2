@@ -23,7 +23,7 @@ export class ArticleCategoriesComponent implements OnInit {
   }
 
   public onSearchEnter(searchQuery: string) {
-    this.router.navigate(['search', searchQuery])
+    this.router.navigate(['search', searchQuery.replace(" ", "%")])
   }
 
   public clickTicket() {

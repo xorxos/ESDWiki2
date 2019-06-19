@@ -9,12 +9,15 @@
         <div *ngIf="!isRequesting && (articleList.length == 0)" class="article-container">
           <div class="article-description">No articles found...</div>
         </div>
-        <div class="article-container" *ngFor="let article of articleList">
+        <div class="article-container" *ngFor="let article of getList()">
           <a [routerLink]="['/browse/articles/', article.id]" class="article-title">{{article?.title}}</a>
           <div class="article-description">{{article.description || "No description found."}}</div>
           <div class="article-category-container" *ngFor="let category of article.wikiCategories">
             <div class="article-category" (click)="clickCategory(category?.categoryName)">Category: {{category?.categoryName}}</div>
           </div>
+        </div>
+        <div style="margin-top:30px; margin-bottom: 60px;">
+          <ngb-pagination [collectionSize]="articleList.length" [(page)]="page" aria-label="Search pagination"></ngb-pagination>
         </div>
       </div>
       <div class="col-lg-3 col-sm-4 col-12">

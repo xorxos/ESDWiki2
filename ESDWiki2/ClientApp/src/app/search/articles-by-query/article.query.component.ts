@@ -15,6 +15,8 @@ export class ArticleQueryComponent implements OnInit {
   tempList: Article[]
   query: string
   params: any;
+  page: number;
+
   constructor(private ArticleService: ArticleService, private CategoryService: CategoryService, private route: ActivatedRoute, private router: Router) {
 
   }
@@ -22,9 +24,29 @@ export class ArticleQueryComponent implements OnInit {
   ngOnInit() {
     this.params = this.route.params.subscribe(params => {
       this.query = params['searchQuery']
+      this.query =  this.query.replace("%", " ")
       console.log("starting search...")
       this.articleList = this.getWikiArticleBySearch(this.query)
+      if (this.articleList.length / 10 > 1) {
+        this.page = this.articleList.length / 10;
+      } else {
+        this.page = 1;
+      }
     })
+  }
+
+  public getList(): Article[] {
+    var pageArticleList: Article[] = []
+    for (var i = (this.page - 1) * 10; this.articleList.length > i; i++) {
+      if (pageArticleList.length < 10) {
+        if (this.articleList[i] != null)
+          console.log("Adding article")
+          pageArticleList.push(this.articleList[i])
+      } else {
+        break;
+      }
+    }
+    return pageArticleList
   }
 
   public getWikiArticleBySearch(searchQuery: string): Article[] {
