@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { Observable } from 'rxjs';
 import { Article } from 'src/app/shared/article.model';
-import { WikiCategory } from '../shared/category.model';
-import { CategoryService } from '../shared/category.service';
 import { ArticleService } from '../shared/article.service';
 
 @Component({
@@ -13,7 +10,7 @@ import { ArticleService } from '../shared/article.service';
 export class ArticleComponent implements OnInit {
   article: Article
 
-  constructor(private CategoryService: CategoryService, private route: ActivatedRoute, private ArticleService: ArticleService) {
+  constructor(private route: ActivatedRoute, private ArticleService: ArticleService) {
 
   }
 
@@ -38,7 +35,7 @@ export class ArticleComponent implements OnInit {
   }
 
   public clickTicket() {
-    window.location.href = 'https://iform.interpublic.com/';
+    (window as any).open('http://iform.interpublic.com/', "_blank");
   }
 
   /** Functions to check which component is in newArticle.articleContents */

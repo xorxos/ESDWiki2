@@ -1,7 +1,7 @@
 <div class="container-fluid white-section">
   <div class="container">
     <div class="row">
-      <div class="col-lg-9 col-sm-8 col-12">
+      <div class="col-lg-8 col-sm-8 col-12">
         <div class="row category-section">
           <div class="col-12" style="background-color: white; margin-top: 10px;">
             <div class="article-view">
@@ -46,7 +46,7 @@
                     <img [src]="component?.imageSrc || component?.placeholder"
                          [ngStyle]="{ 'border': '2px solid #ebeced' }"
                          [style.width]="component?.width + '%'"
-                         style="max-width:100%; margin:10px; margin-left: 5px;" />
+                         style="max-width:100%; margin:10px 0;" />
                   </div>
                 </ng-container>
               </ng-container>
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-sm-4 col-12">
+      <div class="col-lg-4 col-sm-4 col-12">
         <div class="help-header">Still need help?</div>
         <div class="help-body">Click below to submit an iForm ticket.</div>
         <div class="help-link" (click)="clickTicket()">Submit an iForm</div>

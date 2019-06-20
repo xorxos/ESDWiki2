@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
+import { DOCUMENT } from '@angular/common'
 import { CategoryService } from '../shared/category.service';
 import { WikiCategory } from '../shared/category.model';
 import { Router } from '@angular/router';
@@ -27,7 +28,7 @@ export class ArticleCategoriesComponent implements OnInit {
   }
 
   public clickTicket() {
-    window.location.href = 'https://iform.interpublic.com/';
+    (window as any).open('http://iform.interpublic.com/', "_blank");
   }
 
   public browseCategory(name) {

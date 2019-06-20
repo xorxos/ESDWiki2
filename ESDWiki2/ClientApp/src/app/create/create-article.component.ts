@@ -339,7 +339,7 @@ export class CreateArticleComponent implements OnInit {
       displayName: "Text",
       position: this.newArticle.articleItems.length,
       textContents: "This is some text. Extra spaces and returns are shown exactly as entered.",
-      leftSpacing: 2,
+      leftSpacing: 0,
       topSpacing: 0,
       bottomSpacing: 0,
       itemSpacing: 0,
