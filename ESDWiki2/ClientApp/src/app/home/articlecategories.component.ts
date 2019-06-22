@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common'
 import { CategoryService } from '../shared/category.service';
 import { WikiCategory } from '../shared/category.model';
 import { Router } from '@angular/router';
+import { ArticleService } from '../shared/article.service';
 
 @Component({
   selector: 'articlecategories-component',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class ArticleCategoriesComponent implements OnInit {
   categories: WikiCategory[] = [];
   moreCategories: boolean = false;
-  constructor(private CategoryService: CategoryService, private router: Router) {
+  constructor(private CategoryService: CategoryService, private ArticleService: ArticleService, private router: Router) {
 
   }
   ngOnInit() {
@@ -21,6 +22,7 @@ export class ArticleCategoriesComponent implements OnInit {
         this.categories = this.CategoryService.wikiCategories;
       }
     })
+    this.ArticleService.getAllArticles();
   }
 
   public onSearchEnter(searchQuery: string) {

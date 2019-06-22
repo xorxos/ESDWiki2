@@ -36,6 +36,7 @@ export class ArticleContentsMenuComponent implements OnInit {
   wikiCategories: WikiCategory[]
   selectedTeamCategory: string = "Choose..."
   selectedWikiCategory: string = "Choose..."
+  deleteDisabled: boolean
   url: string
 
   constructor(private router: Router, private ArticleService: ArticleService, private CategoryService: CategoryService) { }
@@ -44,6 +45,14 @@ export class ArticleContentsMenuComponent implements OnInit {
     this.url = this.router.url
     this.showArticleSettings = false
     this.showSections = true
+    // Disable delete article button if creating new article
+    if (this.url === '/team-wiki/create') {
+      this.deleteDisabled = true
+    }
+    if (this.url === '/edit') {
+      this.deleteDisabled = false
+    }
+
     // Get current categories
     this.CategoryService.getAllTeamCategories().subscribe(success => {
       if (success) {
@@ -55,6 +64,7 @@ export class ArticleContentsMenuComponent implements OnInit {
         this.wikiCategories = this.CategoryService.wikiCategories;
       }
     })
+
     // Check if team category or wiki category is set
     if ((this.newArticle.teamCategories.length > 0) || (this.newArticle.wikiCategories.length > 0)) {
       // If team category is set, update the selected team category in component

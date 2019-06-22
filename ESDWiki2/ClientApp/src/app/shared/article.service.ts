@@ -11,6 +11,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class ArticleService {
   articleList: Article[]
   newArticle: Article
+  articleById: Article
   existingArticle: Article
   selectedArticleToEdit: Article
   
@@ -114,7 +115,18 @@ export class ArticleService {
   }
 
   getArticleById(id: number) {
-    return this.articleList.find(a => a.id === id)
+    let token = localStorage.getItem('jwt')
+    return this.http.get("/api/article/" + id, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      })
+    })
+      .pipe(
+        map((data: any) => {
+          this.articleById = data;
+          return true;
+        }));
   }
 
 

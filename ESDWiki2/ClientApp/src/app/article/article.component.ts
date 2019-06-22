@@ -15,21 +15,9 @@ export class ArticleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ArticleService.getAllArticles().subscribe(success => {
+    this.ArticleService.getArticleById(+this.route.snapshot.params['id']).subscribe(success => {
       if (success) {
-        this.article = this.ArticleService.getArticleById(+this.route.snapshot.params['id'])
-        console.log(this.article)
-        this.article.articleItems.sort(function (a, b) {
-          if (a.position < b.position) { return -1; }
-          if (a.position > b.position) { return 1; }
-          return 0
-        });
-        for (var articleItem of this.article.articleItems)
-          articleItem.listContents.sort(function (a, b) {
-            if (a.position < b.position) { return -1; }
-            if (a.position > b.position) { return 1; }
-            return 0
-          });
+        this.article = this.ArticleService.articleById
       }
     })
   }

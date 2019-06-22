@@ -27,8 +27,8 @@ export class ArticleQueryComponent implements OnInit {
       this.query =  this.query.replace("%", " ")
       console.log("starting search...")
       this.articleList = this.getWikiArticleBySearch(this.query)
-      if (this.articleList.length / 10 > 1) {
-        this.page = this.articleList.length / 10;
+      if (this.articleList.length / 6 > 1) {
+        this.page = this.articleList.length / 6;
       } else {
         this.page = 1;
       }
@@ -37,8 +37,8 @@ export class ArticleQueryComponent implements OnInit {
 
   public getList(): Article[] {
     var pageArticleList: Article[] = []
-    for (var i = (this.page - 1) * 10; this.articleList.length > i; i++) {
-      if (pageArticleList.length < 10) {
+    for (var i = (this.page - 1) * 6; this.articleList.length > i; i++) {
+      if (pageArticleList.length < 6) {
         if (this.articleList[i] != null)
           console.log("Adding article")
           pageArticleList.push(this.articleList[i])

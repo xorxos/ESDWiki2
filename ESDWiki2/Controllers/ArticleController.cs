@@ -45,6 +45,20 @@ namespace ESDWiki2.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public ActionResult<IEnumerable<Article>> Get(int id)
+        {
+            try
+            {
+                return Ok(repository.GetArticleById(id));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return BadRequest("Failed to get article");
+            }
+        }
+
         [HttpPost]
         [Authorize(Policy = "ESDMember", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Post([FromBody]Article model)
